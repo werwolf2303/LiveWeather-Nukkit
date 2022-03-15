@@ -19,4 +19,4 @@ Just type "/setcity" then enter the city and you have live weather
 
 
 
-INFO: The weather does not apply for all players 
+INFO: The weather does not apply for all players only for you
