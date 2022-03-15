@@ -14,6 +14,10 @@ import java.io.IOException;
 
 public class GetWeather {
     private String apikey = "aaf3cf6e879797e568dd4014d4a694e6";
+    @Deprecated
+    public boolean isValid(String city) {
+        return false;
+    }
     public String getWeather(String city) {
         String lon = getLon(city);
         String lat = getLat(city);
@@ -45,7 +49,12 @@ public class GetWeather {
                                     if(out.contains("Clear")) {
                                         return "Clear";
                                     }else{
-                                        Server.getInstance().getLogger().alert("Exception LiveWeather: Unhandled Weather");
+                                        if(out.contains("Mist")) {
+                                            return "Clear";
+                                        }else {
+                                            Server.getInstance().getLogger().alert("Exception LiveWeather: Unhandled Weather : " + out);
+                                            return "Clear";
+                                        }
                                     }
                                 }
                             }
