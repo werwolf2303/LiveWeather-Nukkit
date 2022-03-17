@@ -16,44 +16,50 @@ public class GetWeather {
     private String apikey = "aaf3cf6e879797e568dd4014d4a694e6";
     @Deprecated
     public boolean isValid(String city) {
-        return false;
+        if(getWeather(city).equals("InvalidCity")) {
+            return false;
+        }else{
+            return true;
+        }
     }
     public String getWeather(String city) {
-        String lon = getLon(city);
-        String lat = getLat(city);
-        String url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apikey;
         try {
-            HttpGet request = new HttpGet(url);
-            CloseableHttpClient client = HttpClients.createDefault();
-            CloseableHttpResponse response = client.execute(request);
-            HttpEntity entity = response.getEntity();
-            String result = EntityUtils.toString(entity);
-            String[] conv = result.split(",");
-            String out = conv[3].replace("\"", "").replace(":", "").replace("main", "");
-            if(conv[3].contains("main")) {
-                if(out.contains("Clouds")) {
-                    return "Clear";
-                }else{
-                    if(out.contains("Thunderstorm")) {
-                        return "Thunderstorm";
-                    }else{
-                        if(out.contains("Drizzle")) {
-                            return "Drizzle";
-                        }else{
-                            if(out.contains("Rain")) {
-                                return "Rain";
-                            }else{
-                                if(out.contains("Snow")) {
-                                    return "Snow";
-                                }else{
-                                    if(out.contains("Clear")) {
-                                        return "Clear";
-                                    }else{
-                                        if(out.contains("Mist")) {
+            String lon = getLon(city);
+            String lat = getLat(city);
+            String url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apikey;
+            try {
+                HttpGet request = new HttpGet(url);
+                CloseableHttpClient client = HttpClients.createDefault();
+                CloseableHttpResponse response = client.execute(request);
+                HttpEntity entity = response.getEntity();
+                String result = EntityUtils.toString(entity);
+                String[] conv = result.split(",");
+                String out = conv[3].replace("\"", "").replace(":", "").replace("main", "");
+                if (conv[3].contains("main")) {
+                    if (out.contains("Clouds")) {
+                        return "Clear";
+                    } else {
+                        if (out.contains("Thunderstorm")) {
+                            return "Thunderstorm";
+                        } else {
+                            if (out.contains("Drizzle")) {
+                                return "Drizzle";
+                            } else {
+                                if (out.contains("Rain")) {
+                                    return "Rain";
+                                } else {
+                                    if (out.contains("Snow")) {
+                                        return "Snow";
+                                    } else {
+                                        if (out.contains("Clear")) {
                                             return "Clear";
-                                        }else {
-                                            Server.getInstance().getLogger().alert("Exception LiveWeather: Unhandled Weather : " + out);
-                                            return "Clear";
+                                        } else {
+                                            if (out.contains("Mist")) {
+                                                return "Clear";
+                                            } else {
+                                                Server.getInstance().getLogger().alert("Exception LiveWeather: Unhandled Weather : " + out);
+                                                return "Clear";
+                                            }
                                         }
                                     }
                                 }
@@ -61,9 +67,11 @@ public class GetWeather {
                         }
                     }
                 }
-            }
-        }catch (IOException ioe) {
+            } catch (IOException ioe) {
 
+            }
+        }catch (ArrayIndexOutOfBoundsException aioobe) {
+            return "InvalidCity";
         }
         return "";
     }

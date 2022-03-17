@@ -4,6 +4,8 @@ import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.plugin.PluginBase;
 import com.liveweather.api.GetWeather;
+import com.liveweather.commands.CityChange;
+import com.liveweather.commands.CityDelete;
 import com.liveweather.commands.CitySetter;
 import com.liveweather.commands.WhatsMyWeather;
 import com.liveweather.setter.Wetter;
@@ -40,6 +42,9 @@ public class Initiator extends PluginBase {
             }
             Server.getInstance().reload();
         }
+        Server.getInstance().getCommandMap().register("help", new TestCommand("testweather", "Test the liveweather plugin"));
+        Server.getInstance().getCommandMap().register("help", new CityDelete("deletecity", "Deletes your city in liveweather"));
+        Server.getInstance().getCommandMap().register("help", new CityChange("changecity", "Change yor liveweather City"));
         Server.getInstance().getCommandMap().register("help", new WhatsMyWeather("whatsmyweather", "Get the current weather for the city you entered"));
         Server.getInstance().getCommandMap().register("help", new CitySetter("setcity", "Set city for LiveWeather"));
         getServer().getScheduler().scheduleRepeatingTask(new Runnable() {

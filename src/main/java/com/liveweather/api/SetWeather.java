@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.event.level.ThunderChangeEvent;
 import cn.nukkit.event.level.WeatherChangeEvent;
+import cn.nukkit.level.Sound;
 import cn.nukkit.network.protocol.LevelEventPacket;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -58,9 +59,12 @@ public class SetWeather {
     public void setThundering(Player p) {
         ThunderChangeEvent ev = new ThunderChangeEvent(p.getLevel(), thundering);
         Server.getInstance().getPluginManager().callEvent(ev);
+        this.thundering = thundering;
         LevelEventPacket pk = new LevelEventPacket();
-        pk.evid = 3004;
-        this.setThunderTime(ThreadLocalRandom.current().nextInt(168000) + 12000);
+        pk.evid = 3002;
+        int time = ThreadLocalRandom.current().nextInt(12000) + 3600;
+        pk.data = time;
+        this.setThunderTime(time);
         Player[] p2 = new Player[] {p};
         Server.broadcastPacket(p2, pk);
     }

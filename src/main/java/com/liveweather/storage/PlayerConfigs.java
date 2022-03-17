@@ -38,6 +38,31 @@ public class PlayerConfigs {
         }
         return false;
     }
+    public void deleteConfig(String playername) {
+        String values = "";
+        try {
+            Scanner myReader = new Scanner(config);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                if(data.contains(playername)) {
+                }else{
+                    if(data.equals("")) {
+                        values = data;
+                    }else{
+                        values = data + "\n";
+                    }
+                }
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+        }
+        try {
+            FileWriter myWriter = new FileWriter(config);
+            myWriter.write(values);
+            myWriter.close();
+        } catch (IOException e) {
+        }
+    }
     public void writeConfig(String playername, String value) {
         String values = "";
         try {
