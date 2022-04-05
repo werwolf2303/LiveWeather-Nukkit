@@ -1,5 +1,7 @@
 package com.liveweather.storage;
 
+import com.liveweather.commandline.LWLogging;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,7 +17,7 @@ public class Zippie {
         String destFilePath = destFile.getCanonicalPath();
 
         if (!destFilePath.startsWith(destDirPath + File.separator)) {
-            throw new IOException("Entry is outside of the target dir: " + zipEntry.getName());
+            new LWLogging().critical("Entry is outside of the target dir: " + zipEntry.getName());
         }
 
         return destFile;
@@ -31,13 +33,13 @@ public class Zippie {
                 File newFile = newFile(destDir, zipEntry);
                 if (zipEntry.isDirectory()) {
                     if (!newFile.isDirectory() && !newFile.mkdirs()) {
-                        throw new IOException("Failed to create directory " + newFile);
+                        new LWLogging().critical("Failed to create directory " + newFile);
                     }
                 } else {
                     // fix for Windows-created archives
                     File parent = newFile.getParentFile();
                     if (!parent.isDirectory() && !parent.mkdirs()) {
-                        throw new IOException("Failed to create directory " + parent);
+                        new LWLogging().critical("Failed to create directory " + parent);
                     }
 
                     // write file content

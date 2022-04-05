@@ -1,7 +1,11 @@
 package com.liveweather.api;
 
 import cn.nukkit.Server;
+import cn.nukkit.plugin.Plugin;
 import cn.nukkit.utils.Logger;
+import com.liveweather.check.APIKey;
+import com.liveweather.commandline.LWLogging;
+import com.liveweather.storage.Options;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -10,7 +14,10 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import sun.net.www.http.HttpClient;
 
+import java.io.File;
 import java.io.IOException;
+
+import static com.liveweather.commandline.LWLogging.unregisterPlugin;
 
 public class GetWeather {
     private String apikey = "aaf3cf6e879797e568dd4014d4a694e6";
@@ -26,6 +33,16 @@ public class GetWeather {
         try {
             String lon = getLon(city);
             String lat = getLat(city);
+            if(!new Options().getConfig("apikey").equals("YOUR_API_KEY")) {
+                if(new APIKey().isValid(new Options().getConfig("apikey"))) {
+                    apikey = new Options().getConfig("apikey");
+                }else{
+                    new LWLogging().critical("APIKey is not valid restore default");
+                    new File(new Options().config).delete();
+                    new Options().createConfig();
+                    new Options().writeConfig("apikey", "YOUR_API_KEY");
+                }
+            }
             String url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apikey;
             try {
                 HttpGet request = new HttpGet(url);
@@ -57,7 +74,7 @@ public class GetWeather {
                                             if (out.contains("Mist")) {
                                                 return "Clear";
                                             } else {
-                                                Server.getInstance().getLogger().alert("Exception LiveWeather: Unhandled Weather : " + out);
+                                                new LWLogging().critical("Exception LiveWeather: Unhandled Weather : " + out);
                                                 return "Clear";
                                             }
                                         }
@@ -77,7 +94,7 @@ public class GetWeather {
     }
     public String getLon(String l) {
         try {
-            String url = "http://api.openweathermap.org/geo/1.0/direct?q=" + l + "&limit=1&appid=aaf3cf6e879797e568dd4014d4a694e6";
+            String url = "http://api.openweathermap.org/geo/1.0/direct?q=" + l + "&limit=1&appid=" + apikey;
             HttpGet request = new HttpGet(url);
             CloseableHttpClient client = HttpClients.createDefault();
             CloseableHttpResponse response = client.execute(request);
@@ -96,7 +113,7 @@ public class GetWeather {
     }
     public String getLat(String l) {
         try {
-            String url = "http://api.openweathermap.org/geo/1.0/direct?q=" + l + "&limit=1&appid=aaf3cf6e879797e568dd4014d4a694e6";
+            String url = "http://api.openweathermap.org/geo/1.0/direct?q=" + l + "&limit=1&appid=" + apikey;
             HttpGet request = new HttpGet(url);
             CloseableHttpClient client = HttpClients.createDefault();
             CloseableHttpResponse response = client.execute(request);

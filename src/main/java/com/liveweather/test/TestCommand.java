@@ -10,7 +10,9 @@ import cn.nukkit.event.level.WeatherEvent;
 import cn.nukkit.level.Level;
 import cn.nukkit.network.protocol.LevelEventPacket;
 import com.liveweather.api.SetWeather;
+import com.liveweather.commandline.LWLogging;
 import com.liveweather.storage.PlayerConfigs;
+import com.liveweather.storage.PlayerConfigs2;
 import ru.nukkitx.forms.elements.CustomForm;
 
 import java.util.Collection;
@@ -33,23 +35,8 @@ public class TestCommand extends Command {
     public boolean execute(CommandSender commandSender, String s, String[] args) {
         if(commandSender instanceof Player) {
             Player p = (Player) commandSender;
-            try {
-                if(args[0].contains("clear")) {
-                    new SetWeather().setClear(p);
-                }else{
-                    if(args[0].contains("thunder")) {
-                        new SetWeather().setThundering(p);
-                    }else{
-                        if(args[0].contains("rain")) {
-                            new SetWeather().setRaining(p);
-                        }else{
-                            p.sendMessage("Invalid weather");
-                        }
-                    }
-                }
-            }catch (ArrayIndexOutOfBoundsException esc) {
-
-            }
+            new PlayerConfigs2().createPlayer(p.getName(), "Hemsbach");
+            p.sendMessage("Debug is: " + new PlayerConfigs2().getCity(p.getName()));
         }
         return false;
     }

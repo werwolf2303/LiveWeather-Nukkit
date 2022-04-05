@@ -1,4 +1,8 @@
-[  ] - Fix weather sound not playing
-[  ] - Fix suffix warnings
-[  ] - Improve Performance for low end servers
-[  ] - Optimize Playerconfig
+[ - ] - Fix weather sound not playing
+[ / ] - Fix suffix warnings
+[ x ] - Improve Performance
+[ x ] - Threading
+[ x ] - Optimize Playerconfig
+
+/ = I guess
+- = I dont know

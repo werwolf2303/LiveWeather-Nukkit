@@ -6,6 +6,7 @@ import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import com.liveweather.api.GetWeather;
 import com.liveweather.storage.PlayerConfigs;
+import com.liveweather.storage.PlayerConfigs2;
 import ru.nukkitx.forms.elements.CustomForm;
 
 public class CitySetter extends Command {
@@ -24,7 +25,7 @@ public class CitySetter extends Command {
                 if(data == null) return; //Если форма закрыта принудительно, то data будет иметь значение null
                 //new PlayerConfigs().writeConfig(event.getPlayer().getName(), targetForm.getElements().toString());
                 if(new GetWeather().isValid(data.toString().replace("[", "").replace("]", ""))) {
-                    new PlayerConfigs().writeConfig(p.getName(), data.toString().replace("[", "").replace("]", ""));
+                    new PlayerConfigs2().createPlayer(p.getName(), data.toString().replace("[", "").replace("]", ""));
                     targetPlayer.sendMessage("Successfull entered city " + data.toString().replace("[", "").replace("]", ""));
                 }else{
                     targetPlayer.sendMessage("Invalid City or not supported by the api");

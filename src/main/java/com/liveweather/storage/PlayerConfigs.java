@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+@Deprecated
 public class PlayerConfigs {
     public File config = new File(Server.getInstance().getFilePath() + "/plugins" + "/" + "LiveWeather" + "/" + "locations.txt");
     public File pluginfolder = new File(Server.getInstance().getFilePath() + "/" + "plugins" + "/" + "LiveWeather");
