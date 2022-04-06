@@ -5,6 +5,7 @@ import cn.nukkit.plugin.Plugin;
 import cn.nukkit.utils.Logger;
 import com.liveweather.check.APIKey;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.language.Language;
 import com.liveweather.storage.Options;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -37,7 +38,7 @@ public class GetWeather {
                 if(new APIKey().isValid(new Options().getConfig("apikey"))) {
                     apikey = new Options().getConfig("apikey");
                 }else{
-                    new LWLogging().critical("APIKey is not valid restore default");
+                    new LWLogging().critical(new Language().get("liveweather.api.apikeynotvalid"));
                     new File(new Options().config).delete();
                     new Options().createConfig();
                     new Options().writeConfig("apikey", "YOUR_API_KEY");
@@ -74,7 +75,7 @@ public class GetWeather {
                                             if (out.contains("Mist")) {
                                                 return "Clear";
                                             } else {
-                                                new LWLogging().critical("Exception LiveWeather: Unhandled Weather : " + out);
+                                                new LWLogging().critical(new Language().get("liveweather.api.unhandled") + out);
                                                 return "Clear";
                                             }
                                         }

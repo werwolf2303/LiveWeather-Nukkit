@@ -1,6 +1,8 @@
 package com.liveweather.threading;
 
 import cn.nukkit.Server;
+import com.liveweather.commandline.LWLogging;
+import com.liveweather.language.Language;
 
 public class Normal {
     Thread t = new Thread();
@@ -21,7 +23,7 @@ public class Normal {
         if(t.isAlive()) {
             running = true;
         }else{
-            Server.getInstance().getLogger().error("LiveWeather :: Critical Error in com.liveweather.threading.Normal");
+            new LWLogging().critical(new Language().get("liveweather.threading.critical"));
         }
     }
 }

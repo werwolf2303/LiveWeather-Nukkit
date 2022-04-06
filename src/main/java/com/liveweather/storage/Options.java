@@ -3,6 +3,7 @@ package com.liveweather.storage;
 
 import cn.nukkit.Server;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.language.Language;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,14 +17,30 @@ public class Options {
         try {
             return new File(config).createNewFile();
         } catch (IOException e) {
-            new LWLogging().critical("Error cant create config");
+            new LWLogging().critical(new Language().get("liveweather.options.cantcreate"));
             return false;
         }
     }
     public boolean writeConfig(String name, String value) {
+        String towrite = "";
+        try {
+            File myObjs = new File(config);
+            Scanner myReaders = new Scanner(myObjs);
+            while (myReaders.hasNextLine()) {
+                String data = myReaders.nextLine();
+                if (towrite.equals("")) {
+                    towrite = data;
+                } else {
+                    towrite = towrite + "\n" + data;
+                }
+            }
+            myReaders.close();
+        } catch (FileNotFoundException es) {
+            return false;
+        }
         try {
             FileWriter myWriter = new FileWriter(config);
-            myWriter.write(name + ":" + value);
+            myWriter.write(towrite + "\n" + name + ":" + value);
             myWriter.close();
         } catch (IOException e) {
             return false;
@@ -43,7 +60,7 @@ public class Options {
         }
         return false;
     }
-    public String getConfig(String name) {
+        public String getConfig(String name) {
         try {
             File myObj = new File(config);
             Scanner myReader = new Scanner(myObj);
@@ -55,7 +72,7 @@ public class Options {
             }
             myReader.close();
         } catch (FileNotFoundException e) {
-            new LWLogging().critical("Failed to read value in config");
+            new LWLogging().critical(new Language().get("liveweather.options.cantread"));
         }
         return null;
     }

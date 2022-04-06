@@ -2,6 +2,7 @@ package com.liveweather.storage;
 
 import cn.nukkit.Server;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.language.Language;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,7 +16,7 @@ public class Configuring {
         try {
             return new File(config).createNewFile();
         } catch (IOException e) {
-            new LWLogging().critical("Error cant create config");
+            new LWLogging().critical(new Language().get("liveweather.configuring.cantcreate"));
             return false;
         }
     }
@@ -54,7 +55,7 @@ public class Configuring {
             }
             myReader.close();
         } catch (FileNotFoundException e) {
-            new LWLogging().critical("Failed to read value in config");
+            new LWLogging().critical(new Language().get("liveweather.configuring.cantread"));
         }
         return null;
     }

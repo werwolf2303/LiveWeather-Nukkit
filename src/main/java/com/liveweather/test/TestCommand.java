@@ -14,16 +14,12 @@ import com.liveweather.commandline.LWLogging;
 import com.liveweather.storage.PlayerConfigs;
 import com.liveweather.storage.PlayerConfigs2;
 import ru.nukkitx.forms.elements.CustomForm;
-
 import java.util.Collection;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class TestCommand extends Command {
     public TestCommand(String name, String description) {
         super(name, description);
-        addCommandParameters("clear", new CommandParameter[] {});
-        addCommandParameters("rain", new CommandParameter[] {});
-        addCommandParameters("thunder", new CommandParameter[] {});
     }
     Boolean raining = false;
     String playername = "";
@@ -35,8 +31,7 @@ public class TestCommand extends Command {
     public boolean execute(CommandSender commandSender, String s, String[] args) {
         if(commandSender instanceof Player) {
             Player p = (Player) commandSender;
-            new PlayerConfigs2().createPlayer(p.getName(), "Hemsbach");
-            p.sendMessage("Debug is: " + new PlayerConfigs2().getCity(p.getName()));
+            p.sendMessage("Debug is: " + p.getAddress());
         }
         return false;
     }

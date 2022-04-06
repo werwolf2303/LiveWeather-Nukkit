@@ -3,6 +3,7 @@ package com.liveweather.commands;
 import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
+import com.liveweather.language.Language;
 import com.liveweather.storage.PlayerConfigs;
 import com.liveweather.storage.PlayerConfigs2;
 
@@ -17,10 +18,12 @@ public class CityDelete extends Command {
             Player p = (Player) commandSender;
             if(new PlayerConfigs2().hasEntered(p.getName())) {
                 new PlayerConfigs2().deletePlayer(p.getName());
-                p.sendMessage("[LiveWeather] §bDeleted city");
+                p.sendMessage(new Language().get("liveweather.commands.citydelete.success"));
             }else{
-                p.sendMessage("[LiveWeather] §cYou dont entered your city");
+                p.sendMessage(new Language().get("liveweather.commands.citydelete.dontentered"));
             }
+        }else{
+            commandSender.sendMessage(new Language().get("liveweather.commands.server"));
         }
         return false;
     }

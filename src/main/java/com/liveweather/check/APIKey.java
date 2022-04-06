@@ -29,4 +29,7 @@ public class APIKey {
             return false;
         }
     }
+    public String getAPIKey() {
+        return new Options().getConfig("apikey");
+    }
 }

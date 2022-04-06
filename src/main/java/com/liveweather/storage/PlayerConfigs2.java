@@ -2,6 +2,7 @@ package com.liveweather.storage;
 
 import cn.nukkit.Server;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.language.Language;
 import com.liveweather.threading.Normal;
 
 import java.io.File;
@@ -26,7 +27,7 @@ public class PlayerConfigs2 {
         try {
             return new File(pluginfolderpath + "/" + playername).list()[0];
         }catch (NullPointerException exc) {
-            new LWLogging().critical("Cant get weather for player");
+            new LWLogging().critical(new Language().get("liveweather.playerconfig.weather.cantget"));
         }
         return "NULL";
     }
@@ -36,7 +37,7 @@ public class PlayerConfigs2 {
     Runnable deleteplayer(String playername) {
         new File(pluginfolderpath + "/" + playername).delete();
         if(new File(pluginfolderpath + "/" + playername).exists()) {
-            new LWLogging().critical("Cant delete player");
+            new LWLogging().critical(new Language().get("liveweather.playerconfig.weather.cantdelete"));
         }
         return null;
     }
@@ -55,7 +56,7 @@ public class PlayerConfigs2 {
         try {
             new File(pluginfolderpath + "/" + playername + "/" + cityname).createNewFile();
         } catch (IOException e) {
-            new LWLogging().critical("cant create player");
+            new LWLogging().critical(new Language().get("liveweather.playerconfig.weather.cantcreate"));
         }
         return null;
     }
