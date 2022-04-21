@@ -6,9 +6,11 @@ import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginClassLoader;
 import cn.nukkit.plugin.PluginLoader;
 import com.liveweather.Initiator;
+import com.sun.xml.internal.bind.api.impl.NameConverter;
 import org.apache.logging.log4j.core.config.plugins.util.PluginUtil;
 
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
