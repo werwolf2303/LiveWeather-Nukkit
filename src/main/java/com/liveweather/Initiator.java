@@ -22,13 +22,14 @@ import com.liveweather.language.Language;
 import com.liveweather.location.Tracker;
 import com.liveweather.setter.Wetter;
 import com.liveweather.setter.WetterService;
-import com.liveweather.storage.Configuring;
-import com.liveweather.storage.Options;
-import com.liveweather.storage.PlayerConfigs2;
-import com.liveweather.storage.Zippie;
+import com.liveweather.storage.*;
 import com.liveweather.test.TestCommand;
+import com.liveweather.time.DateDetect;
+import com.liveweather.updater.Update;
 import sun.java2d.loops.GeneralRenderer;
 import com.liveweather.*;
+
+import java.io.DataInput;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -39,6 +40,7 @@ import static com.liveweather.commandline.LWLogging.unregisterPlugin;
 public class Initiator extends PluginBase {
     public static Plugin plugin;
     int t = 0;
+    boolean first = true;
     @Override
     public void onLoad() {
             if (!new PlayerConfigs2().pluginfolder.exists()) {
@@ -85,6 +87,32 @@ public class Initiator extends PluginBase {
                                 if (new PlayerConfigs2().hasEntered(s.getName())) {
                                     new Wetter().setWeather(new GetWeather().getWeather(new PlayerConfigs2().getCity(s.getName())), s);
                                 }
+                            }
+                        }
+                        t = 0;
+                    } else {
+                        t = t + 1;
+                    }
+                }
+            }, 1);
+            getServer().getScheduler().scheduleRepeatingTask(new Runnable() {
+                @Override
+                public void run() {
+                    if (t == 120) {
+                        if(new UpdateConfig().read().equals("")) {
+                            new UpdateConfig().write(new DateDetect().date());
+                        }
+                        if(first) {
+                            if (new Update().isNewerAvailable()) {
+                                new LWLogging().normal("Newer version is available");
+                            }
+                            first = false;
+                        }else {
+                            if (!new UpdateConfig().read().equals(new DateDetect().date())) {
+                                if (new Update().isNewerAvailable()) {
+                                    new LWLogging().normal("Newer version is available");
+                                }
+                                new UpdateConfig().write(new DateDetect().date());
                             }
                         }
                         t = 0;
