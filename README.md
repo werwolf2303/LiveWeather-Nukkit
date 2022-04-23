@@ -1,4 +1,6 @@
-#LiveWeather-Nukkit
+<h2>LiveWeather-Nukkit</h2>
+
+<br>
 
 Get Live Weather on your server
 
