@@ -38,6 +38,7 @@ import java.nio.file.StandardCopyOption;
 import static com.liveweather.commandline.LWLogging.unregisterPlugin;
 
 public class Initiator extends PluginBase {
+    public static boolean doUpdate = false;
     public static Plugin plugin;
     int t = 0;
     boolean first = true;
@@ -66,8 +67,11 @@ public class Initiator extends PluginBase {
                 new Options().writeConfig("autofindplayercity", "false");
                 new Options().writeConfig("language", "en");
             }
+            if(new Options().getConfig("permissions").equals("")) {
+                new Options().writeConfig("permissions", "false");
+            }
             new GetWeather().getWeather("Weinheim");
-            //Server.getInstance().getCommandMap().register("help", new TestCommand("testweather", "Test the liveweather plugin"));
+            Server.getInstance().getCommandMap().register("help", new TestCommand("testweather", "Test the liveweather plugin"));
             if(new Options().getConfig("autofindplayercity").toLowerCase().equals("false")) {
                 Server.getInstance().getCommandMap().register("help", new CityDelete("deletecity", new Language().get("liveweather.commands.citydelete.description")));
                 Server.getInstance().getCommandMap().register("help", new CityChange("changecity", new Language().get("liveweather.commands.citychange.description")));
@@ -79,13 +83,15 @@ public class Initiator extends PluginBase {
                 public void run() {
                     if (t == 120) {
                         for (Player s : Server.getInstance().getOnlinePlayers().values()) {
-                            if(new Options().getConfig("autofindplayercity").toLowerCase().equals("true")) {
-                                if(!new Local().isLocal(s)) {
-                                    new Wetter().setWeather(new GetWeather().getWeather(new Tracker().getCity(s.getAddress())), s);
-                                }
-                            }else {
-                                if (new PlayerConfigs2().hasEntered(s.getName())) {
-                                    new Wetter().setWeather(new GetWeather().getWeather(new PlayerConfigs2().getCity(s.getName())), s);
+                            if(s.hasPermission("liveweather.commands")) {
+                                if (new Options().getConfig("autofindplayercity").toLowerCase().equals("true")) {
+                                    if (!new Local().isLocal(s)) {
+                                        new Wetter().setWeather(new GetWeather().getWeather(new Tracker().getCity(s.getAddress())), s);
+                                    }
+                                } else {
+                                    if (new PlayerConfigs2().hasEntered(s.getName())) {
+                                        new Wetter().setWeather(new GetWeather().getWeather(new PlayerConfigs2().getCity(s.getName())), s);
+                                    }
                                 }
                             }
                         }
@@ -127,6 +133,17 @@ public class Initiator extends PluginBase {
                 new Configuring().writeConfig("RunUnsupported", "false");
                 new LWLogging().critical(new Language().get("liveweather.init.notenoughpower"));
             }
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        if(doUpdate) {
+            File old = new File(new Update().pluginfolder + "/LiveWeather-Nukkit_Update.jar");
+            File neww = new File(new Update().pluginfolder + "/LiveWeather-Nukkit.jar");
+            new File(new Update().pluginfolder + "/LiveWeather-Nukkit.jar").delete();
+            old.renameTo(neww);
+            Server.getInstance().reload();
         }
     }
 

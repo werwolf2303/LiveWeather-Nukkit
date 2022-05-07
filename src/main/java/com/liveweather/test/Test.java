@@ -1,5 +1,6 @@
 package com.liveweather.test;
 
+import cn.nukkit.Server;
 import com.liveweather.api.GetWeather;
 import com.liveweather.check.APIKey;
 import com.liveweather.commandline.LWLogging;
@@ -14,6 +15,5 @@ import java.util.Scanner;
 
 public class Test {
     public static void main(String[] args) {
-        System.out.println(new Update());
     }
 }

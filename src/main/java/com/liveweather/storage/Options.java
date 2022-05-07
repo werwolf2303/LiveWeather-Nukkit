@@ -74,6 +74,6 @@ public class Options {
         } catch (FileNotFoundException e) {
             new LWLogging().critical(new Language().get("liveweather.options.cantread"));
         }
-        return null;
+        return "";
     }
 }
