@@ -1,19 +1,19 @@
 package com.liveweather.test;
 
-import cn.nukkit.Server;
-import com.liveweather.api.GetWeather;
-import com.liveweather.check.APIKey;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.language.Language;
-import com.liveweather.location.Tracker;
-import com.liveweather.report.Report;
-import com.liveweather.updater.Update;
+import com.liveweather.translate.Languages;
+import com.liveweather.translate.Translate;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Test {
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws InterruptedException {
+
     }
 }

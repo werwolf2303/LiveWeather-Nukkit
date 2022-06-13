@@ -8,6 +8,7 @@ import com.liveweather.commandline.LWLogging;
 import com.liveweather.language.Language;
 import com.liveweather.storage.Options;
 import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -29,6 +30,40 @@ public class GetWeather {
         }else{
             return true;
         }
+    }
+    public String dumpResults(String city) {
+        try {
+            String lon = getLon(city);
+            String lat = getLat(city);
+            if (!new Options().getConfig("apikey").equals("YOUR_API_KEY")) {
+                if (new APIKey().isValid(new Options().getConfig("apikey"))) {
+                    apikey = new Options().getConfig("apikey");
+                } else {
+                    new LWLogging().critical(new Language().get("liveweather.api.apikeynotvalid"));
+                    new File(new Options().config).delete();
+                    new Options().createConfig();
+                    new Options().writeConfig("apikey", "YOUR_API_KEY");
+                }
+            }
+            String result;
+            String url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apikey;
+            try {
+                HttpGet request = new HttpGet(url);
+                CloseableHttpClient client = HttpClients.createDefault();
+                CloseableHttpResponse response = client.execute(request);
+                HttpEntity entity = response.getEntity();
+                result = EntityUtils.toString(entity);
+                return result;
+            } catch (ArrayIndexOutOfBoundsException aioobe) {
+                return "InvalidCity";
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
     public String getWeather(String city) {
         try {

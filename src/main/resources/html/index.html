@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LiveWeather - ConfigServer</title>
+</head>
+<body>
+        <input id="pass" type="password">
+        <button onclick="validate(document.getElementById('pass').value)">Login</button>
+    <script>
+        function validate(key) {
+            window.location.href="login.html?key=" + key;
+        }
+    </script>
+</body>
+</html>

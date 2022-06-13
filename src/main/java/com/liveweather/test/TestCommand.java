@@ -16,6 +16,8 @@ import cn.nukkit.potion.Effect;
 import cn.nukkit.potion.Potion;
 import com.liveweather.api.SetWeather;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.language.Language;
+import com.liveweather.language.LanguageV2;
 import com.liveweather.storage.PlayerConfigs;
 import com.liveweather.storage.PlayerConfigs2;
 import jdk.nashorn.internal.ir.Block;
@@ -37,11 +39,7 @@ public class TestCommand extends Command {
     public boolean execute(CommandSender commandSender, String s, String[] args) {
         if(commandSender instanceof Player) {
             Player p = (Player) commandSender;
-            if(args.length>0) {
-                p.setViewDistance(Integer.parseInt(args[0]));
-            }else{
-                p.sendMessage("Not enough arguments");
-            }
+            new SetWeather().setRaining(p);
         }
         return false;
     }

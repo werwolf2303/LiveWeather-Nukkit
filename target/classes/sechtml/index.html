@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>LiveWeather - AdminPanel</title>
+        <style>
+            .container {
+              height: 200px;
+              position: relative;
+            }
+            
+            .center {
+                margin: 0;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+            .red {
+                color:red;
+            }
+            .yellow {
+                color:yellow;
+            }
+            </style>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+    </head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <body>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div id="demonslayer" class="container">
+            <div class="center">
+                <div class="card">
+                    <div class="card-header">
+                        LiveWeather Configuration
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Password</li>
+                            <li class="list-group-item"><input type="password"><a href="#" class="btn btn-primary">Change</a></li>
+                            <li class="list-group-item">Auto find player city  <input id="autofindplayercityget" type="checkbox" name="autofindplayercityset"></li>
+                            <li class="list-group-item">Permissions  <input id="permissionsget" type="checkbox" name="permissionsset"></li>
+                            <li class="list-group-item">Config server  <input id="configserverget" name="configserverset" type="checkbox"></li>
+                        </ul>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                  <br>
+                  <details>
+                    <summary>Experimental Features</summary>
+                    <div class="card">
+                        <div class="card-header">
+                            Use at your own Risk!!
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Cloudly <input id="cloudlyget" name="cloudlyset" type="checkbox"></li>
+                            </ul>
+                        </div>
+                      </div>
+                </details>
+            </div>
+          </div>
+          <script>
+              function getValue(id) {
+                var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", "/config?" + id, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+              }
+              var checkboxes = document.querySelectorAll("input[type=checkbox]");
+
+/*
+For IE11 support, replace arrow functions with normal functions and
+use a polyfill for Array.forEach:
+https://vanillajstoolkit.com/polyfills/arrayforeach/
+*/
+
+// Use Array.forEach to add an event listener to each checkbox.
+checkboxes.forEach(function(checkbox) {
+  checkbox.addEventListener('change', function() {
+    var checked = checkbox.checked;
+    var name = checkbox.checked;
+    if(checked==0) {
+        checked = false;
+    }else{
+        checked = true;
+    }
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", "/config?" + name + "=" + checked, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+ }) 
+});
+          </script>
+    </body>
+</html>

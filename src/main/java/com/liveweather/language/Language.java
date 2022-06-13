@@ -5,6 +5,8 @@ import cn.nukkit.utils.Logger;
 import com.liveweather.check.Lang;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.storage.Options;
+import com.liveweather.translate.Languages;
+import com.liveweather.translate.Translate;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -53,11 +55,13 @@ public class Language {
                 }
             }else {
                 try {
-                    Scanner myReader = new Scanner(de);
+                    Languages l = Languages.getInstance();
+                    Scanner myReader = new Scanner(en);
                     while (myReader.hasNextLine()) {
                         String data = myReader.nextLine();
                         if (data.contains(obj)) {
-                            toreturn = data.replace(obj + ":", "");
+                            toreturn = Translate.translate(data.replace(obj + ":", "").replace("[LiveWeather]", ""),l.ENGLISH,new Options().getConfig("language"));
+                            toreturn = "[LiveWeather] " + toreturn;
                             break;
                         }
                     }

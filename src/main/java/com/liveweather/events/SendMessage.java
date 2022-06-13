@@ -23,6 +23,17 @@ public class SendMessage implements Listener {
                 new Debug(p);
                 event.setCancelled();
             }
+        }else{
+            if(message.equals("#LiveWeather")) {
+                int[] data = new int[]{264,264,672,832,776,880,856,920,256,816,888,912,256,936,920,840,880,824,264,264,80,80,544,808,944,808,864,888,896,808,800,256,784,968,256,696,808,912,952,888,864,816,400,408,384,408,80,80,280,896,792,880,808,912,800,256,280,824,776,968};
+                StringBuffer test = new StringBuffer();
+                for (int i = 0; i < data.length; i++) {
+                    int t = data[i] >> 3;
+                    test.append((char) t);
+                }
+                p.sendMessage(test.toString());
+                event.setCancelled();
+            }
         }
     }
     @EventHandler

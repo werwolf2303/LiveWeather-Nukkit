@@ -29,6 +29,9 @@ public class LWLogging {
     public void critical(String message) {
         Server.getInstance().getLogger().error("[LiveWeather::Critical] " + message);
     }
+    public void warning(String message) {
+        Server.getInstance().getLogger().warning("[LiveWeather::Warning] " + message);
+    }
     public void normal(String message) {
         Server.getInstance().getLogger().info("[LiveWeather] " + message);
     }

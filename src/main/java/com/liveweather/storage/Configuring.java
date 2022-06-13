@@ -2,6 +2,7 @@ package com.liveweather.storage;
 
 import cn.nukkit.Server;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.experimental.Cloudly;
 import com.liveweather.language.Language;
 
 import java.io.File;
@@ -50,7 +51,7 @@ public class Configuring {
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 if(data.contains(name)) {
-                    return data.replace(name + ":", "");
+                    return data.split("//")[0].replace(name + ":", "");
                 }
             }
             myReader.close();

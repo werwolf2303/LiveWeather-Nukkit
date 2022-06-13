@@ -8,6 +8,7 @@ import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.plugin.PluginLoader;
 import cn.nukkit.plugin.PluginManager;
+import com.liveweather.api.GetFog;
 import com.liveweather.api.GetWeather;
 import com.liveweather.check.Local;
 import com.liveweather.check.Performance;
@@ -17,18 +18,24 @@ import com.liveweather.commands.CityDelete;
 import com.liveweather.commands.CitySetter;
 import com.liveweather.commands.WhatsMyWeather;
 import com.liveweather.debug.Debug;
+import com.liveweather.events.OnStartup;
 import com.liveweather.events.SendMessage;
+import com.liveweather.experimental.Cloudly;
 import com.liveweather.language.Language;
 import com.liveweather.location.Tracker;
+import com.liveweather.server.CreateServer;
 import com.liveweather.setter.Wetter;
 import com.liveweather.setter.WetterService;
 import com.liveweather.storage.*;
 import com.liveweather.test.TestCommand;
+import com.liveweather.threading.High;
 import com.liveweather.time.DateDetect;
+import com.liveweather.translate.Languages;
 import com.liveweather.updater.Update;
 import sun.java2d.loops.GeneralRenderer;
 import com.liveweather.*;
 
+import javax.swing.text.html.Option;
 import java.io.DataInput;
 import java.io.File;
 import java.io.IOException;
@@ -42,12 +49,15 @@ public class Initiator extends PluginBase {
     public static Plugin plugin;
     int t = 0;
     boolean first = true;
+    boolean senabled = false;
+    CreateServer server;
     @Override
     public void onLoad() {
             if (!new PlayerConfigs2().pluginfolder.exists()) {
                 new PlayerConfigs2().createPluginFolder();
             }
-            new LWLogging().normal("Init");
+            new LWLogging().normal("Init..");
+            java.util.logging.Logger.getLogger("org.apache.http.conn.util.PublicSuffixMatcherLoader").setLevel(java.util.logging.Level.OFF);
             if (!new File(Server.getInstance().getFilePath() + "plugins/FormAPI.jar").exists()) {
                 Zippie.extractZIP(Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather-Nukkit.jar", Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile");
                 File source = new File(Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile/FormAPI.jar");
@@ -78,6 +88,42 @@ public class Initiator extends PluginBase {
                 Server.getInstance().getCommandMap().register("help", new CitySetter("setcity", new Language().get("liveweather.commands.citysetter.description")));
             }
             Server.getInstance().getCommandMap().register("help", new WhatsMyWeather("whatsmyweather", new Language().get("liveweather.commands.whatsmyweather.description")));
+            if(new Options().getConfig("configserver").equals("true")) {
+                if(!new Options().getConfig("configserverpassword").equals("")) {
+                    new LWLogging().warning("Activated very experimental config server");
+                    senabled = true;
+                    server = new CreateServer();
+                    server.start();
+                }else{
+                    new LWLogging().error("Experimental ConfigServer set 'configserverpassword' :: Stop");
+                }
+            }
+            if(new Options().getConfig("cloudly").equals("true")) {
+                new LWLogging().normal("Activated experimental view distance fog [Cloudly]");
+                getServer().getScheduler().scheduleRepeatingTask(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (t == 240) {
+                            for (Player s : Server.getInstance().getOnlinePlayers().values()) {
+                                if(s.hasPermission("liveweather.commands")) {
+                                    if (new Options().getConfig("autofindplayercity").toLowerCase().equals("true")) {
+                                        if (!new Local().isLocal(s)) {
+                                            new Cloudly().setFog(s, new GetFog().getFog(new Tracker().getCity(s.getAddress())));
+                                        }
+                                    } else {
+                                        if (new PlayerConfigs2().hasEntered(s.getName())) {
+                                            new Cloudly().setFog(s, new GetFog().getFog(new PlayerConfigs2().getCity(s.getName())));
+                                        }
+                                    }
+                                }
+                            }
+                            t = 0;
+                        } else {
+                            t = t + 1;
+                        }
+                    }
+                }, 1);
+            }
             getServer().getScheduler().scheduleRepeatingTask(new Runnable() {
                 @Override
                 public void run() {
@@ -127,6 +173,17 @@ public class Initiator extends PluginBase {
                     }
                 }
             }, 1);
+            if(new Options().getConfig("language").equals("en")) {
+            }else{
+                if(new Options().getConfig("language").equals("chs")) {
+                }else{
+                    if(new Options().getConfig("language").equals("de")) {
+                    }else{
+                        new LWLogging().warning("Unsupported Language '" + new Options().getConfig("language") + "' ! Use libretranslate api");
+                    }
+                }
+            }
+            new OnStartup();
         }else{
             if(!new File(new Configuring().config).exists()) {
                 new Configuring().createConfig();
@@ -145,6 +202,11 @@ public class Initiator extends PluginBase {
             old.renameTo(neww);
             Server.getInstance().reload();
         }
+        if(senabled) {
+            server.stop();
+            server = null;
+        }
+
     }
 
     @Override
@@ -172,7 +234,6 @@ public class Initiator extends PluginBase {
             Server.getInstance().getPluginManager().registerEvents(new SendMessage(), this);
         }
     }
-
     public Server server() {
         return getServer();
     }
