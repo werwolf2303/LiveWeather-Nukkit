@@ -6,8 +6,12 @@ import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginClassLoader;
 import cn.nukkit.plugin.PluginLoader;
 import com.liveweather.Initiator;
+import com.liveweather.audio.JAudio;
+import com.liveweather.check.CheckIntelliJ;
+import com.liveweather.storage.Options;
 import com.sun.xml.internal.bind.api.impl.NameConverter;
 import org.apache.logging.log4j.core.config.plugins.util.PluginUtil;
+import org.apache.xpath.operations.Bool;
 
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
@@ -16,6 +20,14 @@ import java.util.HashMap;
 import java.util.List;
 
 public class LWLogging {
+    boolean debug = new CheckIntelliJ().check();
+    String location2 = "src/main/resources/sounds/";
+    String location = "";
+    public LWLogging() {
+        if(!debug) {
+            location = Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile/sounds/";
+        }
+    }
     @SuppressWarnings("unused")
     private static Object getPrivateField(Object object, String field)throws SecurityException,
             NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
@@ -27,19 +39,39 @@ public class LWLogging {
         return result;
     }
     public void critical(String message) {
-        Server.getInstance().getLogger().error("[LiveWeather::Critical] " + message);
+        if(!debug) {
+            Server.getInstance().getLogger().error("[LiveWeather::Critical] " + message);
+        }else{
+            System.err.println("[LiveWeather::Crtitical] " + message);
+        }
     }
     public void warning(String message) {
-        Server.getInstance().getLogger().warning("[LiveWeather::Warning] " + message);
+        if(!debug) {
+            Server.getInstance().getLogger().warning("[LiveWeather::Warning] " + message);
+        }else{
+            System.out.println("[LiveWeather::Warning] " + message);
+        }
     }
     public void normal(String message) {
-        Server.getInstance().getLogger().info("[LiveWeather] " + message);
+        if(!debug) {
+            Server.getInstance().getLogger().info("[LiveWeather] " + message);
+        }else{
+            System.out.println("[LiveWeather] " + message);
+        }
     }
     public void error(String message) {
-        Server.getInstance().getLogger().error("[LiveWeather::Error] " + message);
+        if(!debug) {
+            Server.getInstance().getLogger().error("[LiveWeather::Error] " + message);
+        }else{
+            System.err.println("[LiveWeather::Error] " + message);
+        }
     }
     public void debugging(String message) {
-        Server.getInstance().getLogger().debug("[LiveWeather::Debugging] " + message);
+        if(!debug) {
+            Server.getInstance().getLogger().debug("[LiveWeather::Debugging] " + message);
+        }else{
+            System.out.println("[LiveWeather::Debugging] " + message);
+        }
     }
     public static void unregisterPlugin(Plugin plugin) {
         try {

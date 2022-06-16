@@ -14,6 +14,6 @@ import java.util.Scanner;
 public class Test {
 
     public static void main(String[] args) throws InterruptedException {
-
+        new LWLogging().critical("Test");
     }
 }

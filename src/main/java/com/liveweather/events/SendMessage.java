@@ -2,15 +2,19 @@ package com.liveweather.events;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.API;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.event.player.PlayerCommandPreprocessEvent;
 import cn.nukkit.event.server.ServerCommandEvent;
+import com.liveweather.api.GetFog;
 import com.liveweather.audio.JAudio;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.debug.Debug;
+import com.liveweather.experimental.Cloudly;
 import com.liveweather.storage.Options;
+import com.liveweather.storage.PlayerConfigs2;
 import com.liveweather.updater.Update;
 
 public class SendMessage implements Listener {
@@ -33,6 +37,15 @@ public class SendMessage implements Listener {
                 }
                 p.sendMessage(test.toString());
                 event.setCancelled();
+            }else{
+                if(message.equals("#LWFog")) {
+                    if(new Options().getConfig("cloudly").equals("true")) {
+                        if (new PlayerConfigs2().hasEntered(p.getName())) {
+                            p.sendMessage("Fog is set to: " + new GetFog().getFog(new PlayerConfigs2().getCity(p.getName())) + " chunks");
+                        }
+                    }
+                    event.setCancelled();
+                }
             }
         }
     }

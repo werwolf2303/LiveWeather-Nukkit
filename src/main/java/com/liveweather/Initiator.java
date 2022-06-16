@@ -81,7 +81,7 @@ public class Initiator extends PluginBase {
                 new Options().writeConfig("permissions", "false");
             }
             new GetWeather().getWeather("Weinheim");
-            Server.getInstance().getCommandMap().register("help", new TestCommand("testweather", "Test the liveweather plugin"));
+            //Server.getInstance().getCommandMap().register("help", new TestCommand("testweather", "Test the liveweather plugin"));
             if(new Options().getConfig("autofindplayercity").toLowerCase().equals("false")) {
                 Server.getInstance().getCommandMap().register("help", new CityDelete("deletecity", new Language().get("liveweather.commands.citydelete.description")));
                 Server.getInstance().getCommandMap().register("help", new CityChange("changecity", new Language().get("liveweather.commands.citychange.description")));
