@@ -54,20 +54,36 @@ public class Language {
                     e.printStackTrace();
                 }
             }else {
-                try {
-                    Languages l = Languages.getInstance();
-                    Scanner myReader = new Scanner(en);
-                    while (myReader.hasNextLine()) {
-                        String data = myReader.nextLine();
-                        if (data.contains(obj)) {
-                            toreturn = Translate.translate(data.replace(obj + ":", "").replace("[LiveWeather]", ""),l.ENGLISH,new Options().getConfig("language"));
-                            toreturn = "[LiveWeather] " + toreturn;
-                            break;
+                if(new Options().getConfig("language").toLowerCase().equals("de")) {
+                    try {
+                        Scanner myReader = new Scanner(de);
+                        while (myReader.hasNextLine()) {
+                            String data = myReader.nextLine();
+                            if (data.contains(obj)) {
+                                toreturn = data.replace(obj + ":", "");
+                                break;
+                            }
                         }
+                        myReader.close();
+                    } catch (FileNotFoundException e) {
+                        return obj;
                     }
-                    myReader.close();
-                } catch (FileNotFoundException e) {
-                    return obj;
+                }else {
+                    try {
+                        Languages l = Languages.getInstance();
+                        Scanner myReader = new Scanner(en);
+                        while (myReader.hasNextLine()) {
+                            String data = myReader.nextLine();
+                            if (data.contains(obj)) {
+                                toreturn = Translate.translate(data.replace(obj + ":", "").replace("[LiveWeather]", ""), l.ENGLISH, new Options().getConfig("language"));
+                                toreturn = "[LiveWeather] " + toreturn;
+                                break;
+                            }
+                        }
+                        myReader.close();
+                    } catch (FileNotFoundException e) {
+                        return obj;
+                    }
                 }
             }
         }

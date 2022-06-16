@@ -12,12 +12,6 @@ public class Debug {
         String language = new Options().getConfig("language");
         boolean rununsupported = new File(new Configuring().config).exists();
         String iplocation = new Options().getConfig("autofindplayercity");
-
-        if(language.toLowerCase().contains("en")) {
-            language = "Deutsch";
-        }else{
-            language = "English";
-        }
         if(apikey.equals("YOUR_API_KEY")) {
             apikey = "Plugin Default";
         }
