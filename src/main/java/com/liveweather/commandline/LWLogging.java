@@ -45,6 +45,11 @@ public class LWLogging {
             System.err.println("[LiveWeather::Crtitical] " + message);
         }
     }
+    public void extension(String message) {
+        if(!debug) {
+            Server.getInstance().getLogger().info("[LiveWeather <Extension>] " + message);
+        }
+    }
     public void warning(String message) {
         if(!debug) {
             Server.getInstance().getLogger().warning("[LiveWeather::Warning] " + message);

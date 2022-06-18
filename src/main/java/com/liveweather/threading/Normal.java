@@ -6,12 +6,15 @@ import com.liveweather.language.Language;
 public class Normal {
     Thread t = new Thread();
     int prio = 8;
-    public boolean running = false;
+    boolean running = false;
+    boolean actual = false;
     public Normal(Runnable run) {
         t = new Thread(run);
     }
     public void setPriority(int priority) {
-        prio = priority;
+        if(!actual) {
+            prio = priority;
+        }
     }
     public int getPriority() {
         return prio;
@@ -21,12 +24,16 @@ public class Normal {
         t.start();
         if(t.isAlive()) {
             running = true;
+            actual = true;
         }else{
             new LWLogging().critical(new Language().get("liveweather.threading.critical"));
         }
     }
+    public boolean isRunning() {
+        return running;
+    }
     public void stop() {
-        if(running) {
+        if(actual) {
             t.stop();
         }
     }

@@ -16,12 +16,15 @@ import cn.nukkit.potion.Effect;
 import cn.nukkit.potion.Potion;
 import com.liveweather.api.SetWeather;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.extensions.ExtensionLoader;
 import com.liveweather.language.Language;
 import com.liveweather.language.LanguageV2;
 import com.liveweather.storage.PlayerConfigs;
 import com.liveweather.storage.PlayerConfigs2;
 import jdk.nashorn.internal.ir.Block;
 import ru.nukkitx.forms.elements.CustomForm;
+
+import java.io.File;
 import java.util.Collection;
 import java.util.concurrent.ThreadLocalRandom;
 

@@ -35,7 +35,7 @@ public class CreateServer {
         normal.start();
     }
     public void stop() {
-        if(normal.running) {
+        if(normal.isRunning()) {
             server.stop(0);
             normal.stop();
         }

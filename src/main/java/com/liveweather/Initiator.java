@@ -21,6 +21,7 @@ import com.liveweather.debug.Debug;
 import com.liveweather.events.OnStartup;
 import com.liveweather.events.SendMessage;
 import com.liveweather.experimental.Cloudly;
+import com.liveweather.extensions.ExtensionLoader;
 import com.liveweather.language.Language;
 import com.liveweather.location.Tracker;
 import com.liveweather.server.CreateServer;
@@ -41,6 +42,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.security.cert.Extension;
 
 import static com.liveweather.commandline.LWLogging.unregisterPlugin;
 
@@ -71,6 +73,9 @@ public class Initiator extends PluginBase {
                 Server.getInstance().getPluginManager().loadPlugin(new File(Server.getInstance().getFilePath() + "/plugins/FormAPI.jar"));
             }
         if(new Performance().enoughPower()) {
+            if(!new File(Server.getInstance().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "extensions").exists()) {
+                new File(Server.getInstance().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "extensions").mkdir();
+            }
             if(!new File(new Options().config).exists()) {
                 new Options().createConfig();
                 new Options().writeConfig("apikey", "YOUR_API_KEY");
@@ -184,6 +189,10 @@ public class Initiator extends PluginBase {
                 }
             }
             new OnStartup();
+            File extensions = new File(Server.getInstance().getPluginPath() + "/LiveWeather/extensions");
+            for(File f : extensions.listFiles()) {
+                new ExtensionLoader().load(f, false);
+            }
         }else{
             if(!new File(new Configuring().config).exists()) {
                 new Configuring().createConfig();
@@ -195,6 +204,10 @@ public class Initiator extends PluginBase {
 
     @Override
     public void onDisable() {
+        File extensions = new File(Server.getInstance().getPluginPath() + "/LiveWeather/extensions");
+        for(File f : extensions.listFiles()) {
+            new ExtensionLoader().load(f, true);
+        }
         if(doUpdate) {
             File old = new File(new Update().pluginfolder + "/LiveWeather-Nukkit_Update.jar");
             File neww = new File(new Update().pluginfolder + "/LiveWeather-Nukkit.jar");
