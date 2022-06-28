@@ -20,7 +20,7 @@ public class Handler {
                     ips = ips.replace(exchange.getRemoteAddress().getAddress().toString(), "");
                     try {
                         String response = "<script>window.location.href='index.html';</script>";
-                        exchange.sendResponseHeaders(404, response.getBytes().length);//response code and length
+                        exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();
@@ -81,7 +81,7 @@ public class Handler {
                             "</script>";
                 }
                 try {
-                    exchange.sendResponseHeaders(404, response.getBytes().length);//response code and length
+                    exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                     OutputStream os = exchange.getResponseBody();
                     os.write(response.getBytes());
                     os.close();

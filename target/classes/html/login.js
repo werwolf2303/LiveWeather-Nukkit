@@ -33,7 +33,7 @@ this.mainform.addEventListener('mouseup',onClickMainformUp, false);
 setCentered(this.mainform);
 window.onresize = setCentered(this.mainform);
 var oReq = new XMLHttpRequest();
-oReq.open("GET", "/config");
+oReq.open("GET", "config");
 oReq.send();
 oReq.onload = function () {
     if(oReq.status==404) {
