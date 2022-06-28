@@ -1,7 +1,5 @@
 package com.liveweather.bukkit;
 
-import com.liveweather.translate.Languages;
-
 public class ChatColor {
     /**
      * Represents black
