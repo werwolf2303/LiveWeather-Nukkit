@@ -34,6 +34,7 @@ public class GetWeather {
                     new LWLogging().critical(new Language().get("liveweather.api.apikeynotvalid"));
                     new YAMLConfig().delete("apikey");
                     new YAMLConfig().write("apikey", "YOUR_API_KEY");
+                    return "InvalidAPIKey";
                 }
             }
             String result;
@@ -48,11 +49,11 @@ public class GetWeather {
             } catch (ArrayIndexOutOfBoundsException aioobe) {
                 return "InvalidCity";
             } catch (IOException e) {
-                e.printStackTrace();
+
             }
             return "";
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return "";
     }
@@ -67,6 +68,7 @@ public class GetWeather {
                     new LWLogging().critical(new Language().get("liveweather.api.apikeynotvalid"));
                     new YAMLConfig().delete("apikey");
                     new YAMLConfig().write("apikey", "YOUR_API_KEY");
+                    return "InvalidAPIKey";
                 }
             }
             String url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apikey;

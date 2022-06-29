@@ -6,7 +6,6 @@ import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginClassLoader;
 import cn.nukkit.plugin.PluginLoader;
 import com.liveweather.Initiator;
-import com.liveweather.bukkit.ChatColor;
 import com.liveweather.check.CheckIntelliJ;
 
 import java.lang.reflect.Field;

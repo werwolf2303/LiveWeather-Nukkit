@@ -7,8 +7,8 @@ import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.event.player.PlayerCommandPreprocessEvent;
 import com.liveweather.api.GetFog;
 import com.liveweather.debug.Debug;
-import com.liveweather.storage.PlayerConfigs3;
 import com.liveweather.storage.YAMLConfig;
+import com.liveweather.storage.PlayerConfig;
 
 public class SendMessage implements Listener {
     @EventHandler
@@ -33,8 +33,8 @@ public class SendMessage implements Listener {
             }else{
                 if(message.equals("#LWFog")) {
                     if(new YAMLConfig().read("cloudly").equals("true")) {
-                        if (new PlayerConfigs3().hasEntered(p.getName())) {
-                            p.sendMessage("Fog is set to: " + new GetFog().getFog(new PlayerConfigs3().getCity(p.getName())) + " chunks");
+                        if (new PlayerConfig().hasEntered(p.getName())) {
+                            p.sendMessage("Fog is set to: " + new GetFog().getFog(new PlayerConfig().getCity(p.getName())) + " chunks");
                         }
                     }
                     event.setCancelled();

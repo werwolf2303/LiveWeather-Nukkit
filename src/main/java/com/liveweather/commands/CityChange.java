@@ -4,7 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import com.liveweather.language.Language;
-import com.liveweather.storage.PlayerConfigs3;
+import com.liveweather.storage.PlayerConfig;
 import ru.nukkitx.forms.elements.CustomForm;
 
 public class CityChange extends Command {
@@ -16,14 +16,14 @@ public class CityChange extends Command {
     public boolean execute(CommandSender commandSender, String s, String[] strings) {
         if(commandSender instanceof Player) {
             Player p = (Player) commandSender;
-            if(new PlayerConfigs3().hasEntered(p.getName())) {
+            if(new PlayerConfig().hasEntered(p.getName())) {
                 CustomForm form = new CustomForm()
                         .addInput(new Language().get("liveweather.forms.button"));
                 form.setTitle(new Language().get("liveweather.forms.title"));
                 form.send(p, (targetPlayer, targetForm, data) -> {
                     if(data == null) return; //Если форма закрыта принудительно, то data будет иметь значение null
                     //new PlayerConfigs().writeConfig(event.getPlayer().getName(), targetForm.getElements().toString());
-                    new PlayerConfigs3().changePlayer(p.getName(), data.toString().replace("[", "").replace("]", ""));
+                    new PlayerConfig().changePlayer(p.getName(), data.toString().replace("[", "").replace("]", ""));
                     //Server.getInstance().getLogger().info(targetForm.getElements().toString());
                     targetPlayer.sendMessage(new Language().get("liveweather.commands.citychange.successfull") + data.toString().replace("[", "").replace("]", ""));
                 });
