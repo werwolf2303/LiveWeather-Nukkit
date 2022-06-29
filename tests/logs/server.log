@@ -44,3 +44,9 @@
 2022-06-29 11:43:15.761 [main] INFO  - [LiveWeather] Set gamerule DO_WEATHER_CYCLE to false in the World:nether
 2022-06-29 11:43:15.768 [main] INFO  - [CONSOLE: §eReload complete.§f]
 2022-06-29 11:43:18.901 [Thread-14] ERROR - [LiveWeather::Error] Cant delete plugin jarfolder : 'jarfile'
+2022-06-29 12:46:03.007 [main] INFO  - [CONSOLE: Stopping the server]
+2022-06-29 12:46:03.052 [main] INFO  - Disabling LiveWeather v1.7
+2022-06-29 12:46:03.060 [main] INFO  - Disabling FormAPI v2.1-SNAPSHOT
+2022-06-29 12:46:03.061 [main] INFO  - Unloading level "§aworld§f"
+2022-06-29 12:46:03.088 [main] INFO  - Unloading level "§anether§f"
+2022-06-29 12:46:03.143 [main] INFO  - Stopping other threads
