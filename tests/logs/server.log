@@ -1,0 +1,46 @@
+2022-06-29 11:41:19.918 [main] INFO  - Loading §anukkit.yml§f ...
+2022-06-29 11:41:19.967 [main] INFO  - Loading §aserver.properties§f ...
+2022-06-29 11:41:19.967 [main] INFO  - Selected English (eng) as the base language
+2022-06-29 11:41:19.967 [main] INFO  - Starting Minecraft: BE server version §bv1.19.0§r
+2022-06-29 11:41:19.967 [main] INFO  - Selected Zlib Provider: 2 (cn.nukkit.utils.ZlibThreadLocal)
+2022-06-29 11:41:20.000 [main] INFO  - Opening server on 0.0.0.0:19132
+2022-06-29 11:41:20.016 [main] INFO  - This server is running Nukkit version §egit-e8694c2§f "§b§f" (API 1.0.14)
+2022-06-29 11:41:20.016 [main] INFO  - Nukkit is distributed under the GPL License
+2022-06-29 11:41:20.184 [main] INFO  - Loading runtime items...
+2022-06-29 11:41:20.384 [main] INFO  - Loading recipes...
+2022-06-29 11:41:20.531 [main] INFO  - Loaded 1509 recipes.
+2022-06-29 11:41:20.531 [main] INFO  - Successfully loaded 0 resource packs
+2022-06-29 11:41:21.071 [main] INFO  - Loading LiveWeather v1.7
+2022-06-29 11:41:21.071 [main] INFO  - [LiveWeather] Init..
+2022-06-29 11:42:28.244 [main] INFO  - Loading FormAPI v2.1-SNAPSHOT
+2022-06-29 11:42:31.329 [main] ERROR - [LiveWeather::Critical] [LiveWeather] APIKey is not valid restore default
+2022-06-29 11:42:31.974 [main] WARN  - [LiveWeather::Warning] Unsupported Language '' ! Use libretranslate api
+2022-06-29 11:42:31.991 [main] INFO  - Enabling FormAPI v2.1-SNAPSHOT
+2022-06-29 11:42:32.010 [main] INFO  - Preparing level "§aworld§f"
+2022-06-29 11:42:32.057 [main] INFO  - Preparing start region for level "world"
+2022-06-29 11:42:32.100 [main] INFO  - Preparing level "§anether§f"
+2022-06-29 11:42:32.103 [main] INFO  - Preparing start region for level "nether"
+2022-06-29 11:42:32.123 [main] INFO  - Enabling LiveWeather v1.7
+2022-06-29 11:42:32.241 [main] INFO  - [LiveWeather] [LiveWeather] Set gamerule DO_WEATHER_CYCLE to false in the World:world
+2022-06-29 11:42:32.340 [main] INFO  - [LiveWeather] [LiveWeather] Set gamerule DO_WEATHER_CYCLE to false in the World:nether
+2022-06-29 11:42:32.355 [main] INFO  - Starting GS4 status listener
+2022-06-29 11:42:32.355 [main] INFO  - Setting query port to 19132
+2022-06-29 11:42:32.355 [main] INFO  - Query is running on 0.0.0.0:19132
+2022-06-29 11:42:32.359 [main] INFO  - Default game type: Survival Mode
+2022-06-29 11:42:32.359 [main] INFO  - Done (72.473s)! For help, type "help" or "?"
+2022-06-29 11:43:13.366 [main] INFO  - [CONSOLE: §eReloading server...§f]
+2022-06-29 11:43:13.383 [main] INFO  - Reloading...
+2022-06-29 11:43:13.384 [main] INFO  - Saving levels...
+2022-06-29 11:43:13.402 [main] INFO  - Disabling LiveWeather v1.7
+2022-06-29 11:43:13.415 [main] INFO  - Disabling FormAPI v2.1-SNAPSHOT
+2022-06-29 11:43:13.418 [main] INFO  - Reloading properties...
+2022-06-29 11:43:13.435 [main] INFO  - Loading FormAPI v2.1-SNAPSHOT
+2022-06-29 11:43:13.447 [main] INFO  - Loading LiveWeather v1.7
+2022-06-29 11:43:13.464 [main] INFO  - [LiveWeather] Init..
+2022-06-29 11:43:15.717 [main] WARN  - [LiveWeather::Warning] Activated very experimental config server
+2022-06-29 11:43:15.743 [main] INFO  - Enabling FormAPI v2.1-SNAPSHOT
+2022-06-29 11:43:15.749 [main] INFO  - Enabling LiveWeather v1.7
+2022-06-29 11:43:15.754 [main] INFO  - [LiveWeather] Set gamerule DO_WEATHER_CYCLE to false in the World:world
+2022-06-29 11:43:15.761 [main] INFO  - [LiveWeather] Set gamerule DO_WEATHER_CYCLE to false in the World:nether
+2022-06-29 11:43:15.768 [main] INFO  - [CONSOLE: §eReload complete.§f]
+2022-06-29 11:43:18.901 [Thread-14] ERROR - [LiveWeather::Error] Cant delete plugin jarfolder : 'jarfile'
