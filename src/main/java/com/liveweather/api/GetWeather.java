@@ -1,25 +1,17 @@
 package com.liveweather.api;
 
-import cn.nukkit.Server;
-import cn.nukkit.plugin.Plugin;
-import cn.nukkit.utils.Logger;
 import com.liveweather.check.APIKey;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.language.Language;
-import com.liveweather.storage.Options;
+import com.liveweather.storage.YAMLConfig;
 import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import sun.net.www.http.HttpClient;
 
-import java.io.File;
 import java.io.IOException;
-
-import static com.liveweather.commandline.LWLogging.unregisterPlugin;
 
 public class GetWeather {
     private String apikey = "aaf3cf6e879797e568dd4014d4a694e6";
@@ -35,14 +27,13 @@ public class GetWeather {
         try {
             String lon = getLon(city);
             String lat = getLat(city);
-            if (!new Options().getConfig("apikey").equals("YOUR_API_KEY")) {
-                if (new APIKey().isValid(new Options().getConfig("apikey"))) {
-                    apikey = new Options().getConfig("apikey");
+            if (!new YAMLConfig().read("apikey").equals("YOUR_API_KEY")) {
+                if (new APIKey().isValid(new YAMLConfig().read("apikey"))) {
+                    apikey = new YAMLConfig().read("apikey");
                 } else {
                     new LWLogging().critical(new Language().get("liveweather.api.apikeynotvalid"));
-                    new File(new Options().config).delete();
-                    new Options().createConfig();
-                    new Options().writeConfig("apikey", "YOUR_API_KEY");
+                    new YAMLConfig().delete("apikey");
+                    new YAMLConfig().write("apikey", "YOUR_API_KEY");
                 }
             }
             String result;
@@ -69,14 +60,13 @@ public class GetWeather {
         try {
             String lon = getLon(city);
             String lat = getLat(city);
-            if(!new Options().getConfig("apikey").equals("YOUR_API_KEY")) {
-                if(new APIKey().isValid(new Options().getConfig("apikey"))) {
-                    apikey = new Options().getConfig("apikey");
+            if(!new YAMLConfig().read("apikey").equals("YOUR_API_KEY")) {
+                if(new APIKey().isValid(new YAMLConfig().read("apikey"))) {
+                    apikey = new YAMLConfig().read("apikey");
                 }else{
                     new LWLogging().critical(new Language().get("liveweather.api.apikeynotvalid"));
-                    new File(new Options().config).delete();
-                    new Options().createConfig();
-                    new Options().writeConfig("apikey", "YOUR_API_KEY");
+                    new YAMLConfig().delete("apikey");
+                    new YAMLConfig().write("apikey", "YOUR_API_KEY");
                 }
             }
             String url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apikey;

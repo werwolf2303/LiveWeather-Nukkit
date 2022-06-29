@@ -6,15 +6,10 @@ import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginClassLoader;
 import cn.nukkit.plugin.PluginLoader;
 import com.liveweather.Initiator;
-import com.liveweather.audio.JAudio;
+import com.liveweather.bukkit.ChatColor;
 import com.liveweather.check.CheckIntelliJ;
-import com.liveweather.storage.Options;
-import com.sun.xml.internal.bind.api.impl.NameConverter;
-import org.apache.logging.log4j.core.config.plugins.util.PluginUtil;
-import org.apache.xpath.operations.Bool;
 
 import java.lang.reflect.Field;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,7 +68,7 @@ public class LWLogging {
     }
     public void debugging(String message) {
         if(!debug) {
-            Server.getInstance().getLogger().debug("[LiveWeather::Debugging] " + message);
+            Server.getInstance().getLogger().info("[LiveWeather::Debugging] " + message);
         }else{
             System.out.println("[LiveWeather::Debugging] " + message);
         }

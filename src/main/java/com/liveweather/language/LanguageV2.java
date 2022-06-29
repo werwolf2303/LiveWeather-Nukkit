@@ -1,7 +1,7 @@
 package com.liveweather.language;
 
 import cn.nukkit.Server;
-import com.liveweather.storage.Options;
+import com.liveweather.storage.YAMLConfig;
 import com.liveweather.translate.Languages;
 import com.liveweather.translate.Translate;
 
@@ -30,6 +30,6 @@ public class LanguageV2 {
             return obj;
         }
         Languages l = Languages.getInstance();
-        return Translate.translate(toreturn, l.ENGLISH,new Options().getConfig("language"));
+        return Translate.translate(toreturn, l.ENGLISH,new YAMLConfig().read("language"));
     }
 }

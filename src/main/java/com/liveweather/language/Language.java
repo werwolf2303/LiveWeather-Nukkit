@@ -1,10 +1,7 @@
 package com.liveweather.language;
 
 import cn.nukkit.Server;
-import cn.nukkit.utils.Logger;
-import com.liveweather.check.Lang;
-import com.liveweather.commandline.LWLogging;
-import com.liveweather.storage.Options;
+import com.liveweather.storage.YAMLConfig;
 import com.liveweather.translate.Languages;
 import com.liveweather.translate.Translate;
 
@@ -22,7 +19,7 @@ public class Language {
     File chs = new File(location + CHS);
     public String get(String obj) {
         String toreturn = "";
-        if(new Options().getConfig("language").toLowerCase().equals("en")) {
+        if(new YAMLConfig().read("language").toLowerCase().equals("en")) {
             try {
                 Scanner myReader = new Scanner(en);
                 while (myReader.hasNextLine()) {
@@ -37,7 +34,7 @@ public class Language {
                 return obj;
             }
         }else{
-            if(new Options().getConfig("language").toLowerCase().equals("chs")) {
+            if(new YAMLConfig().read("language").toLowerCase().equals("chs")) {
                 try (FileInputStream fis = new FileInputStream(chs);
                      InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
                      BufferedReader reader = new BufferedReader(isr)
@@ -54,7 +51,7 @@ public class Language {
                     e.printStackTrace();
                 }
             }else {
-                if(new Options().getConfig("language").toLowerCase().equals("de")) {
+                if(new YAMLConfig().read("language").toLowerCase().equals("de")) {
                     try {
                         Scanner myReader = new Scanner(de);
                         while (myReader.hasNextLine()) {
@@ -75,7 +72,7 @@ public class Language {
                         while (myReader.hasNextLine()) {
                             String data = myReader.nextLine();
                             if (data.contains(obj)) {
-                                toreturn = Translate.translate(data.replace(obj + ":", "").replace("[LiveWeather]", ""), l.ENGLISH, new Options().getConfig("language"));
+                                toreturn = Translate.translate(data.replace(obj + ":", "").replace("[LiveWeather]", ""), l.ENGLISH, new YAMLConfig().read("language"));
                                 toreturn = "[LiveWeather] " + toreturn;
                                 break;
                             }

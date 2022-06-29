@@ -2,8 +2,7 @@ package com.liveweather.server;
 
 
 import cn.nukkit.Server;
-import com.liveweather.commandline.LWLogging;
-import com.liveweather.storage.Options;
+import com.liveweather.storage.YAMLConfig;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.File;
@@ -70,7 +69,7 @@ public class Handler {
                 String[] conv = args.split("/");
                 args = conv[conv.length - 1];
                 String response = "";
-                if(args.contains(new Options().getConfig("configserverpassword"))) {
+                if(args.contains(new YAMLConfig().read("configserverpassword"))) {
                     response = "<script>\n" +
                             "    window.location.href=\"index.html\";\n" +
                             "</script>";
@@ -125,7 +124,7 @@ public class Handler {
                 if(args.contains("autofindplayercityset")) {
                     String bool = args.split("=")[1];
                     try {
-                        String response = String.valueOf(new Options().betterWriteConfig("autofindplayercity", bool));
+                        String response = String.valueOf(new YAMLConfig().writeReturn("autofindplayercity", bool));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -138,7 +137,7 @@ public class Handler {
                 if(args.contains("languageset")) {
                     String bool = args.split("=")[1];
                     try {
-                        String response = String.valueOf(new Options().betterWriteConfig("language", bool));
+                        String response = String.valueOf(new YAMLConfig().writeReturn("language", bool));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -150,7 +149,7 @@ public class Handler {
                 }
                 if(args.contains("cloudlyget")) {
                     try {
-                        String response = String.valueOf(new Options().getConfig("cloudly"));
+                        String response = String.valueOf(new YAMLConfig().read("cloudly"));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -163,7 +162,7 @@ public class Handler {
                 if(args.contains("cloudlyset")) {
                     String bool = args.split("=")[1];
                     try {
-                        String response = String.valueOf(new Options().betterWriteConfig("cloudly", bool));
+                        String response = String.valueOf(new YAMLConfig().writeReturn("cloudly", bool));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -175,7 +174,7 @@ public class Handler {
                 }
                 if(args.contains("languageget")) {
                     try {
-                        String response = String.valueOf(new Options().getConfig("language"));
+                        String response = String.valueOf(new YAMLConfig().read("language"));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -188,7 +187,7 @@ public class Handler {
                 if(args.contains("permissionsset")) {
                     String bool = args.split("=")[1];
                     try {
-                        String response = String.valueOf(new Options().betterWriteConfig("permissions", bool));
+                        String response = String.valueOf(new YAMLConfig().writeReturn("permissions", bool));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -200,7 +199,7 @@ public class Handler {
                 }
                 if(args.contains("permissionsget")) {
                     try {
-                        String response = String.valueOf(new Options().getConfig("permissions"));
+                        String response = String.valueOf(new YAMLConfig().read("permissions"));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -212,7 +211,7 @@ public class Handler {
                 }
                 if(args.contains("apikeyget")) {
                     try {
-                        String response = String.valueOf(new Options().getConfig("apikey"));
+                        String response = String.valueOf(new YAMLConfig().read("apikey"));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -225,7 +224,7 @@ public class Handler {
                 if(args.contains("apikeyset")) {
                     String bool = args.split("=")[1];
                     try {
-                        String response = String.valueOf(new Options().betterWriteConfig("apikey", bool));
+                        String response = String.valueOf(new YAMLConfig().writeReturn("apikey", bool));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -238,7 +237,7 @@ public class Handler {
                 if(args.contains("configserverset")) {
                     String bool = args.split("=")[1];
                     try {
-                        String response = String.valueOf(new Options().betterWriteConfig("configserver", bool));
+                        String response = String.valueOf(new YAMLConfig().writeReturn("configserver", bool));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -250,7 +249,7 @@ public class Handler {
                 }
                 if(args.contains("configserverget")) {
                     try {
-                        String response = String.valueOf(new Options().getConfig("configserver"));
+                        String response = String.valueOf(new YAMLConfig().read("configserver"));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -262,7 +261,7 @@ public class Handler {
                 }
                 if(args.contains("passwordget")) {
                     try {
-                        String response = String.valueOf(new Options().getConfig("configserverpassword"));
+                        String response = String.valueOf(new YAMLConfig().read("configserverpassword"));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -274,7 +273,7 @@ public class Handler {
                 }
                 if(args.contains("autofindplayercityget")) {
                     try {
-                        String response = String.valueOf(new Options().getConfig("autofindplayercity"));
+                        String response = String.valueOf(new YAMLConfig().read("autofindplayercity"));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());

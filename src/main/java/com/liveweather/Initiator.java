@@ -53,77 +53,76 @@ public class Initiator extends PluginBase {
     int t = 0;
     boolean first = true;
     boolean senabled = false;
+    String pluginlocation = Server.getInstance().getPluginPath() + "/LiveWeather";
     CreateServer server;
-
-    YAMLConfig config = null;
     @Override
     public void onLoad() {
-        config = new YAMLConfig();
-            if (!new PlayerConfigs2().pluginfolder.exists()) {
-                new PlayerConfigs2().createPluginFolder();
+        if (!new File(Server.getInstance().getPluginPath() + "/LiveWeather").exists()) {
+            new LWLogging().normal("Init.. !FIRST RUN! This can take up to 2 minutes");
+        } else {
+            new LWLogging().normal("Init..");
+        }
+        if (!new File(pluginlocation).exists()) {
+            new File(pluginlocation).mkdir();
+        }
+        if (!new File(new YAMLConfig().getLocation()).exists()) {
+            new YAMLConfig().create();
+            new YAMLConfig().write("apikey", "YOUR_API_KEY");
+            new YAMLConfig().write("autofindplayercity", "false");
+            new YAMLConfig().write("language", "en");
+            new YAMLConfig().write("permissions", "false");
+        }
+        java.util.logging.Logger.getLogger("org.apache.http.conn.util.PublicSuffixMatcherLoader").setLevel(java.util.logging.Level.OFF);
+        if (!new File(Server.getInstance().getFilePath() + "plugins/FormAPI.jar").exists()) {
+            Zippie.extractZIP(Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather-Nukkit.jar", Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile");
+            File source = new File(Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile/FormAPI.jar");
+            File dest = new File(Server.getInstance().getFilePath() + "/plugins/FormAPI.jar");
+            try {
+                Files.copy(source.toPath(), dest.toPath(),
+                        StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            if(!new File(Server.getInstance().getPluginPath() + "/LiveWeather").exists()) {
-                new LWLogging().normal("Init.. !FIRST RUN! This can take up to 2 minutes");
-            }else {
-                new LWLogging().normal("Init..");
-            }
-            java.util.logging.Logger.getLogger("org.apache.http.conn.util.PublicSuffixMatcherLoader").setLevel(java.util.logging.Level.OFF);
-            if (!new File(Server.getInstance().getFilePath() + "plugins/FormAPI.jar").exists()) {
-                Zippie.extractZIP(Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather-Nukkit.jar", Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile");
-                File source = new File(Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile/FormAPI.jar");
-                File dest = new File(Server.getInstance().getFilePath() + "/plugins/FormAPI.jar");
-                try {
-                    Files.copy(source.toPath(), dest.toPath(),
-                            StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Server.getInstance().getPluginManager().loadPlugin(new File(Server.getInstance().getFilePath() + "/plugins/FormAPI.jar"));
-            }
-        if(new Performance().enoughPower()) {
-            if(!new File(Server.getInstance().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "extensions").exists()) {
+            Server.getInstance().getPluginManager().loadPlugin(new File(Server.getInstance().getFilePath() + "/plugins/FormAPI.jar"));
+        }
+        if (new Performance().enoughPower()) {
+            if (!new File(Server.getInstance().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "extensions").exists()) {
                 new File(Server.getInstance().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "extensions").mkdir();
-            }
-            if(!new File(new YAMLConfig().config).exists()) {
-                config.write("apikey", "YOUR_API_KEY");
-                config.write("autofindplayercity", "false");
-                config.write("language", "en");
-                config.write("permissions", "false");
             }
             new SuccessFullStartup();
             new GetWeather().getWeather("Weinheim");
             //Server.getInstance().getCommandMap().register("help", new TestCommand("testweather", "Test the liveweather plugin"));
-            if(new Options().getConfig("autofindplayercity").toLowerCase().equals("false")) {
+            if (new YAMLConfig().read("autofindplayercity").toLowerCase().equals("false")) {
                 Server.getInstance().getCommandMap().register("help", new CityDelete("deletecity", new Language().get("liveweather.commands.citydelete.description")));
                 Server.getInstance().getCommandMap().register("help", new CityChange("changecity", new Language().get("liveweather.commands.citychange.description")));
                 Server.getInstance().getCommandMap().register("help", new CitySetter("setcity", new Language().get("liveweather.commands.citysetter.description")));
             }
             Server.getInstance().getCommandMap().register("help", new WhatsMyWeather("whatsmyweather", new Language().get("liveweather.commands.whatsmyweather.description")));
-            if(new YAMLConfig().read("configserver").equals("true")) {
-                if(!new Options().getConfig("configserverpassword").equals("")) {
+            if (new YAMLConfig().read("configserver").equals("true")) {
+                if (!new YAMLConfig().read("configserverpassword").equals("")) {
                     new LWLogging().warning("Activated very experimental config server");
                     senabled = true;
                     server = new CreateServer();
                     server.start();
-                }else{
+                } else {
                     new LWLogging().error("Experimental ConfigServer set 'configserverpassword' :: Stop");
                 }
             }
-            if(new YAMLConfig().read("cloudly").equals("true")) {
+            if (new YAMLConfig().read("cloudly").equals("true")) {
                 new LWLogging().normal("Activated experimental view distance fog [Cloudly]");
                 getServer().getScheduler().scheduleRepeatingTask(new Runnable() {
                     @Override
                     public void run() {
                         if (t == 240) {
                             for (Player s : Server.getInstance().getOnlinePlayers().values()) {
-                                if(s.hasPermission("liveweather.commands")) {
+                                if (s.hasPermission("liveweather.commands")) {
                                     if (new YAMLConfig().read("autofindplayercity").toLowerCase().equals("true")) {
                                         if (!new Local().isLocal(s)) {
                                             new Cloudly().setFog(s, new GetFog().getFog(new Tracker().getCity(s.getAddress())));
                                         }
                                     } else {
-                                        if (new PlayerConfigs2().hasEntered(s.getName())) {
-                                            new Cloudly().setFog(s, new GetFog().getFog(new PlayerConfigs2().getCity(s.getName())));
+                                        if (new PlayerConfigs3().hasEntered(s.getName())) {
+                                            new Cloudly().setFog(s, new GetFog().getFog(new PlayerConfigs3().getCity(s.getName())));
                                         }
                                     }
                                 }
@@ -140,14 +139,14 @@ public class Initiator extends PluginBase {
                 public void run() {
                     if (t == 120) {
                         for (Player s : Server.getInstance().getOnlinePlayers().values()) {
-                            if(s.hasPermission("liveweather.commands")) {
+                            if (s.hasPermission("liveweather.commands")) {
                                 if (new YAMLConfig().read("autofindplayercity").toLowerCase().equals("true")) {
                                     if (!new Local().isLocal(s)) {
                                         new Wetter().setWeather(new GetWeather().getWeather(new Tracker().getCity(s.getAddress())), s);
                                     }
                                 } else {
-                                    if (new PlayerConfigs2().hasEntered(s.getName())) {
-                                        new Wetter().setWeather(new GetWeather().getWeather(new PlayerConfigs2().getCity(s.getName())), s);
+                                    if (new PlayerConfigs3().hasEntered(s.getName())) {
+                                        new Wetter().setWeather(new GetWeather().getWeather(new PlayerConfigs3().getCity(s.getName())), s);
                                     }
                                 }
                             }
@@ -162,15 +161,15 @@ public class Initiator extends PluginBase {
                 @Override
                 public void run() {
                     if (t == 120) {
-                        if(new UpdateConfig().read().equals("")) {
+                        if (new UpdateConfig().read().equals("")) {
                             new UpdateConfig().write(new DateDetect().date());
                         }
-                        if(first) {
+                        if (first) {
                             if (new Update().isNewerAvailable()) {
                                 new LWLogging().normal("Newer version is available");
                             }
                             first = false;
-                        }else {
+                        } else {
                             if (!new UpdateConfig().read().equals(new DateDetect().date())) {
                                 if (new Update().isNewerAvailable()) {
                                     new LWLogging().normal("Newer version is available");
@@ -184,28 +183,29 @@ public class Initiator extends PluginBase {
                     }
                 }
             }, 1);
-            if(new YAMLConfig().read("language").equals("en")) {
-            }else{
-                if(new YAMLConfig().read("language").equals("chs")) {
-                }else{
-                    if(new YAMLConfig().read("language").equals("de")) {
-                    }else{
+            if (new YAMLConfig().read("language").equals("en")) {
+            } else {
+                if (new YAMLConfig().read("language").equals("chs")) {
+                } else {
+                    if (new YAMLConfig().read("language").equals("de")) {
+                    } else {
                         new LWLogging().warning("Unsupported Language '" + new YAMLConfig().read("language") + "' ! Use libretranslate api");
                     }
                 }
             }
             new OnStartup();
             File extensions = new File(Server.getInstance().getPluginPath() + "/LiveWeather/extensions");
-            for(File f : extensions.listFiles()) {
+            for (File f : extensions.listFiles()) {
                 new ExtensionLoader().load(f, false);
             }
-        }else{
-            if(!new File(new Configuring().config).exists()) {
+        } else {
+            if (!new File(new Configuring().config).exists()) {
                 new Configuring().createConfig();
                 new Configuring().writeConfig("RunUnsupported", "false");
                 new LWLogging().critical(new Language().get("liveweather.init.notenoughpower"));
             }
         }
+
     }
 
     @Override

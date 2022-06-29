@@ -5,17 +5,17 @@ import cn.nukkit.utils.Config;
 import com.liveweather.commandline.LWLogging;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
-public class YAMLConfig {
-    String config = Server.getInstance().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "options.yml";
+public class PlayerYAMLConfig {
+    String config = Server.getInstance().getPluginPath().replace("\\", "/") + "LiveWeather" + "/PlayerCity/";
     File conf_emotes = new File(config);
-    public Config oConfig = new Config();
-    public YAMLConfig() {
+    public Config oConfig;
+    public PlayerYAMLConfig(String player) {
         if(exist()) {
             oConfig = new Config(conf_emotes);
         }
+        config = config + player + ".yml";
     }
     boolean exist(){
         return conf_emotes.exists();
@@ -39,19 +39,10 @@ public class YAMLConfig {
         return oConfig.getString(key);
     }
     public void write(String key, String value) {
-        if(exist()) {
-            oConfig.set(key, value);
-            oConfig.save();
-        }else{
-            new LWLogging().debugging("Failed to Write config not existing");
+        if(!exist()) {
+            create();
         }
-    }
-    public String writeReturn(String key, String value) {
-        if(exist()) {
-            oConfig.set(key, value);
-            oConfig.save();
-            return oConfig.getString(key);
-        }
-        return null;
+        oConfig.set(key, value);
+        oConfig.save();
     }
 }

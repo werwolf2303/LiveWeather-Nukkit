@@ -2,16 +2,16 @@ package com.liveweather.debug;
 
 import cn.nukkit.Player;
 import com.liveweather.storage.Configuring;
-import com.liveweather.storage.Options;
+import com.liveweather.storage.YAMLConfig;
 
 import java.io.File;
 
 public class Debug {
     public Debug(Player p) {
-        String apikey = new Options().getConfig("apikey");
-        String language = new Options().getConfig("language");
+        String apikey = new YAMLConfig().read("apikey");
+        String language = new YAMLConfig().read("language");
         boolean rununsupported = new File(new Configuring().config).exists();
-        String iplocation = new Options().getConfig("autofindplayercity");
+        String iplocation = new YAMLConfig().read("autofindplayercity");
         if(apikey.equals("YOUR_API_KEY")) {
             apikey = "Plugin Default";
         }

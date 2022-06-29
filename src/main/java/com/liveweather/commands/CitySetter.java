@@ -1,13 +1,11 @@
 package com.liveweather.commands;
 
 import cn.nukkit.Player;
-import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import com.liveweather.api.GetWeather;
 import com.liveweather.language.Language;
-import com.liveweather.storage.PlayerConfigs;
-import com.liveweather.storage.PlayerConfigs2;
+import com.liveweather.storage.PlayerConfigs3;
 import ru.nukkitx.forms.elements.CustomForm;
 
 public class CitySetter extends Command {
@@ -26,7 +24,7 @@ public class CitySetter extends Command {
                 if(data == null) return; //Если форма закрыта принудительно, то data будет иметь значение null
                 //new PlayerConfigs().writeConfig(event.getPlayer().getName(), targetForm.getElements().toString());
                 if(new GetWeather().isValid(data.toString().replace("[", "").replace("]", ""))) {
-                    new PlayerConfigs2().createPlayer(p.getName(), data.toString().replace("[", "").replace("]", ""));
+                    new PlayerConfigs3().createPlayer(p.getName(), data.toString().replace("[", "").replace("]", ""));
                     targetPlayer.sendMessage(new Language().get("liveweather.commands.citysetter.success") + data.toString().replace("[", "").replace("]", ""));
                 }else{
                     targetPlayer.sendMessage(new Language().get("liveweather.commands.citysetter.notvalid"));
