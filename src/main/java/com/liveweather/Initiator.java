@@ -12,6 +12,7 @@ import com.liveweather.api.GetFog;
 import com.liveweather.api.GetWeather;
 import com.liveweather.check.Local;
 import com.liveweather.check.Performance;
+import com.liveweather.check.SuccessFullStartup;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.commands.CityChange;
 import com.liveweather.commands.CityDelete;
@@ -53,12 +54,19 @@ public class Initiator extends PluginBase {
     boolean first = true;
     boolean senabled = false;
     CreateServer server;
+
+    YAMLConfig config = null;
     @Override
     public void onLoad() {
+        config = new YAMLConfig();
             if (!new PlayerConfigs2().pluginfolder.exists()) {
                 new PlayerConfigs2().createPluginFolder();
             }
-            new LWLogging().normal("Init..");
+            if(!new File(Server.getInstance().getPluginPath() + "/LiveWeather").exists()) {
+                new LWLogging().normal("Init.. !FIRST RUN! This can take up to 2 minutes");
+            }else {
+                new LWLogging().normal("Init..");
+            }
             java.util.logging.Logger.getLogger("org.apache.http.conn.util.PublicSuffixMatcherLoader").setLevel(java.util.logging.Level.OFF);
             if (!new File(Server.getInstance().getFilePath() + "plugins/FormAPI.jar").exists()) {
                 Zippie.extractZIP(Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather-Nukkit.jar", Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile");
@@ -76,15 +84,13 @@ public class Initiator extends PluginBase {
             if(!new File(Server.getInstance().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "extensions").exists()) {
                 new File(Server.getInstance().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "extensions").mkdir();
             }
-            if(!new File(new Options().config).exists()) {
-                new Options().createConfig();
-                new Options().writeConfig("apikey", "YOUR_API_KEY");
-                new Options().writeConfig("autofindplayercity", "false");
-                new Options().writeConfig("language", "en");
+            if(!new File(new YAMLConfig().config).exists()) {
+                config.write("apikey", "YOUR_API_KEY");
+                config.write("autofindplayercity", "false");
+                config.write("language", "en");
+                config.write("permissions", "false");
             }
-            if(new Options().getConfig("permissions").equals("")) {
-                new Options().writeConfig("permissions", "false");
-            }
+            new SuccessFullStartup();
             new GetWeather().getWeather("Weinheim");
             //Server.getInstance().getCommandMap().register("help", new TestCommand("testweather", "Test the liveweather plugin"));
             if(new Options().getConfig("autofindplayercity").toLowerCase().equals("false")) {
@@ -93,7 +99,7 @@ public class Initiator extends PluginBase {
                 Server.getInstance().getCommandMap().register("help", new CitySetter("setcity", new Language().get("liveweather.commands.citysetter.description")));
             }
             Server.getInstance().getCommandMap().register("help", new WhatsMyWeather("whatsmyweather", new Language().get("liveweather.commands.whatsmyweather.description")));
-            if(new Options().getConfig("configserver").equals("true")) {
+            if(new YAMLConfig().read("configserver").equals("true")) {
                 if(!new Options().getConfig("configserverpassword").equals("")) {
                     new LWLogging().warning("Activated very experimental config server");
                     senabled = true;
@@ -103,7 +109,7 @@ public class Initiator extends PluginBase {
                     new LWLogging().error("Experimental ConfigServer set 'configserverpassword' :: Stop");
                 }
             }
-            if(new Options().getConfig("cloudly").equals("true")) {
+            if(new YAMLConfig().read("cloudly").equals("true")) {
                 new LWLogging().normal("Activated experimental view distance fog [Cloudly]");
                 getServer().getScheduler().scheduleRepeatingTask(new Runnable() {
                     @Override
@@ -111,7 +117,7 @@ public class Initiator extends PluginBase {
                         if (t == 240) {
                             for (Player s : Server.getInstance().getOnlinePlayers().values()) {
                                 if(s.hasPermission("liveweather.commands")) {
-                                    if (new Options().getConfig("autofindplayercity").toLowerCase().equals("true")) {
+                                    if (new YAMLConfig().read("autofindplayercity").toLowerCase().equals("true")) {
                                         if (!new Local().isLocal(s)) {
                                             new Cloudly().setFog(s, new GetFog().getFog(new Tracker().getCity(s.getAddress())));
                                         }
@@ -135,7 +141,7 @@ public class Initiator extends PluginBase {
                     if (t == 120) {
                         for (Player s : Server.getInstance().getOnlinePlayers().values()) {
                             if(s.hasPermission("liveweather.commands")) {
-                                if (new Options().getConfig("autofindplayercity").toLowerCase().equals("true")) {
+                                if (new YAMLConfig().read("autofindplayercity").toLowerCase().equals("true")) {
                                     if (!new Local().isLocal(s)) {
                                         new Wetter().setWeather(new GetWeather().getWeather(new Tracker().getCity(s.getAddress())), s);
                                     }
@@ -178,13 +184,13 @@ public class Initiator extends PluginBase {
                     }
                 }
             }, 1);
-            if(new Options().getConfig("language").equals("en")) {
+            if(new YAMLConfig().read("language").equals("en")) {
             }else{
-                if(new Options().getConfig("language").equals("chs")) {
+                if(new YAMLConfig().read("language").equals("chs")) {
                 }else{
-                    if(new Options().getConfig("language").equals("de")) {
+                    if(new YAMLConfig().read("language").equals("de")) {
                     }else{
-                        new LWLogging().warning("Unsupported Language '" + new Options().getConfig("language") + "' ! Use libretranslate api");
+                        new LWLogging().warning("Unsupported Language '" + new YAMLConfig().read("language") + "' ! Use libretranslate api");
                     }
                 }
             }

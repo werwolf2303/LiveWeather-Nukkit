@@ -5,6 +5,7 @@ import cn.nukkit.utils.Config;
 
 import java.io.File;
 
+@Deprecated
 public class Options2 {
     public String configlocation = Server.getInstance().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "options.cfg";
     Config config = new Config(configlocation);
@@ -15,6 +16,7 @@ public class Options2 {
     }
     public void write(String key, String value) {
         config.set(key,value);
+        config.save();
     }
     public String read(String key) {
         return config.get(key).toString();

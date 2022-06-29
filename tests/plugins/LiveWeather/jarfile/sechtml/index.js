@@ -51,8 +51,8 @@ function onResize() {
     if(mainform.offsetHeight<398) {
         mainform.style.height = "422px";
     }
-    if(mainform.offsetWidth<403) {
-        mainform.style.width = "403px";
+    if(mainform.offsetWidth<423) {
+        mainform.style.width = "423px";
     }
 }
 function getValue(id) {

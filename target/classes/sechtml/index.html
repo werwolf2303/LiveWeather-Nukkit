@@ -17,6 +17,9 @@
             .yellow {
                 color:yellow;
             }
+            ul {
+  list-style-type: none;
+}
             </style>
              <script type="text/javascript" 
              src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
@@ -50,14 +53,13 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Password</li>
-                            <li class="list-group-item"><input type="password"><a href="#" class="btn btn-primary">Change</a></li>
-                            <li class="list-group-item">Auto find player city  <input id="autofindplayercityget" type="checkbox" name="autofindplayercityset"></li>
-                            <li class="list-group-item">Permissions  <input id="permissionsget" type="checkbox" name="permissionsset"></li>
-                            <li class="list-group-item">Config server  <input id="configserverget" name="configserverset" type="checkbox"></li>
+                            <li class="list-group-item border-0"><input placeholder="Enter Password" type="password"><a href="#" class="btn btn-primary">Change Password</a></li>
+                            <li class="list-group-item border-0"><input id="autofindplayercityget" type="checkbox" name="autofindplayercityset"> Auto find player city</li>
+                            <li class="list-group-item border-0"><input id="permissionsget" type="checkbox" name="permissionsset"> Permissions</li>
+                            <li class="list-group-item border-0">Config server  <input id="configserverget" name="configserverset" type="checkbox"></li>
                             <br>
-                            <li class="list-group-item"><span style="color:red" >Warning Experimental Features </span></li>
-                            <li class="list-group-item">Cloudly <input id="cloudlyget" name="cloudlyset" type="checkbox"></li>
+                            <li class="list-group-item border-0"><span style="color:red" >Warning Experimental Features </span></li>
+                            <li class="list-group-item border-0"><input id="cloudlyget" name="cloudlyset" type="checkbox"> Cloudly</li>
                         </ul>
                     </div>
                   </div>

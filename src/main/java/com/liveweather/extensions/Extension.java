@@ -25,4 +25,6 @@ public interface Extension {
 
     void onLoad();
     void onDisable();
+
+    String getName();
 }

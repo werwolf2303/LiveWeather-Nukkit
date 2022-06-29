@@ -26,6 +26,11 @@ public class ExtensionLoader {
             }else {
                 for (Method m : jarclass.getDeclaredMethods()) {
                     for (Method m2 : Extension.class.getDeclaredMethods()) {
+                        if(m.getName().equals("getName")) {
+                            m.setAccessible(true);
+                            Object o = m.invoke(t);
+                            new LWLogging().normal("Load extension : " + o.toString());
+                        }
                         if (m.getName().equals(m2.getName())) {
                             m.setAccessible(true);
                             Object o = m.invoke(t);
