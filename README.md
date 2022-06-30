@@ -31,3 +31,10 @@ Supported languages:
 - English <100%>
 - German <100%>
 - Chinese <100%>
+
+
+
+Todo:
+
+- Fix file size [ ]
+- Implement more languages
