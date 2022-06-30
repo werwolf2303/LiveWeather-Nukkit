@@ -58,9 +58,9 @@ public class Initiator extends PluginBase {
     @Override
     public void onLoad() {
         if (!new File(Server.getInstance().getPluginPath() + "/LiveWeather").exists()) {
-            new LWLogging().normal("Init.. !FIRST RUN! This can take up to 2 minutes");
+            new LWLogging().normal(new Language().get("liveweather.init.First"));
         } else {
-            new LWLogging().normal("Init..");
+            new LWLogging().normal(new Language().get("liveweather.init"));
         }
         if (!new File(pluginlocation).exists()) {
             new File(pluginlocation).mkdir();

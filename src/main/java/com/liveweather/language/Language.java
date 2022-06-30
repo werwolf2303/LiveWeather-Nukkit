@@ -67,13 +67,11 @@ public class Language {
                     }
                 }else {
                     try {
-                        Languages l = Languages.getInstance();
                         Scanner myReader = new Scanner(en);
                         while (myReader.hasNextLine()) {
                             String data = myReader.nextLine();
                             if (data.contains(obj)) {
-                                toreturn = Translate.translate(data.replace(obj + ":", "").replace("[LiveWeather]", ""), l.ENGLISH, new YAMLConfig().read("language"));
-                                toreturn = "[LiveWeather] " + toreturn;
+                                toreturn = data.replace(obj + ":", "");
                                 break;
                             }
                         }
