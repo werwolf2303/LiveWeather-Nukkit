@@ -6,7 +6,6 @@ import cn.nukkit.level.GameRule;
 import cn.nukkit.level.Level;
 import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
-import cn.nukkit.plugin.PluginLoader;
 import cn.nukkit.plugin.PluginManager;
 import com.liveweather.api.GetFog;
 import com.liveweather.api.GetWeather;
@@ -18,7 +17,6 @@ import com.liveweather.commands.CityChange;
 import com.liveweather.commands.CityDelete;
 import com.liveweather.commands.CitySetter;
 import com.liveweather.commands.WhatsMyWeather;
-import com.liveweather.debug.Debug;
 import com.liveweather.events.OnStartup;
 import com.liveweather.events.SendMessage;
 import com.liveweather.experimental.Cloudly;
@@ -29,20 +27,11 @@ import com.liveweather.server.CreateServer;
 import com.liveweather.setter.Wetter;
 import com.liveweather.setter.WetterService;
 import com.liveweather.storage.*;
-import com.liveweather.test.TestCommand;
-import com.liveweather.threading.High;
-import com.liveweather.time.DateDetect;
-import com.liveweather.translate.Languages;
-import sun.java2d.loops.GeneralRenderer;
-import com.liveweather.*;
 
-import javax.swing.text.html.Option;
-import java.io.DataInput;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.security.cert.Extension;
 
 import static com.liveweather.commandline.LWLogging.unregisterPlugin;
 
@@ -71,6 +60,11 @@ public class Initiator extends PluginBase {
             new YAMLConfig().write("language", "en");
             new YAMLConfig().write("permissions", "false");
         }
+        //Test only
+
+        new LWLogging().debugging(new Language().get("liveweather.performance.warning"));
+
+        //
         java.util.logging.Logger.getLogger("org.apache.http.conn.util.PublicSuffixMatcherLoader").setLevel(java.util.logging.Level.OFF);
         if (!new File(Server.getInstance().getFilePath() + "plugins/FormAPI.jar").exists()) {
             Zippie.extractZIP(Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather-Nukkit.jar", Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile");

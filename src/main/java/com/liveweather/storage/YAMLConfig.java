@@ -6,7 +6,6 @@ import com.liveweather.commandline.LWLogging;
 import com.liveweather.language.Language;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 public class YAMLConfig {
