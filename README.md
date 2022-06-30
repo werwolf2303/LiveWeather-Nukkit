@@ -31,6 +31,12 @@ INFO: The weather applies for each player individually
 
 Supported languages:
 
-- English <100%>
-- German <100%>
-- Chinese <100%>
+- English --> Full
+- German --> Half
+- Chinese --> Half
+
+
+Todo :
+
+[] - Fix file size
+[] - Add more languages
