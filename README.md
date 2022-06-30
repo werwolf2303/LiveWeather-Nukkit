@@ -1,5 +1,7 @@
 <h2>LiveWeather-Nukkit</h2>
 
+<img src="https://github.com/Werwolf2303/LiveWeather-Nukkit/blob/main/liveweatherlogo.png?raw=true" width="200" height="200" alt="Your browser suck"></img>
+
 <br>
 
 Get Live Weather on your server
