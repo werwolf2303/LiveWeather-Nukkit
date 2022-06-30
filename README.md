@@ -38,5 +38,5 @@ Supported languages:
 
 Todo :
 
-[] - Fix file size
-[] - Add more languages
+- [ ] Fix file size
+- [ ] Add more languages
