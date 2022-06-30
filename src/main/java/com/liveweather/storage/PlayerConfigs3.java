@@ -5,6 +5,7 @@ import com.liveweather.commandline.LWLogging;
 import com.liveweather.language.Language;
 import com.liveweather.threading.Normal;
 import java.io.File;
+import java.io.IOException;
 
 public class PlayerConfigs3 {
     String location = Server.getInstance().getPluginPath().replace("\\", "") + "LiveWeather/PlayerCity/";
@@ -24,33 +25,25 @@ public class PlayerConfigs3 {
     }
     public String getCity(String playername) {
         try {
-            return new PlayerYAMLConfig(playername).read("City");
+            return new PlayerConfig().getCity(playername);
         }catch (NullPointerException exc) {
             new LWLogging().critical(new Language().get("liveweather.playerconfig.weather.cantget"));
         }
-        return "NULL";
+        return "InvalidCity";
     }
     public boolean hasEntered(String playername) {
-        return new PlayerYAMLConfig(playername).exist();
+        return new PlayerConfig().hasEntered(playername);
     }
     Runnable deleteplayer(String playername) {
-        new PlayerYAMLConfig(playername).delete("City");
-        if(!new PlayerYAMLConfig(playername).read("City").equals("")) {
-            new LWLogging().critical(new Language().get("liveweather.playerconfig.weather.cantdelete"));
-        }
+        new PlayerConfig().deleteplayer("City");
         return null;
     }
     Runnable changeplayer(String playername, String city) {
-        new PlayerYAMLConfig(playername).delete("City");
-        new PlayerYAMLConfig(playername).write("City", city);
+        new PlayerConfig().changeplayer(playername,city);
         return null;
     }
     Runnable createplayer(String playername, String cityname) {
-        new PlayerYAMLConfig(playername).create();
-        new PlayerYAMLConfig(playername).write("City", cityname);
-        if(!new PlayerYAMLConfig(playername).exist()) {
-            new LWLogging().critical(new Language().get("liveweather.playerconfig.weather.cantcreate"));
-        }
+        new PlayerConfig().createplayer(playername,cityname);
         return null;
     }
 }

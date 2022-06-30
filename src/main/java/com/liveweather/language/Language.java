@@ -1,6 +1,7 @@
 package com.liveweather.language;
 
 import cn.nukkit.Server;
+import com.liveweather.commandline.LWLogging;
 import com.liveweather.storage.YAMLConfig;
 
 import java.io.File;
@@ -28,6 +29,7 @@ public class Language {
                 return toreturn;
             }
         }catch (FileNotFoundException ex) {
+            new LWLogging().error("Language '" + language + "' not supported");
             return obj;
         }
     }

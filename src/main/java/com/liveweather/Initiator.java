@@ -46,7 +46,7 @@ public class Initiator extends PluginBase {
     @Override
     public void onLoad() {
         if (!new File(Server.getInstance().getPluginPath() + "/LiveWeather").exists()) {
-            new LWLogging().normal("Init.. !FIRST RUN! This can take up to 2 minutes");
+            new LWLogging().normal("Init.. !FIRST RUN! This can take a while");
         } else {
             new LWLogging().normal("Init..");
         }
@@ -60,11 +60,6 @@ public class Initiator extends PluginBase {
             new YAMLConfig().write("language", "en");
             new YAMLConfig().write("permissions", "false");
         }
-        //Test only
-
-        new LWLogging().debugging(new Language().get("liveweather.performance.warning"));
-
-        //
         java.util.logging.Logger.getLogger("org.apache.http.conn.util.PublicSuffixMatcherLoader").setLevel(java.util.logging.Level.OFF);
         if (!new File(Server.getInstance().getFilePath() + "plugins/FormAPI.jar").exists()) {
             Zippie.extractZIP(Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather-Nukkit.jar", Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile");
@@ -83,7 +78,6 @@ public class Initiator extends PluginBase {
                 new File(Server.getInstance().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "extensions").mkdir();
             }
             new SuccessFullStartup();
-            new GetWeather().getWeather("Weinheim");
             //Server.getInstance().getCommandMap().register("help", new TestCommand("testweather", "Test the liveweather plugin"));
             if (new YAMLConfig().read("autofindplayercity").toLowerCase().equals("false")) {
                 Server.getInstance().getCommandMap().register("help", new CityDelete("deletecity", new Language().get("liveweather.commands.citydelete.description")));
@@ -98,11 +92,11 @@ public class Initiator extends PluginBase {
                     server = new CreateServer();
                     server.start();
                 } else {
-                    new LWLogging().error("Experimental ConfigServer set 'configserverpassword' :: Stop");
+                    new LWLogging().error(new Language().get("livweather.configserver.nopassword") + " Stop");
                 }
             }
             if (new YAMLConfig().read("cloudly").equals("true")) {
-                new LWLogging().normal("Activated experimental view distance fog [Cloudly]");
+                new LWLogging().normal(new Language().get("liveweather.cloudly.activate"));
                 getServer().getScheduler().scheduleRepeatingTask(new Runnable() {
                     @Override
                     public void run() {
@@ -150,16 +144,6 @@ public class Initiator extends PluginBase {
                     }
                 }
             }, 1);
-            if (new YAMLConfig().read("language").equals("en")) {
-            } else {
-                if (new YAMLConfig().read("language").equals("chs")) {
-                } else {
-                    if (new YAMLConfig().read("language").equals("de")) {
-                    } else {
-                        new LWLogging().warning("Unsupported Language '" + new YAMLConfig().read("language") + "' ! Use libretranslate api");
-                    }
-                }
-            }
             new OnStartup();
             File extensions = new File(Server.getInstance().getPluginPath() + "/LiveWeather/extensions");
             for (File f : extensions.listFiles()) {
