@@ -38,6 +38,9 @@ public class YAMLConfig {
     public String read(String key) {
         return oConfig.getString(key);
     }
+    public Boolean readBoolean(String key) {
+        return oConfig.getBoolean(key);
+    }
     public void write(String key, String value) {
         if(exist()) {
             oConfig.set(key, value);
