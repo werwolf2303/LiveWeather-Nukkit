@@ -3,6 +3,7 @@ package com.liveweather.experimental;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.language.Language;
 
 public class Cloudly {
     //Activate this with 'cloudly:true' in options.cfg
@@ -29,7 +30,7 @@ public class Cloudly {
                 }
             }
             if (failure) {
-                new LWLogging().error("Cloudly --> Zero or Minus not allowed");
+                new LWLogging().error(new Language().get("liveweather.cloudly.error"));
             } else {
                 if(distance==10) {
                     p.setViewDistance(Server.getInstance().getViewDistance());

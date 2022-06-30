@@ -1,7 +1,5 @@
 package com.liveweather.check;
 
-import cn.nukkit.Server;
-import cn.nukkit.plugin.Plugin;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.language.Language;
 import com.liveweather.storage.Configuring;

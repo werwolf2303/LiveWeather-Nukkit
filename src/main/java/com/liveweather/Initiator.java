@@ -6,7 +6,6 @@ import cn.nukkit.level.GameRule;
 import cn.nukkit.level.Level;
 import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
-import cn.nukkit.plugin.PluginLoader;
 import cn.nukkit.plugin.PluginManager;
 import com.liveweather.api.GetFog;
 import com.liveweather.api.GetWeather;
@@ -18,7 +17,6 @@ import com.liveweather.commands.CityChange;
 import com.liveweather.commands.CityDelete;
 import com.liveweather.commands.CitySetter;
 import com.liveweather.commands.WhatsMyWeather;
-import com.liveweather.debug.Debug;
 import com.liveweather.events.OnStartup;
 import com.liveweather.events.SendMessage;
 import com.liveweather.experimental.Cloudly;
@@ -29,21 +27,11 @@ import com.liveweather.server.CreateServer;
 import com.liveweather.setter.Wetter;
 import com.liveweather.setter.WetterService;
 import com.liveweather.storage.*;
-import com.liveweather.test.TestCommand;
-import com.liveweather.threading.High;
-import com.liveweather.time.DateDetect;
-import com.liveweather.translate.Languages;
-import com.liveweather.updater.Update;
-import sun.java2d.loops.GeneralRenderer;
-import com.liveweather.*;
 
-import javax.swing.text.html.Option;
-import java.io.DataInput;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.security.cert.Extension;
 
 import static com.liveweather.commandline.LWLogging.unregisterPlugin;
 
@@ -58,9 +46,9 @@ public class Initiator extends PluginBase {
     @Override
     public void onLoad() {
         if (!new File(Server.getInstance().getPluginPath() + "/LiveWeather").exists()) {
-            new LWLogging().normal(new Language().get("liveweather.init.First"));
+            new LWLogging().normal("Init.. !FIRST RUN! This can take a while");
         } else {
-            new LWLogging().normal(new Language().get("liveweather.init"));
+            new LWLogging().normal("Init..");
         }
         if (!new File(pluginlocation).exists()) {
             new File(pluginlocation).mkdir();
@@ -90,7 +78,6 @@ public class Initiator extends PluginBase {
                 new File(Server.getInstance().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "extensions").mkdir();
             }
             new SuccessFullStartup();
-            new GetWeather().getWeather("Weinheim");
             //Server.getInstance().getCommandMap().register("help", new TestCommand("testweather", "Test the liveweather plugin"));
             if (new YAMLConfig().read("autofindplayercity").toLowerCase().equals("false")) {
                 Server.getInstance().getCommandMap().register("help", new CityDelete("deletecity", new Language().get("liveweather.commands.citydelete.description")));
@@ -105,11 +92,11 @@ public class Initiator extends PluginBase {
                     server = new CreateServer();
                     server.start();
                 } else {
-                    new LWLogging().error("Experimental ConfigServer set 'configserverpassword' :: Stop");
+                    new LWLogging().error(new Language().get("livweather.configserver.nopassword") + " Stop");
                 }
             }
             if (new YAMLConfig().read("cloudly").equals("true")) {
-                new LWLogging().normal("Activated experimental view distance fog [Cloudly]");
+                new LWLogging().normal(new Language().get("liveweather.cloudly.activate"));
                 getServer().getScheduler().scheduleRepeatingTask(new Runnable() {
                     @Override
                     public void run() {
@@ -157,42 +144,6 @@ public class Initiator extends PluginBase {
                     }
                 }
             }, 1);
-            getServer().getScheduler().scheduleRepeatingTask(new Runnable() {
-                @Override
-                public void run() {
-                    if (t == 120) {
-                        if (new UpdateConfig().read().equals("")) {
-                            new UpdateConfig().write(new DateDetect().date());
-                        }
-                        if (first) {
-                            if (new Update().isNewerAvailable()) {
-                                new LWLogging().normal("Newer version is available");
-                            }
-                            first = false;
-                        } else {
-                            if (!new UpdateConfig().read().equals(new DateDetect().date())) {
-                                if (new Update().isNewerAvailable()) {
-                                    new LWLogging().normal("Newer version is available");
-                                }
-                                new UpdateConfig().write(new DateDetect().date());
-                            }
-                        }
-                        t = 0;
-                    } else {
-                        t = t + 1;
-                    }
-                }
-            }, 1);
-            if (new YAMLConfig().read("language").equals("en")) {
-            } else {
-                if (new YAMLConfig().read("language").equals("chs")) {
-                } else {
-                    if (new YAMLConfig().read("language").equals("de")) {
-                    } else {
-                        new LWLogging().warning("Unsupported Language '" + new YAMLConfig().read("language") + "' ! Use libretranslate api");
-                    }
-                }
-            }
             new OnStartup();
             File extensions = new File(Server.getInstance().getPluginPath() + "/LiveWeather/extensions");
             for (File f : extensions.listFiles()) {
@@ -213,13 +164,6 @@ public class Initiator extends PluginBase {
         File extensions = new File(Server.getInstance().getPluginPath() + "/LiveWeather/extensions");
         for(File f : extensions.listFiles()) {
             new ExtensionLoader().load(f, true);
-        }
-        if(doUpdate) {
-            File old = new File(new Update().pluginfolder + "/LiveWeather-Nukkit_Update.jar");
-            File neww = new File(new Update().pluginfolder + "/LiveWeather-Nukkit.jar");
-            new File(new Update().pluginfolder + "/LiveWeather-Nukkit.jar").delete();
-            old.renameTo(neww);
-            Server.getInstance().reload();
         }
         if(senabled) {
             server.stop();

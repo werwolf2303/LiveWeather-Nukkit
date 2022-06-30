@@ -1,6 +1,7 @@
 package com.liveweather.server;
 
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.language.Language;
 import com.liveweather.storage.YAMLConfig;
 import com.liveweather.threading.Normal;
 import com.sun.net.httpserver.HttpServer;
@@ -21,7 +22,7 @@ public class CreateServer {
                 server.setExecutor(null);
                 server.start();
             } catch (IOException e) {
-                new LWLogging().critical("Cant start config server");
+                new LWLogging().critical(new Language().get("liveweather.configserver.startfailure"));
             }
         }
         return null;
