@@ -29,6 +29,6 @@ INFO: The weather applies for each player individually
 
 Supported languages:
 
-- English <Full>
-- German <Half>
-- Chinese <Half>
+- English Full
+- German Half
+- Chinese Half
