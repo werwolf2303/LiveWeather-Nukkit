@@ -5,6 +5,7 @@ import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import com.liveweather.language.Language;
 import com.liveweather.storage.PlayerConfig;
+import com.liveweather.storage.PlayerConfigs3;
 
 public class CityDelete extends Command {
     public CityDelete(String name, String description) {

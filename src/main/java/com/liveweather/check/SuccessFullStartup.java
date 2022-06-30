@@ -3,6 +3,7 @@ package com.liveweather.check;
 import cn.nukkit.Server;
 import com.liveweather.Initiator;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.language.Language;
 import com.liveweather.storage.YAMLConfig;
 
 public class SuccessFullStartup {
@@ -11,19 +12,19 @@ public class SuccessFullStartup {
         try {
             if (new YAMLConfig().read("language").equals("")) {
                 wrong = true;
-                new LWLogging().critical("Plugin misbehaviour -> Config write error :: language");
+                new LWLogging().critical(new Language().get("liveweather.error.misbehaviour") + " " + "language");
             }
             if (new YAMLConfig().read("permissions").equals("")) {
                 wrong = true;
-                new LWLogging().critical("Plugin misbehaviour -> Config write error :: permissions");
+                new LWLogging().critical(new Language().get("liveweather.error.misbehaviour") + " " + "permissions");
             }
             if (new YAMLConfig().read("autofindplayercity").equals("")) {
                 wrong = true;
-                new LWLogging().critical("Plugin misbehaviour -> Config write error :: autofindplayercity");
+                new LWLogging().critical(new Language().get("liveweather.error.misbehaviour") + " " + "autofindplayercity");
             }
             if (new YAMLConfig().read("apikey").equals("")) {
                 wrong = true;
-                new LWLogging().critical("Plugin misbehaviour -> Config write error :: apikey");
+                new LWLogging().critical(new Language().get("liveweather.error.misbehaviour") + " " + "apikey");
             }
         }catch (NullPointerException nullpointer) {
             wrong = true;

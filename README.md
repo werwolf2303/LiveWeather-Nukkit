@@ -1,6 +1,6 @@
 <h2>LiveWeather-Nukkit</h2>
 
-
+<img src="https://github.com/Werwolf2303/LiveWeather-Nukkit/blob/main/liveweatherlogo.png?raw=true" width="200" height="200" alt="Your browser suck"></img>
 
 <br>
 
@@ -9,34 +9,34 @@ Get Live Weather on your server
 Commands:
 
 /setcity > Set the city 
-/setcity > Set your city 
 
 /whatsmyweather > Checks the current weather
-/whatsmyweather > Checks your current weather
 
 /deletecity > Deletes your city
 
 /changecity > Change your city
 
 
-How does it work?
+How to use it?
 
 Just type "/setcity" then enter the city and you have live weather
 
 
+How does it work?
 
-INFO: The weather does not apply for all players only for you
-INFO: The weather does not apply for all players at the same time only for you
+It uses the openweathermap api to retrieve real world weather data. And from this data it sets the weather.
+
+
+INFO: The weather applies for each player individually
 
 Supported languages:
 
-- English <100%>
-- German <100%>
-- Chinese <100%>
+- English --> Full
+- German --> Half
+- Chinese --> Half
 
 
-
-Todo:
+Todo :
 
 - [ ] Fix file size
-- [ ] Implement more languages
+- [ ] Add more languages

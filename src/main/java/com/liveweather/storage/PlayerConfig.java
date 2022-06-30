@@ -1,82 +1,135 @@
 package com.liveweather.storage;
 
 import cn.nukkit.Server;
+import com.liveweather.commandline.LWLogging;
+import com.liveweather.language.Language;
+import com.liveweather.threading.Normal;
 
 import java.io.*;
 import java.util.Properties;
 
 public class PlayerConfig {
-    File playerloc = new File(Server.getInstance().getPluginPath().replace("\\", "/") + "LiveWeather/player.properties");
-    Properties properties;
+    String location = Server.getInstance().getPluginPath().replace("\\", "/") + "LiveWeather/PlayerCity/";
     public PlayerConfig() {
-        if(!playerloc.exists()) {
-            create();
-
-        }else{
-            properties = new Properties();
+        if (!new File(location).exists()) {
+            new File(location).mkdir();
+        }
+    }
+    public void createPlayer(String playername, String city) {
+        new Normal(createplayer(playername, city)).start();
+    }
+    public void deletePlayer(String playername) {
+        new Normal(deleteplayer(playername)).start();
+    }
+    public void changePlayer(String playername, String city) {
+        new Normal(changeplayer(playername, city)).start();
+    }
+    public String getCity(String playername) {
+        try {
+            FileReader reader= null;
+            String filename = location + playername + ".properties";
             try {
-                properties.load(new FileInputStream(playerloc));
+                reader = new FileReader(filename);
+            } catch (FileNotFoundException e) {
+            }
+
+            Properties p=new Properties();
+            try {
+                p.load(reader);
             } catch (IOException e) {
             }
+            return p.get("City").toString();
+        }catch (NullPointerException exc) {
+            new LWLogging().critical(new Language().get("liveweather.playerconfig.weather.cantget"));
+        }
+        return "InvalidCity";
+    }
+    public boolean hasEntered(String playername) {
+        try {
+            FileReader reader = null;
+            String filename = location + playername + ".properties";
+            try {
+                reader = new FileReader(filename);
+            } catch (FileNotFoundException e) {
+                return false;
+            }
+
+            Properties p = new Properties();
+            try {
+                p.load(reader);
+            } catch (IOException e) {
+                return false;
+            }
+            return !p.get("City").equals("");
+        }catch (NullPointerException ex) {
+            return false;
         }
     }
-    public void create() {
+    Runnable deleteplayer(String playername) {
+        FileReader reader= null;
+        String filename = location + playername + ".properties";
         try {
-            playerloc.createNewFile();
-        } catch (IOException e) {
-        }
-    }
-    public String read(String player) {
-        return properties.getProperty(player);
-    }
-    public void write(String player, String city) {
-        properties.setProperty(player,city);
-        OutputStream out = null;
-        try {
-            out = new FileOutputStream(playerloc);
+            reader = new FileReader(filename);
         } catch (FileNotFoundException e) {
         }
+
+        Properties p=new Properties();
         try {
-            properties.store(out, null);
+            p.load(reader);
         } catch (IOException e) {
         }
-    }
-    public void change(String player, String city) {
-        properties.remove(player);
-        properties.setProperty(player,city);
-        OutputStream out = null;
+        p.remove("City");
         try {
-            out = new FileOutputStream(playerloc);
+            p.store(new FileWriter(filename), "Player config");
+        } catch (IOException e) {
+        }
+        return null;
+    }
+    Runnable changeplayer(String playername, String city) {
+        FileReader reader= null;
+        String filename = location + playername + ".properties";
+        try {
+            reader = new FileReader(filename);
         } catch (FileNotFoundException e) {
         }
+
+        Properties p=new Properties();
         try {
-            properties.store(out, null);
+            p.load(reader);
         } catch (IOException e) {
         }
-    }
-    public void delete(String player) {
-        properties.remove(player);
-        OutputStream out = null;
+        p.remove("City");
+        p.setProperty("City", city);
         try {
-            out = new FileOutputStream(playerloc);
+            p.store(new FileWriter(filename), "Player config");
+        } catch (IOException e) {
+        }
+        return null;
+    }
+    Runnable createplayer(String playername, String cityname) {
+        FileReader reader= null;
+        String filename = location + playername + ".properties";
+        try {
+            reader = new FileReader(filename);
         } catch (FileNotFoundException e) {
         }
+        if(!new File(filename).exists()) {
+            try {
+                new File(filename).createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                new LWLogging().debugging(filename);
+            }
+        }
+        Properties p=new Properties();
+        p.setProperty("City", cityname);
         try {
-            properties.store(out, null);
+            p.store(new FileWriter(filename), "Player config");
         } catch (IOException e) {
         }
-    }
-    public boolean hasEntered(String player) {
-        return !read(player).equals("");
-    }
-    public void changePlayer(String player, String city) {
-        delete(player);
-        write(player,city);
-    }
-    public void deletePlayer(String player) {
-        delete(player);
-    }
-    public String getCity(String player) {
-        return read(player);
+        if(new PlayerConfig().getCity(playername).equals("")) {
+            new LWLogging().critical(new Language().get("liveweather.playerconfig.weather.cantcreate"));
+        }
+        return null;
     }
 }
