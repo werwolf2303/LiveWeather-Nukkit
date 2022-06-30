@@ -1,17 +1,18 @@
 package com.exampleextension.com.extension;
-
-import com.liveweather.extensions.Extension;
-
-public class Init implements Extension {
+public class Init {
     public void onLoad() {
-        //Called when loading
+        //REQUIRED: Called when loading
     }
-
-    public String getName() {
-        //Define here the name of your extension
+    public String getExtensionName() {
+        //REQUIRED Define here the name of your extension
         return "Example Extension";
     }
     public void onDisable() {
-        //Called when nukkit is stopping or reloading
+        //REQUIRED: Called when nukkit is stopping or reloading
+    }
+
+    public String dumpFunctions() {
+        //OPTIONAL: When you want to dump all functions to console
+        return "true";
     }
 }

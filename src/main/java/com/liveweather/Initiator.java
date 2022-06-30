@@ -33,7 +33,6 @@ import com.liveweather.test.TestCommand;
 import com.liveweather.threading.High;
 import com.liveweather.time.DateDetect;
 import com.liveweather.translate.Languages;
-import com.liveweather.updater.Update;
 import sun.java2d.loops.GeneralRenderer;
 import com.liveweather.*;
 
@@ -157,32 +156,6 @@ public class Initiator extends PluginBase {
                     }
                 }
             }, 1);
-            getServer().getScheduler().scheduleRepeatingTask(new Runnable() {
-                @Override
-                public void run() {
-                    if (t == 120) {
-                        if (new UpdateConfig().read().equals("")) {
-                            new UpdateConfig().write(new DateDetect().date());
-                        }
-                        if (first) {
-                            if (new Update().isNewerAvailable()) {
-                                new LWLogging().normal("Newer version is available");
-                            }
-                            first = false;
-                        } else {
-                            if (!new UpdateConfig().read().equals(new DateDetect().date())) {
-                                if (new Update().isNewerAvailable()) {
-                                    new LWLogging().normal("Newer version is available");
-                                }
-                                new UpdateConfig().write(new DateDetect().date());
-                            }
-                        }
-                        t = 0;
-                    } else {
-                        t = t + 1;
-                    }
-                }
-            }, 1);
             if (new YAMLConfig().read("language").equals("en")) {
             } else {
                 if (new YAMLConfig().read("language").equals("chs")) {
@@ -213,13 +186,6 @@ public class Initiator extends PluginBase {
         File extensions = new File(Server.getInstance().getPluginPath() + "/LiveWeather/extensions");
         for(File f : extensions.listFiles()) {
             new ExtensionLoader().load(f, true);
-        }
-        if(doUpdate) {
-            File old = new File(new Update().pluginfolder + "/LiveWeather-Nukkit_Update.jar");
-            File neww = new File(new Update().pluginfolder + "/LiveWeather-Nukkit.jar");
-            new File(new Update().pluginfolder + "/LiveWeather-Nukkit.jar").delete();
-            old.renameTo(neww);
-            Server.getInstance().reload();
         }
         if(senabled) {
             server.stop();

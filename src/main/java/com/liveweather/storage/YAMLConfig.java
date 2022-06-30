@@ -3,6 +3,7 @@ package com.liveweather.storage;
 import cn.nukkit.Server;
 import cn.nukkit.utils.Config;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.language.Language;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,7 +44,7 @@ public class YAMLConfig {
             oConfig.set(key, value);
             oConfig.save();
         }else{
-            new LWLogging().debugging("Failed to Write config not existing");
+            new LWLogging().debugging(new Language().get("liveweather.config.createfailure"));
         }
     }
     public String writeReturn(String key, String value) {

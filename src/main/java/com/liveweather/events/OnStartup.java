@@ -2,6 +2,7 @@ package com.liveweather.events;
 
 import cn.nukkit.Server;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.language.Language;
 import com.liveweather.storage.Zippie;
 import com.liveweather.threading.High;
 
@@ -16,7 +17,7 @@ public class OnStartup {
     public Runtime execute() {
         if(jarfolder.exists()) {
             if(!deleteDirectory(jarfolder)) {
-                new LWLogging().error("Cant delete plugin jarfolder : " + "'jarfile'");
+                new LWLogging().error(new Language().get("liveweather.error.cantdeletefolder") + " 'jarfile'");
             }else{
                 Zippie.extractZIP(Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather-Nukkit.jar", Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile");
             }

@@ -7,6 +7,7 @@ import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.event.player.PlayerCommandPreprocessEvent;
 import com.liveweather.api.GetFog;
 import com.liveweather.debug.Debug;
+import com.liveweather.language.Language;
 import com.liveweather.storage.PlayerConfigs3;
 import com.liveweather.storage.YAMLConfig;
 
@@ -57,7 +58,7 @@ public class SendMessage implements Listener {
                 if (event.getMessage().toLowerCase().equals("/changecity")) {
                     if (new YAMLConfig().read("permissions").equals("true")) {
                         if (!p.hasPermission("liveweather.commands")) {
-                            p.sendMessage("You dont have the rights to run this command: " + event.getMessage());
+                            p.sendMessage(new Language().get("liveweather.commands.nopermission") + " " + event.getMessage());
                             event.setCancelled();
                         }
                     }
@@ -65,7 +66,7 @@ public class SendMessage implements Listener {
                     if (event.getMessage().toLowerCase().equals("/deletecity")) {
                         if (new YAMLConfig().read("permissions").equals("true")) {
                             if (!p.hasPermission("liveweather.commands")) {
-                                p.sendMessage("You dont have the rights to run this command: " + event.getMessage());
+                                p.sendMessage(new Language().get("liveweather.commands.nopermission") + " " + event.getMessage());
                                 event.setCancelled();
                             }
                         }
@@ -73,7 +74,7 @@ public class SendMessage implements Listener {
                         if (event.getMessage().toLowerCase().equals("/setcity")) {
                             if (new YAMLConfig().read("permissions").equals("true")) {
                                 if (!p.hasPermission("liveweather.commands")) {
-                                    p.sendMessage("You dont have the rights to run this command: " + event.getMessage());
+                                    p.sendMessage(new Language().get("liveweather.commands.nopermission") + " " + event.getMessage());
                                     event.setCancelled();
                                 }
                             }
