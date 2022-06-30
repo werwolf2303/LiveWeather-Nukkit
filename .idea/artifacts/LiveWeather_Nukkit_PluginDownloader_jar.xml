@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LiveWeather-Nukkit_PluginDownloader:jar">
+    <output-path>$USER_HOME$/Pictures/Nukkit/plugins</output-path>
+    <root id="archive" name="LiveWeather-Nukkit_PluginDownloader.jar">
+      <element id="module-output" name="LiveWeather-Nukkit_PluginDownloader" />
+      <element id="extracted-dir" path="$USER_HOME$/Pictures/Nukkit/nukkit-1.0-SNAPSHOT.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

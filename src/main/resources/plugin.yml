@@ -1,10 +1,5 @@
-name: LiveWeather
-main: com.liveweather.Initiator
+name: PluginDownloader
+main: com.plugindownloader.Initiator
 api: ["1.0.14"]
-version: "1.7"
+version: "1.0"
 author: Werwolf2303
-
-permissions:
-  liveweather.commands:
-    description: "Allows the user to run the commands of the LiveWeather plugin"
-    default: false
