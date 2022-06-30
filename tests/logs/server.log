@@ -1,24 +1,22 @@
-2022-06-29 15:45:35.709 [main] INFO  - Loading §anukkit.yml§f ...
-2022-06-29 15:45:35.746 [main] INFO  - Loading §aserver.properties§f ...
-2022-06-29 15:45:35.762 [main] INFO  - Selected English (eng) as the base language
-2022-06-29 15:45:35.762 [main] INFO  - Starting Minecraft: BE server version §bv1.19.0§r
-2022-06-29 15:45:35.762 [main] INFO  - Selected Zlib Provider: 2 (cn.nukkit.utils.ZlibThreadLocal)
-2022-06-29 15:45:35.778 [main] INFO  - Opening server on 0.0.0.0:19132
-2022-06-29 15:45:35.794 [main] INFO  - This server is running Nukkit version §egit-e8694c2§f "§b§f" (API 1.0.14)
-2022-06-29 15:45:35.794 [main] INFO  - Nukkit is distributed under the GPL License
-2022-06-29 15:45:35.963 [main] INFO  - Loading runtime items...
-2022-06-29 15:45:36.180 [main] INFO  - Loading recipes...
-2022-06-29 15:45:36.332 [main] INFO  - Loaded 1509 recipes.
-2022-06-29 15:45:36.332 [main] INFO  - Successfully loaded 0 resource packs
-2022-06-29 15:45:36.847 [main] INFO  - Loading FormAPI v2.1-SNAPSHOT
-2022-06-29 15:45:36.847 [main] INFO  - Loading LiveWeather v1.7
-2022-06-29 15:45:36.863 [main] INFO  - [LiveWeather] Init..
-2022-06-29 15:45:36.878 [main] ERROR - [LiveWeather::Critical] Critical errors occurred, cant continue
-2022-06-29 15:45:36.878 [main] FATAL - Could not load plugin
+2022-06-30 09:28:14.732 [main] INFO  - Loading §anukkit.yml§f ...
+2022-06-30 09:28:14.780 [main] INFO  - Loading §aserver.properties§f ...
+2022-06-30 09:28:14.780 [main] INFO  - Selected English (eng) as the base language
+2022-06-30 09:28:14.780 [main] INFO  - Starting Minecraft: BE server version §bv1.19.0§r
+2022-06-30 09:28:14.796 [main] INFO  - Selected Zlib Provider: 2 (cn.nukkit.utils.ZlibThreadLocal)
+2022-06-30 09:28:14.818 [main] INFO  - Opening server on 0.0.0.0:19132
+2022-06-30 09:28:14.834 [main] INFO  - This server is running Nukkit version §egit-e8694c2§f "§b§f" (API 1.0.14)
+2022-06-30 09:28:14.834 [main] INFO  - Nukkit is distributed under the GPL License
+2022-06-30 09:28:15.011 [main] INFO  - Loading runtime items...
+2022-06-30 09:28:15.218 [main] INFO  - Loading recipes...
+2022-06-30 09:28:15.364 [main] INFO  - Loaded 1509 recipes.
+2022-06-30 09:28:15.364 [main] INFO  - Successfully loaded 0 resource packs
+2022-06-30 09:28:15.863 [main] INFO  - Loading FormAPI v2.1-SNAPSHOT
+2022-06-30 09:28:15.879 [main] INFO  - Loading LiveWeather v1.7
+2022-06-30 09:28:15.879 [main] INFO  - [LiveWeather] init... !FIRST RUN! This can take up to 2 minutes
+2022-06-30 09:28:15.907 [main] FATAL - Could not load plugin
 java.lang.NullPointerException: null
-	at cn.nukkit.plugin.PluginManager.disablePlugin(PluginManager.java:508) ~[nukkit-1.0-SNAPSHOT.jar:?]
-	at com.liveweather.check.SuccessFullStartup.<init>(SuccessFullStartup.java:33) ~[?:?]
-	at com.liveweather.Initiator.onLoad(Initiator.java:98) ~[?:?]
+	at com.liveweather.language.Language.get(Language.java:22) ~[?:?]
+	at com.liveweather.Initiator.onLoad(Initiator.java:56) ~[?:?]
 	at cn.nukkit.plugin.JavaPluginLoader.initPlugin(JavaPluginLoader.java:109) ~[nukkit-1.0-SNAPSHOT.jar:?]
 	at cn.nukkit.plugin.JavaPluginLoader.loadPlugin(JavaPluginLoader.java:57) ~[nukkit-1.0-SNAPSHOT.jar:?]
 	at cn.nukkit.plugin.PluginManager.loadPlugin(PluginManager.java:95) [nukkit-1.0-SNAPSHOT.jar:?]
@@ -28,15 +26,19 @@ java.lang.NullPointerException: null
 	at cn.nukkit.plugin.PluginManager.loadPlugins(PluginManager.java:120) [nukkit-1.0-SNAPSHOT.jar:?]
 	at cn.nukkit.Server.<init>(Server.java:505) [nukkit-1.0-SNAPSHOT.jar:?]
 	at cn.nukkit.Nukkit.main(Nukkit.java:120) [nukkit-1.0-SNAPSHOT.jar:?]
-2022-06-29 15:45:36.878 [main] FATAL - Could not load plugin "LiveWeather"
-2022-06-29 15:45:36.878 [main] INFO  - Enabling FormAPI v2.1-SNAPSHOT
-2022-06-29 15:45:36.910 [main] INFO  - Preparing level "§aworld§f"
-2022-06-29 15:45:36.931 [main] INFO  - Preparing start region for level "world"
-2022-06-29 15:45:36.963 [main] INFO  - Preparing level "§anether§f"
-2022-06-29 15:45:36.963 [main] INFO  - Preparing start region for level "nether"
-2022-06-29 15:45:36.995 [main] INFO  - Starting GS4 status listener
-2022-06-29 15:45:37.011 [main] INFO  - Setting query port to 19132
-2022-06-29 15:45:37.011 [main] INFO  - Query is running on 0.0.0.0:19132
-2022-06-29 15:45:37.011 [main] INFO  - Default game type: Survival Mode
-2022-06-29 15:45:37.011 [main] INFO  - Done (1.333s)! For help, type "help" or "?"
-2022-06-29 15:45:37.011 [main] INFO  - Disabling FormAPI v2.1-SNAPSHOT
+2022-06-30 09:28:15.907 [main] FATAL - Could not load plugin "LiveWeather"
+2022-06-30 09:28:15.907 [main] INFO  - Enabling FormAPI v2.1-SNAPSHOT
+2022-06-30 09:28:15.940 [main] INFO  - Preparing level "§aworld§f"
+2022-06-30 09:28:15.956 [main] INFO  - Preparing start region for level "world"
+2022-06-30 09:28:15.988 [main] INFO  - Preparing level "§anether§f"
+2022-06-30 09:28:15.988 [main] INFO  - Preparing start region for level "nether"
+2022-06-30 09:28:16.039 [main] INFO  - Starting GS4 status listener
+2022-06-30 09:28:16.040 [main] INFO  - Setting query port to 19132
+2022-06-30 09:28:16.040 [main] INFO  - Query is running on 0.0.0.0:19132
+2022-06-30 09:28:16.040 [main] INFO  - Default game type: Survival Mode
+2022-06-30 09:28:16.040 [main] INFO  - Done (1.323s)! For help, type "help" or "?"
+2022-06-30 09:31:36.907 [main] INFO  - [CONSOLE: Stopping the server]
+2022-06-30 09:31:36.945 [main] INFO  - Disabling FormAPI v2.1-SNAPSHOT
+2022-06-30 09:31:36.945 [main] INFO  - Unloading level "§aworld§f"
+2022-06-30 09:31:36.975 [main] INFO  - Unloading level "§anether§f"
+2022-06-30 09:31:37.009 [main] INFO  - Stopping other threads
