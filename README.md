@@ -36,5 +36,5 @@ Supported languages:
 
 Todo:
 
-- Fix file size [ ]
-- Implement more languages
+- [ ] Fix file size
+- [ ] Implement more languages
