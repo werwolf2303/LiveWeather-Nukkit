@@ -21,8 +21,8 @@ public class WhatsMyWeather extends Command {
         if(commandSender instanceof Player) {
             Player p = (Player) commandSender;
             if(!new YAMLConfig().read("autofindplayercity").toLowerCase().equals("true")) {
-                if (!new PlayerConfig().read(p.getName()).equals("")) {
-                    p.sendMessage(new Language().get("liveweather.commands.whatsmyweather.noautofind.current") + new GetWeather().getWeather(new PlayerConfig().read(p.getName())));
+                if (!new YAMLConfig().read(p.getName()).equals("")) {
+                    p.sendMessage(new Language().get("liveweather.commands.whatsmyweather.noautofind.current") + new GetWeather().getWeather(new YAMLConfig().read(p.getName())));
                 } else {
                     p.sendMessage(new Language().get("liveweather.commands.whatsmyweather.noautofind.error"));
                 }
