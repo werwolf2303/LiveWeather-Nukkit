@@ -6,6 +6,7 @@ import cn.nukkit.event.level.ThunderChangeEvent;
 import cn.nukkit.event.level.WeatherChangeEvent;
 import cn.nukkit.level.Sound;
 import cn.nukkit.network.protocol.LevelEventPacket;
+import com.liveweather.instances.InstanceManager;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -23,7 +24,7 @@ public class SetWeather {
     }
     public void setRaining(Player p) {
         WeatherChangeEvent ev = new WeatherChangeEvent(p.getLevel(), raining);
-        Server.getInstance().getPluginManager().callEvent(ev);
+        InstanceManager.getServer().getPluginManager().callEvent(ev);
         LevelEventPacket pk = new LevelEventPacket();
         pk.evid = 3001;
         int time = ThreadLocalRandom.current().nextInt(12000) + 12000;
@@ -40,7 +41,7 @@ public class SetWeather {
     }
     public void noThundering(Player p) {
         WeatherChangeEvent ev = new WeatherChangeEvent(p.getLevel(), raining);
-        Server.getInstance().getPluginManager().callEvent(ev);
+        InstanceManager.getServer().getPluginManager().callEvent(ev);
         LevelEventPacket pk = new LevelEventPacket();
         pk.evid = 3004;
         this.setRainTime(ThreadLocalRandom.current().nextInt(168000) + 12000);
@@ -49,16 +50,16 @@ public class SetWeather {
     }
     public void noRaining(Player p) {
         WeatherChangeEvent ev = new WeatherChangeEvent(p.getLevel(), raining);
-        Server.getInstance().getPluginManager().callEvent(ev);
+        InstanceManager.getServer().getPluginManager().callEvent(ev);
         LevelEventPacket pk = new LevelEventPacket();
         pk.evid = 3003;
         this.setRainTime(ThreadLocalRandom.current().nextInt(168000) + 12000);
         Player[] p2 = new Player[] {p};
-        Server.broadcastPacket(p2, pk);
+        InstanceManager.getServer().broadcastPacket(p2, pk);
     }
     public void setThundering(Player p) {
         ThunderChangeEvent ev = new ThunderChangeEvent(p.getLevel(), thundering);
-        Server.getInstance().getPluginManager().callEvent(ev);
+        InstanceManager.getServer().getPluginManager().callEvent(ev);
         this.thundering = thundering;
         LevelEventPacket pk = new LevelEventPacket();
         pk.evid = 3002;
@@ -66,6 +67,6 @@ public class SetWeather {
         pk.data = time;
         this.setThunderTime(time);
         Player[] p2 = new Player[] {p};
-        Server.broadcastPacket(p2, pk);
+        InstanceManager.getServer().broadcastPacket(p2, pk);
     }
 }

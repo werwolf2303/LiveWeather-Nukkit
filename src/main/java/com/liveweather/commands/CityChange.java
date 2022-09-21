@@ -14,7 +14,7 @@ public class CityChange extends Command {
 
     @Override
     public boolean execute(CommandSender commandSender, String s, String[] strings) {
-        if(commandSender instanceof Player) {
+        if(commandSender.isPlayer()) {
             Player p = (Player) commandSender;
             if(new PlayerConfig().hasEntered(p.getName())) {
                 CustomForm form = new CustomForm()
@@ -24,7 +24,7 @@ public class CityChange extends Command {
                     if(data == null) return; //Если форма закрыта принудительно, то data будет иметь значение null
                     //new PlayerConfigs().writeConfig(event.getPlayer().getName(), targetForm.getElements().toString());
                     new PlayerConfig().changePlayer(p.getName(), data.toString().replace("[", "").replace("]", ""));
-                    //Server.getInstance().getLogger().info(targetForm.getElements().toString());
+                    //InstanceManager.getServer().getLogger().info(targetForm.getElements().toString());
                     targetPlayer.sendMessage(new Language().get("liveweather.commands.citychange.successfull") + data.toString().replace("[", "").replace("]", ""));
                 });
             }else{

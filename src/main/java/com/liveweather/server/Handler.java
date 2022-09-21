@@ -2,6 +2,7 @@ package com.liveweather.server;
 
 
 import cn.nukkit.Server;
+import com.liveweather.instances.InstanceManager;
 import com.liveweather.storage.YAMLConfig;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -28,13 +29,13 @@ public class Handler {
                     }
                 }else {
                     if (exchange.getRequestURI().toString().equals("")) {
-                        File file = new File(Server.getInstance().getPluginPath() + "/LiveWeather/jarfile/sechtml/" + "index.html");
+                        File file = new File(InstanceManager.getServer().getPluginPath() + "/LiveWeather/jarfile/sechtml/" + "index.html");
                         exchange.sendResponseHeaders(200, file.length());
                         try (OutputStream os = exchange.getResponseBody()) {
                             Files.copy(file.toPath(), os);
                         }
                     } else {
-                        File file = new File(Server.getInstance().getPluginPath() + "/LiveWeather/jarfile/sechtml/" + exchange.getRequestURI().toString());
+                        File file = new File(InstanceManager.getServer().getPluginPath() + "/LiveWeather/jarfile/sechtml/" + exchange.getRequestURI().toString());
                         exchange.sendResponseHeaders(200, file.length());
                         try (OutputStream os = exchange.getResponseBody()) {
                             Files.copy(file.toPath(), os);
@@ -89,13 +90,13 @@ public class Handler {
             }
             try {
                 if (exchange.getRequestURI().toString().equals("/")) {
-                    File file2 = new File(Server.getInstance().getPluginPath() + "/LiveWeather/jarfile/html/" + "index.html");
+                    File file2 = new File(InstanceManager.getServer().getPluginPath() + "/LiveWeather/jarfile/html/" + "index.html");
                     exchange.sendResponseHeaders(200, file2.length());
                     try (OutputStream os = exchange.getResponseBody()) {
                         Files.copy(file2.toPath(), os);
                     }
                 } else {
-                    File file = new File(Server.getInstance().getPluginPath() + "/LiveWeather/jarfile/html/" + exchange.getRequestURI().toString());
+                    File file = new File(InstanceManager.getServer().getPluginPath() + "/LiveWeather/jarfile/html/" + exchange.getRequestURI().toString());
                     exchange.sendResponseHeaders(200, file.length());
                     try (OutputStream os = exchange.getResponseBody()) {
                         Files.copy(file.toPath(), os);

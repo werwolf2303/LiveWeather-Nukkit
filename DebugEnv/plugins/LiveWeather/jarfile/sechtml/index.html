@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>LiveWeather - AdminPanel</title>
+        <script src="index.js"></script>
+        <style>
+            #body {
+  background-image:url("noise.jpg");
+            }
+            .container {
+              height: 200px;
+              position: relative;
+            }
+            .red {
+                color:red;
+            }
+            .yellow {
+                color:yellow;
+            }
+            ul {
+  list-style-type: none;
+}
+            </style>
+             <script type="text/javascript" 
+             src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+         <script type="text/javascript" 
+             src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.js"></script>
+         <link rel="stylesheet" type="text/css" 
+             href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <head>
+            <body id="body" onload="init()">
+        <div id="nnav">
+        </div>
+        <div style="display:none" id="error">
+            <center>
+                <div class="card mx-auto">
+                    <div class="card-header">
+                        <a style="color:red">API Offline</a>
+                    </div>
+                  </div>
+                  </div>
+                </center>
+          </div>
+        </div>
+        <div id="demonslayer" class="container">
+                <div id="mainform" class="card mx-auto">
+                    <div class="card-header">
+                        LiveWeather Configuration
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item border-0"><input placeholder="Enter Password" type="password"><a href="#" class="btn btn-primary">Change Password</a></li>
+                            <li class="list-group-item border-0"><input id="autofindplayercityget" type="checkbox" name="autofindplayercityset"> Auto find player city</li>
+                            <li class="list-group-item border-0"><input id="permissionsget" type="checkbox" name="permissionsset"> Permissions</li>
+                            <li class="list-group-item border-0">Config server  <input id="configserverget" name="configserverset" type="checkbox"></li>
+                            <br>
+                            <li class="list-group-item border-0"><span style="color:red" >Warning Experimental Features </span></li>
+                            <li class="list-group-item border-0"><input id="cloudlyget" name="cloudlyset" type="checkbox"> Cloudly</li>
+                        </ul>
+                    </div>
+                  </div>
+                  </div>
+            </div>
+          </div>
+    </body>
+</html>

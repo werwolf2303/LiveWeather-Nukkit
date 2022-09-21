@@ -7,6 +7,7 @@ import cn.nukkit.plugin.PluginClassLoader;
 import cn.nukkit.plugin.PluginLoader;
 import com.liveweather.Initiator;
 import com.liveweather.check.CheckIntelliJ;
+import com.liveweather.instances.InstanceManager;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class LWLogging {
     String location = "";
     public LWLogging() {
         if(!debug) {
-            location = Server.getInstance().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile/sounds/";
+            location = InstanceManager.getServer().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile/sounds/";
         }
     }
     @SuppressWarnings("unused")
@@ -34,40 +35,40 @@ public class LWLogging {
     }
     public void critical(String message) {
         if(!debug) {
-            Server.getInstance().getLogger().error("[LiveWeather::Critical] " + message);
+            InstanceManager.getServer().getLogger().error("[LiveWeather::Critical] " + message);
         }else{
             System.err.println("[LiveWeather::Crtitical] " + message);
         }
     }
     public void extension(String message) {
         if(!debug) {
-            Server.getInstance().getLogger().info("[LiveWeather <Extension>] " + message);
+            InstanceManager.getServer().getLogger().info("[LiveWeather <Extension>] " + message);
         }
     }
     public void warning(String message) {
         if(!debug) {
-            Server.getInstance().getLogger().warning("[LiveWeather::Warning] " + message);
+            InstanceManager.getServer().getLogger().warning("[LiveWeather::Warning] " + message);
         }else{
             System.out.println("[LiveWeather::Warning] " + message);
         }
     }
     public void normal(String message) {
         if(!debug) {
-            Server.getInstance().getLogger().info("[LiveWeather] " + message);
+            InstanceManager.getServer().getLogger().info("[LiveWeather] " + message);
         }else{
             System.out.println("[LiveWeather] " + message);
         }
     }
     public void error(String message) {
         if(!debug) {
-            Server.getInstance().getLogger().error("[LiveWeather::Error] " + message);
+            InstanceManager.getServer().getLogger().error("[LiveWeather::Error] " + message);
         }else{
             System.err.println("[LiveWeather::Error] " + message);
         }
     }
     public void debugging(String message) {
         if(!debug) {
-            Server.getInstance().getLogger().info("[LiveWeather::Debugging] " + message);
+            InstanceManager.getServer().getLogger().info("[LiveWeather::Debugging] " + message);
         }else{
             System.out.println("[LiveWeather::Debugging] " + message);
         }
@@ -78,28 +79,28 @@ public class LWLogging {
 
             if(plugin == Initiator.plugin) return;
 
-            Server.getInstance().getServiceManager().cancel(plugin);
+            InstanceManager.getServer().getServiceManager().cancel(plugin);
 
 
-            Object map = getPrivateField(Server.getInstance().getPluginManager(), "plugins");
+            Object map = getPrivateField(InstanceManager.getServer().getPluginManager(), "plugins");
             @SuppressWarnings("unchecked")
             HashMap<String, Plugin> plugins = (HashMap<String, Plugin>) map;
 
             plugins.remove(plugin.getName());
 
-            Object cmds = getPrivateField(Server.getInstance().getCommandMap(), "knownCommands");
+            Object cmds = getPrivateField(InstanceManager.getServer().getCommandMap(), "knownCommands");
             @SuppressWarnings("unchecked")
             HashMap<String, Command> knownCommands = (HashMap<String, Command>) cmds;
 
             HashMap<String, String> cmdds = new HashMap<>();
 
-            for(Command c : Server.getInstance().getCommandMap().getCommands().values()) {
+            for(Command c : InstanceManager.getServer().getCommandMap().getCommands().values()) {
                 if(cmdds.containsKey(c.getClass().getName())) {
                     cmdds.put(c.getClass().getName(),cmdds.get(c.getClass().getName()) + ">>>" + c.getName());
                 } else cmdds.put(c.getClass().getName(), c.getName());
             }
 
-            Object files = getPrivateField(Server.getInstance().getPluginManager(), "fileAssociations");
+            Object files = getPrivateField(InstanceManager.getServer().getPluginManager(), "fileAssociations");
             @SuppressWarnings("unchecked")
             HashMap<String, PluginLoader> fileAssociations = (HashMap<String, PluginLoader>) files;
             for(PluginLoader p : fileAssociations.values()) {
@@ -146,7 +147,7 @@ public class LWLogging {
     public static void unregisterCommand(Command cmd) {
         try {
 
-            Object map = getPrivateField(Server.getInstance().getCommandMap(), "knownCommands");
+            Object map = getPrivateField(InstanceManager.getServer().getCommandMap(), "knownCommands");
             @SuppressWarnings("unchecked")
             HashMap<String, Command> knownCommands = (HashMap<String, Command>) map;
             if(knownCommands.containsKey(cmd.getName())) knownCommands.remove(cmd.getName());

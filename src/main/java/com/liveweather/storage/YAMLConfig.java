@@ -3,13 +3,14 @@ package com.liveweather.storage;
 import cn.nukkit.Server;
 import cn.nukkit.utils.Config;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.instances.InstanceManager;
 import com.liveweather.language.Language;
 
 import java.io.File;
 import java.io.IOException;
 
 public class YAMLConfig {
-    String config = Server.getInstance().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "options.yml";
+    String config = InstanceManager.getServer().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "options.yml";
     File conf_emotes = new File(config);
     public Config oConfig = new Config();
     public YAMLConfig() {

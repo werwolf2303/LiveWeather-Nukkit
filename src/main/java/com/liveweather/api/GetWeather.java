@@ -129,11 +129,12 @@ public class GetWeather {
             HttpEntity entity = response.getEntity();
             String result = EntityUtils.toString(entity);
             String[] lon = result.replace("[", "").replace("]", "").split(",");
-            if(lon[4].contains("lon")) {
-                return lon[4].replace("\"lon\":", "");
-            }else{
-                return "NotFound";
+            for(String s : lon) {
+                if(s.contains("lon")) {
+                    return s.replace("\"lon\":", "");
+                }
             }
+            return "NotFound";
         }catch (IOException ioe) {
 
         }
@@ -148,11 +149,12 @@ public class GetWeather {
             HttpEntity entity = response.getEntity();
             String result = EntityUtils.toString(entity);
             String[] lon = result.replace("[", "").replace("]", "").split(",");
-            if(lon[3].contains("lat")) {
-                return lon[3].replace("\"lat\":", "");
-            }else{
-                return "NotFound";
+            for(String s : lon) {
+                if(s.contains("lat")) {
+                    return s.replace("\"lat\":", "");
+                }
             }
+            return "NotFound";
         }catch (IOException ioe) {
 
         }

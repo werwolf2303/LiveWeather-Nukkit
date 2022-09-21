@@ -2,6 +2,7 @@ package com.liveweather.language;
 
 import cn.nukkit.Server;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.instances.InstanceManager;
 import com.liveweather.storage.YAMLConfig;
 
 import java.io.File;
@@ -9,7 +10,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Language {
-    String location = Server.getInstance().getFilePath().replace("\\", "/") + "plugins/" + "LiveWeather" + "/" + "jarfile/lang/";
+    String location = InstanceManager.getServer().getFilePath().replace("\\", "/") + "plugins/" + "LiveWeather" + "/" + "jarfile/lang/";
     String language = new YAMLConfig().read("language");
     public String get(String obj) {
         String toreturn = "";

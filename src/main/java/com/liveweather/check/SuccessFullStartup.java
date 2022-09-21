@@ -3,6 +3,7 @@ package com.liveweather.check;
 import cn.nukkit.Server;
 import com.liveweather.Initiator;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.instances.InstanceManager;
 import com.liveweather.language.Language;
 import com.liveweather.storage.YAMLConfig;
 
@@ -31,7 +32,7 @@ public class SuccessFullStartup {
         }
         if(wrong) {
             new LWLogging().critical("Critical errors occurred, cant continue");
-            Server.getInstance().getPluginManager().disablePlugin(Initiator.plugin);
+            InstanceManager.getServer().getPluginManager().disablePlugin(Initiator.plugin);
         }
     }
 }

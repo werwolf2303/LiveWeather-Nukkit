@@ -13,6 +13,7 @@
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/sourceforge/htmlunit/htmlunit/2.61.0/htmlunit-2.61.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Downloads/nukkit-1.0-SNAPSHOT.jar" path-in-jar="/" />
       <element id="module-output" name="LiveWeather-Nukkit_unstable" />
+      <element id="module-output" name="LiveWeather-Nukkit" />
     </root>
   </artifact>
 </component>

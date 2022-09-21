@@ -18,7 +18,7 @@ public class WhatsMyWeather extends Command {
 
     @Override
     public boolean execute(CommandSender commandSender, String s, String[] strings) {
-        if(commandSender instanceof Player) {
+        if(commandSender.isPlayer()) {
             Player p = (Player) commandSender;
             if(!new YAMLConfig().read("autofindplayercity").toLowerCase().equals("true")) {
                 if (!new YAMLConfig().read(p.getName()).equals("")) {
