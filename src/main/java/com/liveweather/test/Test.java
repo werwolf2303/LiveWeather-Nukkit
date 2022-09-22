@@ -14,7 +14,6 @@ public class Test {
     public static void main(String[] args) {
         //ExtensionLoader e = new ExtensionLoader();
         //e.load(new File("C:\\Users\\C5350929\\Pictures\\Nukkit\\plugins\\LiveWeather\\extensions\\LWExtension.jar"), false);
-        Server s = InstanceManager.getServer();
-        System.out.println(s.getName());
+
     }
 }

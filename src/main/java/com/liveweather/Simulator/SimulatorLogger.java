@@ -7,11 +7,10 @@ import java.lang.reflect.Method;
 
 public class SimulatorLogger {
     public void info(String message) {
-        System.out.println("[Server::info] " + message);
-        InstanceManager.getConsole().init();
+        InstanceManager.getDebugFrame().add("[Server::info] " + message);
+
     }
     public void player(String message) {
-        System.out.println("[Player::Message] " + message);
-        InstanceManager.getConsole().init();
+        InstanceManager.getDebugFrame().add("[Player::Message] " + message);
     }
 }

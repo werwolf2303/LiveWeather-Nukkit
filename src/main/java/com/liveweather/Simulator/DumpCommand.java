@@ -13,7 +13,7 @@ public class DumpCommand extends Command {
     @Override
     public boolean execute(CommandSender var1, String var2, String[] var3) {
         for(Command s : Console.com) {
-            System.out.println("Available: " + s);
+            System.out.println("Available: " + s + "  =>  " + s.getDescription());
         }
         return false;
     }

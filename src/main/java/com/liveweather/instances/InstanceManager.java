@@ -5,6 +5,7 @@ import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import com.liveweather.GlobalValues;
 import com.liveweather.Simulator.Console;
+import com.liveweather.Simulator.DebugFrame;
 
 public class InstanceManager {
     static com.liveweather.Simulator.Server server = null;
@@ -17,6 +18,13 @@ public class InstanceManager {
             return server;
         }
         return Server.getInstance();
+    }
+    static DebugFrame.Content frame = null;
+    public static DebugFrame.Content getDebugFrame() {
+        return frame;
+    }
+    public static void setDebugFrame(DebugFrame.Content content) {
+        frame = content;
     }
     public static Console getConsole() {
         if(console!=null) {
