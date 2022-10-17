@@ -26,6 +26,7 @@ public class Simulate {
         System.out.println("Simulator Mode: Console has only plugin commands");
         new Initiator().onLoad();
         new Initiator().onEnable();
+        InstanceManager.getServer().getCommandMap().register("help", new ExecCommand("exec"));
         InstanceManager.getServer().getCommandMap().register("help", new KillCommand("kill"));
         InstanceManager.getServer().getCommandMap().register("help", new LogCommand("log"));
         InstanceManager.getServer().getCommandMap().register("help", new HelpCommand("help"));

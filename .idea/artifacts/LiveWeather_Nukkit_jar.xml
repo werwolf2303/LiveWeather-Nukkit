@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="LiveWeather-Nukkit:jar">
-    <output-path>$USER_HOME$/Pictures/Nukkit/plugins</output-path>
+    <output-path>$USER_HOME$/OneDrive - Pilgerhaus Weinheim/Bilder/Nukkit/plugins</output-path>
     <root id="archive" name="LiveWeather-Nukkit.jar">
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpmime/4.5.13/httpmime-4.5.13.jar" path-in-jar="/" />

@@ -1,6 +1,8 @@
 package com.liveweather.test;
 
 import cn.nukkit.Server;
+import com.liveweather.GlobalValues;
+import com.liveweather.api.GetFog;
 import com.liveweather.api.GetWeather;
 import com.liveweather.bukkit.ChatColor;
 import com.liveweather.extensions.Extension;

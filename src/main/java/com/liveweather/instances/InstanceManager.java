@@ -4,11 +4,14 @@ import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import com.liveweather.GlobalValues;
+import com.liveweather.Simulator.APIResponse;
 import com.liveweather.Simulator.Console;
 import com.liveweather.Simulator.DebugFrame;
+import com.liveweather.api.GetWeather;
 
 public class InstanceManager {
     static com.liveweather.Simulator.Server server = null;
+    static GetWeather weather = null;
     static Console console = null;
     public static Server getServer() {
         if(GlobalValues.debug) {
@@ -19,7 +22,16 @@ public class InstanceManager {
         }
         return Server.getInstance();
     }
+    public static GetWeather getWeather() {
+        if(GlobalValues.debug) {
+            if(weather==null) {
+                weather = new APIResponse();
+            }
+        }
+        return weather;
+    }
     static DebugFrame.Content frame = null;
+
     public static DebugFrame.Content getDebugFrame() {
         return frame;
     }
