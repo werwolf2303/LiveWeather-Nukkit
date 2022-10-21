@@ -8,6 +8,7 @@ import cn.nukkit.event.player.PlayerCommandPreprocessEvent;
 import com.liveweather.api.GetFog;
 import com.liveweather.debug.Debug;
 import com.liveweather.language.Language;
+import com.liveweather.panel.AdminPanel;
 import com.liveweather.storage.PlayerConfigs3;
 import com.liveweather.storage.YAMLConfig;
 
@@ -37,6 +38,11 @@ public class SendMessage implements Listener {
                         if (new PlayerConfigs3().hasEntered(p.getName())) {
                             p.sendMessage("Fog is set to: " + new GetFog().getFog(new PlayerConfigs3().getCity(p.getName())) + " chunks");
                         }
+                    }
+                    event.setCancelled();
+                }else{
+                    if(message.equals("#LWPanel")) {
+                        new AdminPanel().openLoginForm(p);
                     }
                     event.setCancelled();
                 }

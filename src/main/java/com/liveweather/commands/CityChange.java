@@ -3,9 +3,9 @@ package com.liveweather.commands;
 import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
+import com.liveweather.formapi.forms.elements.CustomForm;
 import com.liveweather.language.Language;
 import com.liveweather.storage.PlayerConfig;
-import ru.nukkitx.forms.elements.CustomForm;
 
 public class CityChange extends Command {
     public CityChange(String name, String description) {
@@ -18,8 +18,8 @@ public class CityChange extends Command {
             Player p = (Player) commandSender;
             if(new PlayerConfig().hasEntered(p.getName())) {
                 CustomForm form = new CustomForm()
-                        .addInput(new Language().get("liveweather.forms.button"));
-                form.setTitle(new Language().get("liveweather.forms.title"));
+                        .addInput(new Language().get("liveweather.formapi.button"));
+                form.setTitle(new Language().get("liveweather.formapi.title"));
                 form.send(p, (targetPlayer, targetForm, data) -> {
                     if(data == null) return; //Если форма закрыта принудительно, то data будет иметь значение null
                     //new PlayerConfigs().writeConfig(event.getPlayer().getName(), targetForm.getElements().toString());

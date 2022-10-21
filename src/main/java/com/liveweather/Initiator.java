@@ -22,6 +22,7 @@ import com.liveweather.events.OnStartup;
 import com.liveweather.events.SendMessage;
 import com.liveweather.experimental.Cloudly;
 import com.liveweather.extensions.ExtensionLoader;
+import com.liveweather.formapi.events.EventListener;
 import com.liveweather.instances.InstanceManager;
 import com.liveweather.language.Language;
 import com.liveweather.location.Tracker;
@@ -29,7 +30,7 @@ import com.liveweather.server.CreateServer;
 import com.liveweather.setter.Wetter;
 import com.liveweather.setter.WetterService;
 import com.liveweather.storage.*;
-
+import com.liveweather.utils.PluginAPI;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -63,7 +64,12 @@ public class Initiator extends PluginBase {
             new YAMLConfig().write("permissions", "false");
         }
         java.util.logging.Logger.getLogger("org.apache.http.conn.util.PublicSuffixMatcherLoader").setLevel(java.util.logging.Level.OFF);
-        if (!new File(InstanceManager.getServer().getFilePath() + "plugins/FormAPI.jar").exists()) {
+        if(new File(InstanceManager.getServer().getFilePath()+"plugins/FormAPI.jar").exists()) {
+            new LWLogging().normal("Found old FormAPI! Delete...");
+            new PluginAPI().delete("formapi");
+            new LWLogging().normal("Done...");
+        }
+        /*if (!new File(InstanceManager.getServer().getFilePath() + "plugins/FormAPI.jar").exists()) {
             Zippie.extractZIP(InstanceManager.getServer().getFilePath() + "/plugins/" + "LiveWeather-Nukkit.jar", InstanceManager.getServer().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile");
             File source = new File(InstanceManager.getServer().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile/FormAPI.jar");
             File dest = new File(InstanceManager.getServer().getFilePath() + "/plugins/FormAPI.jar");
@@ -74,7 +80,7 @@ public class Initiator extends PluginBase {
                 e.printStackTrace();
             }
             InstanceManager.getServer().getPluginManager().loadPlugin(new File(InstanceManager.getServer().getFilePath() + "/plugins/FormAPI.jar"));
-        }
+        }*/
         if (new Performance().enoughPower()) {
             if (!new File(InstanceManager.getServer().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "extensions").exists()) {
                 new File(InstanceManager.getServer().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "extensions").mkdir();
@@ -199,6 +205,7 @@ public class Initiator extends PluginBase {
             InstanceManager.getServer().getPluginManager().registerEvents(new WetterService(), this);
             InstanceManager.getServer().getPluginManager().registerEvents(new SendMessage(), this);
         }
+        InstanceManager.getServer().getPluginManager().registerEvents(new EventListener(), this);
     }
     public Server server() {
         return getServer();

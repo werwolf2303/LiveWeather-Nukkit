@@ -14,6 +14,7 @@
       <element id="extracted-dir" path="$USER_HOME$/Downloads/nukkit-1.0-SNAPSHOT.jar" path-in-jar="/" />
       <element id="module-output" name="LiveWeather-Nukkit_unstable" />
       <element id="module-output" name="LiveWeather-Nukkit" />
+      <element id="module-output" name="LiveWeather" />
     </root>
   </artifact>
 </component>
