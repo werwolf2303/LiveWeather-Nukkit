@@ -2,11 +2,9 @@ package com.liveweather.formapi.forms.elements;
 
 import cn.nukkit.Player;
 import cn.nukkit.form.element.*;
-import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.window.FormWindowCustom;
 import com.liveweather.formapi.forms.CustomFormResponse;
 import com.liveweather.formapi.forms.Form;
-import com.liveweather.formapi.forms.custom.Button;
 
 import java.util.List;
 
@@ -25,7 +23,7 @@ public class CustomForm extends Form {
     }
 
     public void send(Player player, CustomFormResponse response){
-        playersForm.put(player.getName(), (FormResponse) response);
+        playersForm.put(player.getName(), response);
         player.showFormWindow(form);
     }
 
@@ -65,12 +63,6 @@ public class CustomForm extends Form {
 
     public CustomForm addToggle() {
         ElementToggle element = new ElementToggle("");
-        ((FormWindowCustom) form).addElement(element);
-        return this;
-    }
-
-    public CustomForm addButton(String text) {
-        Button element = new Button(text);
         ((FormWindowCustom) form).addElement(element);
         return this;
     }

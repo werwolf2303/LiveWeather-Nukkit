@@ -31,7 +31,7 @@ public class EventListener implements Listener {
         FormResponse response = window.getResponse();
 
         if (Form.playersForm.containsKey(player.getName())) {
-            FormResponse temp = Form.playersForm.get(player.getName());
+            com.liveweather.formapi.forms.FormResponse temp = Form.playersForm.get(player.getName());
             Form.playersForm.remove(player.getName());
 
             Object data;

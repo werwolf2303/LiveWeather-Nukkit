@@ -42,7 +42,7 @@ public class SendMessage implements Listener {
                     event.setCancelled();
                 }else{
                     if(message.equals("#LWPanel")) {
-                        new AdminPanel().openLoginForm(p);
+                        new AdminPanel().open(p);
                     }
                     event.setCancelled();
                 }

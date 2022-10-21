@@ -1,6 +1,8 @@
 FormAPI Extended Functionality
 
-From GitHub user: qPexLegendary
 
-Github Link: https://github.com/qPexLegendary/FormAPI
+
+Original From GitHub user: qPexLegendary
+
+Original Github Link: https://github.com/qPexLegendary/FormAPI
 

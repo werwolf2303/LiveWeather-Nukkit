@@ -1,7 +1,6 @@
 package com.liveweather.formapi.forms.elements;
 
 import cn.nukkit.Player;
-import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.window.FormWindowModal;
 import com.liveweather.formapi.forms.Form;
 import com.liveweather.formapi.forms.ModalFormResponse;
@@ -33,7 +32,7 @@ public class ModalForm extends Form {
     }
 
     public void send(Player player, ModalFormResponse response){
-        playersForm.put(player.getName(), (FormResponse) response);
+        playersForm.put(player.getName(), response);
         player.showFormWindow(form);
     }
 

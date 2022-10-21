@@ -30,6 +30,7 @@ import com.liveweather.server.CreateServer;
 import com.liveweather.setter.Wetter;
 import com.liveweather.setter.WetterService;
 import com.liveweather.storage.*;
+import com.liveweather.test.TestCommand;
 import com.liveweather.utils.PluginAPI;
 import java.io.File;
 import java.io.IOException;
@@ -86,7 +87,7 @@ public class Initiator extends PluginBase {
                 new File(InstanceManager.getServer().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "extensions").mkdir();
             }
             new SuccessFullStartup();
-            //InstanceManager.getServer().getCommandMap().register("help", new TestCommand("testweather", "Test the liveweather plugin"));
+            InstanceManager.getServer().getCommandMap().register("help", new TestCommand("testweather"));
             if (new YAMLConfig().read("autofindplayercity").toLowerCase().equals("false")) {
                 InstanceManager.getServer().getCommandMap().register("help", new CityDelete("deletecity", new Language().get("liveweather.commands.citydelete.description")));
                 InstanceManager.getServer().getCommandMap().register("help", new CityChange("changecity", new Language().get("liveweather.commands.citychange.description")));
