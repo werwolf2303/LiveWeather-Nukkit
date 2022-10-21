@@ -20,4 +20,4 @@ jobs:
         uses: actions/upload-artifact@v3.1.1
         with:
           name: Build
-          path: /home/runner/work/LiveWeather-Nukkit/LiveWeather-Nukkit/LiveWeather-Nukkit/target/LiveWeather-1.0-SNAPSHOT.jar
+          path: /home/runner/work/LiveWeather-Nukkit/LiveWeather-Nukkit/LiveWeather-Nukkit/target/LiveWeather-Nukkit.jar
