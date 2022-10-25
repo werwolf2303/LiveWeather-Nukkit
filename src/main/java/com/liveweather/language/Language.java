@@ -1,36 +1,35 @@
 package com.liveweather.language;
 
-import cn.nukkit.Server;
+import com.liveweather.GlobalValues;
 import com.liveweather.commandline.LWLogging;
-import com.liveweather.instances.InstanceManager;
-import com.liveweather.storage.YAMLConfig;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import com.liveweather.storage.LWConfig;
+import com.liveweather.utils.Resources;
 
 public class Language {
-    String location = InstanceManager.getServer().getFilePath().replace("\\", "/") + "plugins/" + "LiveWeather" + "/" + "jarfile/lang/";
-    String language = new YAMLConfig().read("language");
+    String location = "lang/";
+    String language = new LWConfig().read("language");
     public String get(String obj) {
+        if(GlobalValues.langnotsupported) {
+            language = "de";
+        }
         String toreturn = "";
         try {
-            Scanner myReader = new Scanner(new File(location + language + ".cfg"));
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
+            for (String data : new Resources().read(location + language + ".cfg").split("\n")) {
                 if (data.contains(obj)) {
                     toreturn = data.replace(obj + ":", "");
                     break;
                 }
             }
-            myReader.close();
             if (toreturn.equals("")) {
                 return obj;
             } else {
                 return toreturn;
             }
-        }catch (FileNotFoundException ex) {
-            new LWLogging().error("Language '" + language + "' not supported");
+        }catch (IllegalArgumentException a) {
+            GlobalValues.langnotsupported = true;
+            new LWLogging().error("Language \"" + language + "\" not supported revert to default: \"en\"");
+            new LWLogging().normal("Lang is: " + new LWConfig().read("language"));
             return obj;
         }
     }

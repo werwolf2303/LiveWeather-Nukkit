@@ -12,11 +12,9 @@ import com.liveweather.check.Local;
 import com.liveweather.check.Performance;
 import com.liveweather.check.SuccessFullStartup;
 import com.liveweather.commandline.LWLogging;
-import com.liveweather.commands.CityChange;
-import com.liveweather.commands.CityDelete;
-import com.liveweather.commands.CitySetter;
-import com.liveweather.commands.WhatsMyWeather;
+import com.liveweather.commands.*;
 import com.liveweather.events.SendMessage;
+import com.liveweather.events.ServerEvents;
 import com.liveweather.experimental.Cloudly;
 import com.liveweather.extensions.ExtensionLoader;
 import com.liveweather.formapi.events.EventListener;
@@ -32,12 +30,13 @@ import com.liveweather.debug.TriggerCommand;
 import com.liveweather.utils.PluginAPI;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class Initiator extends PluginBase {
     public static Plugin plugin;
     int t = 0;
     boolean senabled = false;
-    String pluginlocation = InstanceManager.getServer().getPluginPath() + "/LiveWeather";
+    public static String pluginlocation = InstanceManager.getServer().getPluginPath() + "/LiveWeather";
     CreateServer server;
     @Override
     public void onLoad() {
@@ -47,18 +46,19 @@ public class Initiator extends PluginBase {
         //Check if first run when yes create plugin folder
         if (!new File(pluginlocation).exists()) {
             new LWLogging().normal("Init.. !FIRST RUN! This can take a while");
-            new File(pluginlocation).mkdir();
+            if(!new File(pluginlocation).mkdir()) {
+                new LWLogging().critical("Cant create LiveWeather directory");
+            }
         } else {
             new LWLogging().normal("Init..");
         }
         //--
         //Create config file
-        if (!new File(new YAMLConfig().getLocation()).exists()) {
-            new YAMLConfig().create();
-            new YAMLConfig().write("apikey", "YOUR_API_KEY");
-            new YAMLConfig().write("autofindplayercity", "false");
-            new YAMLConfig().write("language", "en");
-            new YAMLConfig().write("permissions", "false");
+        if (!new File(LWConfig.config).exists()) {
+            new LWConfig().write("apikey", "YOUR_API_KEY");
+            new LWConfig().write("autofindplayercity", "false");
+            new LWConfig().write("language", "en");
+            new LWConfig().write("permissions", "false");
         }
         //---
         //Check if server has enough power or if its ignored when not disable plugin
@@ -79,15 +79,15 @@ public class Initiator extends PluginBase {
         new SuccessFullStartup();
         //---
         //Check if auto location is enabled
-        if (new YAMLConfig().read("autofindplayercity").toLowerCase().equals("false")) {
+        if (new LWConfig().read("autofindplayercity").toLowerCase().equals("false")) {
                 InstanceManager.getServer().getCommandMap().register("help", new CityDelete("deletecity", new Language().get("liveweather.commands.citydelete.description")));
                 InstanceManager.getServer().getCommandMap().register("help", new CityChange("changecity", new Language().get("liveweather.commands.citychange.description")));
                 InstanceManager.getServer().getCommandMap().register("help", new CitySetter("setcity", new Language().get("liveweather.commands.citysetter.description")));
             }
         //---
         //Enable Configserver if set to true
-        if (new YAMLConfig().read("configserver").equals("true")) {
-                if (!new YAMLConfig().read("configserverpassword").equals("")) {
+        if (new LWConfig().read("configserver").equals("true")) {
+                if (!new LWConfig().read("configserverpassword").equals("")) {
                     new LWLogging().warning("Activated very experimental config server");
                     senabled = true;
                     server = new CreateServer();
@@ -98,7 +98,7 @@ public class Initiator extends PluginBase {
             }
         //---
         //Enable Cloudly if set to true
-        if (new YAMLConfig().read("cloudly").equals("true")) {
+        if (new LWConfig().read("cloudly").equals("true")) {
                 new LWLogging().normal(new Language().get("liveweather.cloudly.activate"));
                 InstanceManager.getServer().getScheduler().scheduleRepeatingTask(new Runnable() {
                     @Override
@@ -106,7 +106,7 @@ public class Initiator extends PluginBase {
                         if (t == 2780) {
                             for (Player s : InstanceManager.getServer().getOnlinePlayers().values()) {
                                 if (s.hasPermission("liveweather.commands")) {
-                                    if (new YAMLConfig().read("autofindplayercity").toLowerCase().equals("true")) {
+                                    if (new LWConfig().read("autofindplayercity").toLowerCase().equals("true")) {
                                         if (!new Local().isLocal(s)) {
                                             new Cloudly().setFog(s, new GetFog().getFog(new Tracker().getCity(s.getAddress())));
                                         }
@@ -132,6 +132,7 @@ public class Initiator extends PluginBase {
         }
         //---
         InstanceManager.getServer().getCommandMap().register("help", new WhatsMyWeather("whatsmyweather", new Language().get("liveweather.commands.whatsmyweather.description")));
+        InstanceManager.getServer().getCommandMap().register("help", new PanelCommand("lwpanel", "Opens LiveWeather Admin Panel"));
         //Register weather change event
         InstanceManager.getServer().getScheduler().scheduleRepeatingTask(new Runnable() {
                 @Override
@@ -139,7 +140,7 @@ public class Initiator extends PluginBase {
                     if (t == 2780) {
                         for (Player s : InstanceManager.getServer().getOnlinePlayers().values()) {
                             if (s.hasPermission("liveweather.commands")) {
-                                if (new YAMLConfig().read("autofindplayercity").toLowerCase().equals("true")) {
+                                if (new LWConfig().read("autofindplayercity").toLowerCase().equals("true")) {
                                     if (!new Local().isLocal(s)) {
                                         new Wetter().setWeather(new GetWeather().getWeather(new Tracker().getCity(s.getAddress())), s);
                                     }
@@ -165,7 +166,6 @@ public class Initiator extends PluginBase {
                 }
             }
         //---
-        new LWLogging().normal(new Language().get("liveweather.init.finished"));
     }
     @Override
     public void onDisable() {
@@ -195,14 +195,23 @@ public class Initiator extends PluginBase {
         }
         //---
         //Set weather change on all levels to false
-        for(Level level : InstanceManager.getServer().getLevels().values()) {
-            new LWLogging().normal(new Language().get("liveweather.init.gamerule.setforevery") + level.getName());
-            level.getGameRules().setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+        new LWLogging().normal("Is Ingore true:" + new LWSave().read("Ignore"));
+        if(!Boolean.parseBoolean(new LWSave().read("Reload"))) {
+            for (Level level : InstanceManager.getServer().getLevels().values()) {
+                new LWLogging().normal(new Language().get("liveweather.init.gamerule.setforevery").replace("%LEVEL%", level.getName()));
+                level.getGameRules().setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+            }
         }
         //---
         InstanceManager.getServer().getPluginManager().registerEvents(new WetterService(), this);
         InstanceManager.getServer().getPluginManager().registerEvents(new SendMessage(), this);
         InstanceManager.getServer().getPluginManager().registerEvents(new EventListener(), this);
+        InstanceManager.getServer().getPluginManager().registerEvents(new ServerEvents(), this);
+        new LWLogging().normal(new Language().get("liveweather.init.finished"));
+    }
+    @Override
+    public void reloadConfig() {
+        new LWLogging().normal("Reloading");
     }
     public Server server() {
         return getServer();

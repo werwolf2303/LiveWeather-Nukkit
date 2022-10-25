@@ -8,11 +8,12 @@ import cn.nukkit.event.player.PlayerCommandPreprocessEvent;
 import com.liveweather.api.GetFog;
 import com.liveweather.debug.Debug;
 import com.liveweather.language.Language;
-import com.liveweather.panel.AdminPanel;
+import com.liveweather.storage.LWConfig;
 import com.liveweather.storage.PlayerConfigs3;
-import com.liveweather.storage.YAMLConfig;
+
 
 public class SendMessage implements Listener {
+
     @EventHandler
     public void onSendMessage(PlayerChatEvent event) {
         Player p = event.getPlayer();
@@ -34,15 +35,10 @@ public class SendMessage implements Listener {
                 event.setCancelled();
             }else{
                 if(message.equals("#LWFog")) {
-                    if(new YAMLConfig().read("cloudly").equals("true")) {
+                    if(new LWConfig().read("cloudly").equals("true")) {
                         if (new PlayerConfigs3().hasEntered(p.getName())) {
                             p.sendMessage("Fog is set to: " + new GetFog().getFog(new PlayerConfigs3().getCity(p.getName())) + " chunks");
                         }
-                    }
-                    event.setCancelled();
-                }else{
-                    if(message.equals("#LWPanel")) {
-                        new AdminPanel().open(p);
                     }
                     event.setCancelled();
                 }
@@ -54,7 +50,7 @@ public class SendMessage implements Listener {
         Player p = event.getPlayer();
         if(!p.isOp()) {
             if (event.getMessage().toLowerCase().equals("/whatsmyweather")) {
-                if (new YAMLConfig().read("permissions").equals("true")) {
+                if (new LWConfig().read("permissions").equals("true")) {
                     if (!p.hasPermission("liveweather.commands")) {
                         p.sendMessage("You dont have the rights to run this command: " + event.getMessage());
                         event.setCancelled();
@@ -62,7 +58,7 @@ public class SendMessage implements Listener {
                 }
             } else {
                 if (event.getMessage().toLowerCase().equals("/changecity")) {
-                    if (new YAMLConfig().read("permissions").equals("true")) {
+                    if (new LWConfig().read("permissions").equals("true")) {
                         if (!p.hasPermission("liveweather.commands")) {
                             p.sendMessage(new Language().get("liveweather.commands.nopermission") + " " + event.getMessage());
                             event.setCancelled();
@@ -70,7 +66,7 @@ public class SendMessage implements Listener {
                     }
                 } else {
                     if (event.getMessage().toLowerCase().equals("/deletecity")) {
-                        if (new YAMLConfig().read("permissions").equals("true")) {
+                        if (new LWConfig().read("permissions").equals("true")) {
                             if (!p.hasPermission("liveweather.commands")) {
                                 p.sendMessage(new Language().get("liveweather.commands.nopermission") + " " + event.getMessage());
                                 event.setCancelled();
@@ -78,7 +74,7 @@ public class SendMessage implements Listener {
                         }
                     } else {
                         if (event.getMessage().toLowerCase().equals("/setcity")) {
-                            if (new YAMLConfig().read("permissions").equals("true")) {
+                            if (new LWConfig().read("permissions").equals("true")) {
                                 if (!p.hasPermission("liveweather.commands")) {
                                     p.sendMessage(new Language().get("liveweather.commands.nopermission") + " " + event.getMessage());
                                     event.setCancelled();

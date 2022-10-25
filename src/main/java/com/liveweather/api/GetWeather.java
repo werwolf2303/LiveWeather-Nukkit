@@ -3,7 +3,8 @@ package com.liveweather.api;
 import com.liveweather.check.APIKey;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.language.Language;
-import com.liveweather.storage.YAMLConfig;
+import com.liveweather.storage.LWConfig;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -27,13 +28,13 @@ public class GetWeather implements GW {
         try {
             String lon = getLon(city);
             String lat = getLat(city);
-            if (!new YAMLConfig().read("apikey").equals("YOUR_API_KEY")) {
-                if (new APIKey().isValid(new YAMLConfig().read("apikey"))) {
-                    apikey = new YAMLConfig().read("apikey");
+            if (!new LWConfig().read("apikey").equals("YOUR_API_KEY")) {
+                if (new APIKey().isValid(new LWConfig().read("apikey"))) {
+                    apikey = new LWConfig().read("apikey");
                 } else {
                     new LWLogging().critical(new Language().get("liveweather.api.apikeynotvalid"));
-                    new YAMLConfig().delete("apikey");
-                    new YAMLConfig().write("apikey", "YOUR_API_KEY");
+                    new LWConfig().delete("apikey");
+                    new LWConfig().write("apikey", "YOUR_API_KEY");
                     return "InvalidAPIKey";
                 }
             }
@@ -61,13 +62,13 @@ public class GetWeather implements GW {
         try {
             String lon = getLon(city);
             String lat = getLat(city);
-            if(!new YAMLConfig().read("apikey").equals("YOUR_API_KEY")) {
-                if(new APIKey().isValid(new YAMLConfig().read("apikey"))) {
-                    apikey = new YAMLConfig().read("apikey");
+            if(!new LWConfig().read("apikey").equals("YOUR_API_KEY")) {
+                if(new APIKey().isValid(new LWConfig().read("apikey"))) {
+                    apikey = new LWConfig().read("apikey");
                 }else{
                     new LWLogging().critical(new Language().get("liveweather.api.apikeynotvalid"));
-                    new YAMLConfig().delete("apikey");
-                    new YAMLConfig().write("apikey", "YOUR_API_KEY");
+                    new LWConfig().delete("apikey");
+                    new LWConfig().write("apikey", "YOUR_API_KEY");
                     return "InvalidAPIKey";
                 }
             }

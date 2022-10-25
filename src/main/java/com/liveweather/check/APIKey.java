@@ -1,6 +1,7 @@
 package com.liveweather.check;
 
-import com.liveweather.storage.YAMLConfig;
+
+import com.liveweather.storage.LWConfig;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -30,6 +31,6 @@ public class APIKey {
         }
     }
     public String getAPIKey() {
-        return new YAMLConfig().read("apikey");
+        return new LWConfig().read("apikey");
     }
 }

@@ -7,9 +7,9 @@ import com.liveweather.api.GetWeather;
 import com.liveweather.check.Local;
 import com.liveweather.language.Language;
 import com.liveweather.location.Tracker;
+import com.liveweather.storage.LWConfig;
 import com.liveweather.storage.PlayerConfig;
-import com.liveweather.storage.PlayerConfigs3;
-import com.liveweather.storage.YAMLConfig;
+
 
 public class WhatsMyWeather extends Command {
 
@@ -21,8 +21,8 @@ public class WhatsMyWeather extends Command {
     public boolean execute(CommandSender commandSender, String s, String[] strings) {
         if(commandSender.isPlayer()) {
             Player p = (Player) commandSender;
-            if(!new YAMLConfig().read("autofindplayercity").toLowerCase().equals("true")) {
-                if (!new YAMLConfig().read(p.getName()).equals("")) {
+            if(!new LWConfig().read("autofindplayercity").toLowerCase().equals("true")) {
+                if (!new LWConfig().read(p.getName()).equals("")) {
                     p.sendMessage(new Language().get("liveweather.commands.whatsmyweather.noautofind.current") + new GetWeather().getWeather(new PlayerConfig().getCity(p.getName())));
                 } else {
                     p.sendMessage(new Language().get("liveweather.commands.whatsmyweather.noautofind.error"));

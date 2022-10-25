@@ -2,7 +2,8 @@ package com.liveweather.Simulator;
 
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
-import com.liveweather.storage.YAMLConfig;
+import com.liveweather.storage.LWConfig;
+
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -37,7 +38,7 @@ public class ExecCommand extends Command {
                 BufferedReader reader;
                 try {
                     reader = new BufferedReader(new FileReader(
-                            new YAMLConfig().getLocation()));
+                            LWConfig.config));
                     String line = reader.readLine();
                     while (line != null) {
                         System.out.println("Line: " + line);
