@@ -3,12 +3,12 @@ package com.liveweather.threading;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.language.Language;
 
-public class Normal {
+public class User {
     Thread t = new Thread();
-    int prio = 8;
+    int prio = 3;
     boolean running = false;
     boolean actual = false;
-    public Normal(Runnable run) {
+    public User(Runnable run) {
         t = new Thread(run);
     }
     public void setPriority(int priority) {

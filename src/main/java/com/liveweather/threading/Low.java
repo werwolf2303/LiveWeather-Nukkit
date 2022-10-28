@@ -22,6 +22,7 @@ public class Low {
     public void start() {
         t.setPriority(prio);
         t.start();
+        t.setDaemon(true);
         if(t.isAlive()) {
             running = true;
             actual = true;
@@ -34,7 +35,7 @@ public class Low {
     }
     public void stop() {
         if(actual) {
-            t.stop();
+            t.interrupt();
         }
     }
 }

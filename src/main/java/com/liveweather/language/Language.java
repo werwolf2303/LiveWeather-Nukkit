@@ -22,6 +22,7 @@ public class Language {
                 }
             }
             if (toreturn.equals("")) {
+                new LWLogging().error("Language error");
                 return obj;
             } else {
                 return toreturn;

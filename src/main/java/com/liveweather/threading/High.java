@@ -20,6 +20,7 @@ public class High {
         return prio;
     }
     public void start() {
+        t.setDaemon(true);
         t.setPriority(prio);
         t.start();
         if(t.isAlive()) {
@@ -34,7 +35,7 @@ public class High {
     }
     public void stop() {
         if(actual) {
-            t.stop();
+            t.interrupt();
         }
     }
 }
