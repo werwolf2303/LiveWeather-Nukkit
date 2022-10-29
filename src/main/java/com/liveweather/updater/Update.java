@@ -6,12 +6,12 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.liveweather.GlobalValues;
 import com.liveweather.Initiator;
+import com.liveweather.api.GHKey;
 import com.liveweather.client.Client;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.instances.InstanceManager;
 import com.liveweather.language.Language;
 import com.liveweather.storage.Zippie;
-import com.sun.corba.se.spi.extension.ZeroPortPolicy;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,7 +31,7 @@ public class Update {
         JSONArray artifacts = json.getJSONArray("artifacts");
         JSONObject newest = artifacts.getJSONObject(0);
         String downloadurl = newest.getString("archive_download_url");
-        String token = "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";
+        String token = new GHKey().get();
         try {
             WebClient webClient = new WebClient(BrowserVersion.BEST_SUPPORTED);
             webClient.addRequestHeader("Authorization", "token " + token);

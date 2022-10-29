@@ -1,5 +1,6 @@
 package com.liveweather.report;
 
+import com.liveweather.api.GHKey;
 import org.eclipse.egit.github.core.Issue;
 import org.eclipse.egit.github.core.RepositoryId;
 import org.eclipse.egit.github.core.client.GitHubClient;
@@ -10,7 +11,7 @@ import java.io.IOException;
 public class Report {
     public boolean exists(String title) {
         GitHubClient client = new GitHubClient();
-        client.setOAuth2Token("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"); // Use the token generated above
+        client.setOAuth2Token(new GHKey().get()); // Use the token generated above
         IssueService issueService = new IssueService(client);
         try {
             Issue issue = new Issue();
@@ -34,7 +35,7 @@ public class Report {
     public void create(String title, String message) {
         if(!exists(title)) {
             GitHubClient client = new GitHubClient();
-            client.setOAuth2Token("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");
+            client.setOAuth2Token(new GHKey().get());
             IssueService issueService = new IssueService(client);
             try {
                 Issue issue = new Issue();

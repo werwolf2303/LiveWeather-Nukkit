@@ -4,7 +4,6 @@ import com.liveweather.Initiator;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.language.Language;
 import com.liveweather.utils.FileUtils;
-import com.sun.javafx.charts.ChartLayoutAnimator;
 
 import java.io.File;
 import java.io.FileWriter;
