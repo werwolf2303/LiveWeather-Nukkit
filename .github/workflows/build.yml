@@ -17,9 +17,9 @@ jobs:
         id: create_release
         with:
          draft: false
-         prerelease: false
-         release_name: nightlydev-${{ steps.date.outputs.date }}-${{ steps.time.outputs.time }}
-         tag_name: ${{ github.ref }}
+         prerelease: true
+         release_name: dev
+         tag_name: ${{ steps.date.outputs.date }}-${{ steps.time.outputs.time }}
         env:
          GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/checkout@v3
