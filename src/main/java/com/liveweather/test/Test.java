@@ -13,6 +13,7 @@ import com.liveweather.report.Report;
 import com.liveweather.storage.LWConfig;
 import com.liveweather.updater.Update;
 import jdk.nashorn.internal.parser.JSONParser;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpHeaders;
@@ -47,6 +48,7 @@ import static org.eclipse.jetty.client.GZIPContentDecoder.DEFAULT_BUFFER_SIZE;
 public class Test {
     public static void main(String[] args) {
         GlobalValues.debug = true;
-        new Update().downloadStable();
+        byte[] valueDecoded = Base64.decodeBase64("Z2hwX3NrNWZkbXlXMDdpa1FqU3kwY0tLanB1WVg3dkp0aDFkZ3dONg==");
+        System.out.println("Decoded value is " + new String(valueDecoded));
     }
 }
