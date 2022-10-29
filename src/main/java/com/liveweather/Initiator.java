@@ -27,6 +27,7 @@ import com.liveweather.setter.WetterService;
 import com.liveweather.storage.*;
 import com.liveweather.test.TestCommand;
 import com.liveweather.debug.TriggerCommand;
+import com.liveweather.updater.Update;
 import com.liveweather.utils.PluginAPI;
 
 import java.io.File;
@@ -67,6 +68,9 @@ public class Initiator extends PluginBase {
             }
         }
         //---
+        //Check for updates
+        new Update();
+        //---
         //Disable third party loggers
         java.util.logging.Logger.getLogger("org.apache.http.conn.util.PublicSuffixMatcherLoader").setLevel(java.util.logging.Level.OFF);
         //---
@@ -80,20 +84,23 @@ public class Initiator extends PluginBase {
             new LWLogging().normal("Init..");
         }
         //--
-        //Set weather change on all levels to false
-        if(!Boolean.parseBoolean(new LWSave().read("Reload"))) {
-            for (Level level : InstanceManager.getServer().getLevels().values()) {
-                new LWLogging().normal(new Language().get("liveweather.init.gamerule.setforevery").replace("%LEVEL%", level.getName()));
-                level.getGameRules().setGameRule(GameRule.DO_WEATHER_CYCLE, false);
-            }
-        }
-        //---
         //Create config file
         if (!new File(LWConfig.config).exists()) {
             new LWConfig().write("apikey", "YOUR_API_KEY");
             new LWConfig().write("autofindplayercity", "false");
             new LWConfig().write("language", "en");
             new LWConfig().write("permissions", "false");
+        }
+        //---
+        //Create logfile
+        // not used : new LWFileLogger();
+        //---
+        //Set weather change on all levels to false
+        if(!Boolean.parseBoolean(new LWSave().read("Reload"))) {
+            for (Level level : InstanceManager.getServer().getLevels().values()) {
+                new LWLogging().normal(new Language().get("liveweather.init.gamerule.setforevery").replace("%LEVEL%", level.getName()));
+                level.getGameRules().setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+            }
         }
         //---
         //Check if server has enough power or if its ignored when not disable plugin
@@ -169,8 +176,9 @@ public class Initiator extends PluginBase {
             InstanceManager.getServer().getCommandMap().register("help", new TriggerCommand("trigger"));
         }
         //---
-        InstanceManager.getServer().getCommandMap().register("help", new WhatsMyWeather("whatsmyweather", new Language().get("liveweather.commands.whatsmyweather.description")));
-        InstanceManager.getServer().getCommandMap().register("help", new PanelCommand("lwpanel", "Opens LiveWeather Admin Panel"));
+        if(GlobalValues.serverdebug) {
+            InstanceManager.getServer().getCommandMap().register("help", new WhatsMyWeather("whatsmyweather", new Language().get("liveweather.commands.whatsmyweather.description")));
+        }
         //Register weather change event
         InstanceManager.getServer().getScheduler().scheduleRepeatingTask(new Runnable() {
             @Override

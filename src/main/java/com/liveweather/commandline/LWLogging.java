@@ -23,6 +23,18 @@ public class LWLogging {
             location = InstanceManager.getServer().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile/sounds/";
         }
     }
+    public void throwable(Throwable throwable) {
+        if(!debug) {
+            InstanceManager.getServer().getLogger().alert("[LiveWeather::Throwable] " + throwable.getMessage());
+        }else{
+            System.out.println("[LiveWeather::Throwable] " + throwable.getMessage());
+        }
+    }
+    public void fatal(String message) {
+        if(!debug) {
+            InstanceManager.getServer().getLogger().emergency(message);
+        }
+    }
     public void critical(String message) {
         if(!debug) {
             InstanceManager.getServer().getLogger().error("[LiveWeather::Critical::PANIC] " + message);

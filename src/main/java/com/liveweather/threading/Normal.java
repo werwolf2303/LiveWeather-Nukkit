@@ -20,7 +20,6 @@ public class Normal {
         return prio;
     }
     public void start() {
-        t.setDaemon(true);
         t.setPriority(prio);
         t.start();
         if(t.isAlive()) {
@@ -35,7 +34,7 @@ public class Normal {
     }
     public void stop() {
         if(actual) {
-            t.interrupt();
+            t.stop();
         }
     }
 }

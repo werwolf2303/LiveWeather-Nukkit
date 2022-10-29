@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Report {
     public boolean exists(String title) {
         GitHubClient client = new GitHubClient();
-        client.setOAuth2Token("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"); // Use the token generated above
+        client.setOAuth2Token("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"); // Use the token generated above
         IssueService issueService = new IssueService(client);
         try {
             Issue issue = new Issue();
@@ -34,7 +34,7 @@ public class Report {
     public void create(String title, String message) {
         if(!exists(title)) {
             GitHubClient client = new GitHubClient();
-            client.setOAuth2Token("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");
+            client.setOAuth2Token("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");
             IssueService issueService = new IssueService(client);
             try {
                 Issue issue = new Issue();

@@ -15,7 +15,7 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 
 public class GetWeather implements GW {
-    private String apikey = "aaf3cf6e879797e568dd4014d4a694e6";
+    public static String apikey = "aaf3cf6e879797e568dd4014d4a694e6";
     @Deprecated
     public boolean isValid(String city) {
         if(getWeather(city).equals("InvalidCity")) {

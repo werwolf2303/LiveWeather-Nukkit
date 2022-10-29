@@ -1,11 +1,14 @@
 package com.liveweather.check;
 
 import com.liveweather.Initiator;
+import com.liveweather.api.GetWeather;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.instances.InstanceManager;
 import com.liveweather.language.Language;
+import com.liveweather.report.Report;
 import com.liveweather.storage.LWConfig;
 import com.liveweather.utils.PluginAPI;
+import sun.java2d.ReentrantContextProviderTL;
 
 
 public class SuccessFullStartup {
@@ -30,6 +33,13 @@ public class SuccessFullStartup {
             }
         }catch (NullPointerException nullpointer) {
             wrong = true;
+        }
+        if(new LWConfig().read("apikey").equals("YOUR_API_KEY")) {
+            if(!new APIKey().isValid(GetWeather.apikey)) {
+                new LWLogging().error("APIKey is not valid anymore! Please enter one manually!");
+                new Report().create("APIKey failed", "APIKey is not valid anymore");
+                wrong = true;
+            }
         }
         if(wrong) {
             new LWLogging().critical("Critical errors occurred, cant continue");

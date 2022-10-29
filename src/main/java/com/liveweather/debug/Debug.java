@@ -16,6 +16,6 @@ public class Debug {
         if(apikey.equals("YOUR_API_KEY")) {
             apikey = "Plugin Default";
         }
-        p.sendMessage("APIKey is: " + apikey + "\n" + "Language is: " + language + "\n" + "EnoughPerformance: " + rununsupported + "\n" + "AutoFindLocation: " + iplocation);
+        p.sendMessage("APIKey is: " + apikey + "\n" + "Language is: " + language + "\n" + "AutoFindLocation: " + iplocation);
     }
 }
