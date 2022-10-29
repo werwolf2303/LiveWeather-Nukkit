@@ -18,8 +18,8 @@ jobs:
         with:
          draft: false
          prerelease: true
-         release_name: dev
-         tag_name: ${{ steps.date.outputs.date }}-${{ steps.time.outputs.time }}
+         release_name: ${{ steps.date.outputs.date }}-${{ steps.time.outputs.time }}
+         tag_name: dev
         env:
          GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/checkout@v3
