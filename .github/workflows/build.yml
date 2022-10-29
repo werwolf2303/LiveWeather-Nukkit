@@ -6,13 +6,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
       - name: release
         uses: actions/create-release@v1
         id: create_release
         with:
          draft: false
          prerelease: false
-         release_name: nightlydev
+         release_name: nightlydev-${{ steps.date.outputs.date }}
          tag_name: ${{ github.ref }}
         env:
          GITHUB_TOKEN: ${{ github.token }}
