@@ -87,6 +87,11 @@ public class DebugLogger implements Logger {
         element.setY(my);
         element.setX(10);
         my+=24;
+        ArrayList<String> st = new ArrayList<>();
+        for(String s : text.split(" ")) {
+            st.add(s);
+            if((mholder.getGraphics().getFontMetrics().stringWidth(text) > mholder.getGraphics().getFontMetrics().stringWidth(st))
+        }
         if(my>debugFrame.getHeight()) {
             debugFrame.setTitle(title + " - Clearing Console");
             my=25;
