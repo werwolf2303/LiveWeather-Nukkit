@@ -5,15 +5,18 @@ import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import com.liveweather.GlobalValues;
 import com.liveweather.Initiator;
+import com.liveweather.Logger;
 import com.liveweather.Simulator.APIResponse;
 import com.liveweather.Simulator.Console;
-import com.liveweather.Simulator.DebugFrame;
 import com.liveweather.api.GetWeather;
+import com.liveweather.commandline.LWLogging;
+import com.liveweather.debug.DebugLogger;
 import com.liveweather.formapi.forms.elements.ModalForm;
 import com.liveweather.utils.FileUtils;
 
 public class InstanceManager {
     static com.liveweather.Simulator.Server server = null;
+    static DebugLogger logger = null;
     static GetWeather weather = null;
     static Console console = null;
     public static Server getServer() {
@@ -33,13 +36,20 @@ public class InstanceManager {
         }
         return weather;
     }
-    static DebugFrame.Content frame = null;
-
-    public static DebugFrame.Content getDebugFrame() {
-        return frame;
+    public static DebugLogger getDebugLogger() {
+        if(logger==null) {
+            logger = new DebugLogger();
+        }
+        return logger;
     }
-    public static void setDebugFrame(DebugFrame.Content content) {
-        frame = content;
+    static Logger log = null;
+    public static Logger getLogger() {
+        if(GlobalValues.serverdebug) {
+            log = new DebugLogger();
+        }else{
+            log = new LWLogging();
+        }
+        return log;
     }
     public static Console getConsole() {
         if(console!=null) {

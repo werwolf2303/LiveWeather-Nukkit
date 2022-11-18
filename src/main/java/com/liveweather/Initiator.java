@@ -13,6 +13,7 @@ import com.liveweather.check.Performance;
 import com.liveweather.check.SuccessFullStartup;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.commands.*;
+import com.liveweather.debug.DebugLogger;
 import com.liveweather.events.SendMessage;
 import com.liveweather.events.ServerEvents;
 import com.liveweather.experimental.Cloudly;
@@ -174,10 +175,8 @@ public class Initiator extends PluginBase {
         if(GlobalValues.serverdebug) {
             InstanceManager.getServer().getCommandMap().register("help", new TestCommand("testweather"));
             InstanceManager.getServer().getCommandMap().register("help", new TriggerCommand("trigger"));
-        }
-        //---
-        if(GlobalValues.serverdebug) {
             InstanceManager.getServer().getCommandMap().register("help", new WhatsMyWeather("whatsmyweather", new Language().get("liveweather.commands.whatsmyweather.description")));
+            InstanceManager.getDebugLogger().create();
         }
         //Register weather change event
         InstanceManager.getServer().getScheduler().scheduleRepeatingTask(new Runnable() {

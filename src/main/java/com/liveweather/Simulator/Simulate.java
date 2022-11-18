@@ -5,6 +5,7 @@ import com.liveweather.GlobalValues;
 import com.liveweather.Initiator;
 import com.liveweather.api.GetWeather;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.debug.TriggerCommand;
 import com.liveweather.instances.InstanceManager;
 
 import java.io.File;
@@ -15,7 +16,7 @@ public class Simulate {
             System.err.println("Cant run Simulator! Cant find modified version of nukkit");
             return;
         }
-        new DebugFrame().init();
+        InstanceManager.getDebugLogger().create();
         GlobalValues.debug = true;
         if(!new File("DebugEnv").exists()) {
             new File("DebugEnv").mkdir();
@@ -26,6 +27,7 @@ public class Simulate {
         System.out.println("Simulator Mode: Console has only plugin commands");
         new Initiator().onLoad();
         new Initiator().onEnable();
+        InstanceManager.getServer().getCommandMap().register("help", new TriggerCommand("trigger"));
         InstanceManager.getServer().getCommandMap().register("help", new ExecCommand("exec"));
         InstanceManager.getServer().getCommandMap().register("help", new KillCommand("kill"));
         InstanceManager.getServer().getCommandMap().register("help", new LogCommand("log"));
