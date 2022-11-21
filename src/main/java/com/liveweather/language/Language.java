@@ -1,43 +1,30 @@
 package com.liveweather.language;
 
-import com.liveweather.GlobalValues;
-import com.liveweather.commandline.LWLogging;
-
+import com.liveweather.Cache;
 import com.liveweather.instances.InstanceManager;
 import com.liveweather.storage.LWConfig;
-import com.liveweather.storage.LWSave;
-import com.liveweather.utils.PluginAPI;
+import com.liveweather.utils.FileUtils;
 import com.liveweather.utils.Resources;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Objects;
 
 public class Language {
-    String location = "lang/";
-    String language = new LWConfig().read("language");
+    String lang = new LWConfig().read("language");
     public String get(String obj) {
-        if(GlobalValues.langnotsupported) {
-            language = "en";
+        if(Cache.languageCache.equals("")) {
+            Cache.languageCache = new Resources().read("/lang/" + lang + ".json");
+            Cache.lastLanguage = new LWConfig().read("language");
         }
-        String toreturn = "";
+        if(!Objects.equals(Cache.lastLanguage, new LWConfig().read("language"))) {
+            Cache.languageCache = new Resources().read("/lang/" + lang + ".json");
+            Cache.lastLanguage = new LWConfig().read("language");
+        }
+        JSONObject object = new JSONObject(Cache.languageCache);
         try {
-            for (String data : new Resources().read(location + language + ".cfg").split("\n")) {
-                if (data.contains(obj)) {
-                    toreturn = data.replace(obj + ":", "");
-                    break;
-                }
-            }
-            if (toreturn.equals("")) {
-                new LWLogging().error("Language error");
-                return obj;
-            } else {
-                return toreturn;
-            }
-        }catch (IllegalArgumentException a) {
-            GlobalValues.langnotsupported = true;
-            if(language.equals("en")) {
-                new LWLogging().fatal("Language failure");
-                new PluginAPI().disableLiveWeather();
-            }else {
-                new LWLogging().error("Language \"" + language + "\" not supported revert to default: \"en\"");
-            }
+            return object.getString(obj);
+        }catch (JSONException ex) {
             return obj;
         }
     }

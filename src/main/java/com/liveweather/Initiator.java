@@ -6,6 +6,7 @@ import cn.nukkit.level.GameRule;
 import cn.nukkit.level.Level;
 import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
+import com.liveweather.analytics.GoogleAnalytics;
 import com.liveweather.api.GetFog;
 import com.liveweather.api.GetWeather;
 import com.liveweather.check.Local;
@@ -220,6 +221,9 @@ public class Initiator extends PluginBase {
         InstanceManager.getServer().getPluginManager().registerEvents(new SendMessage(), this);
         InstanceManager.getServer().getPluginManager().registerEvents(new EventListener(), this);
         InstanceManager.getServer().getPluginManager().registerEvents(new ServerEvents(), this);
+        //---
+        //Registering Google Analytics
+        new GoogleAnalytics();
         //---
         new LWLogging().normal(new Language().get("liveweather.init.finished"));
     }

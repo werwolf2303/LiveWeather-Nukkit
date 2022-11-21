@@ -18,8 +18,8 @@ public class CityChange extends Command {
             Player p = (Player) commandSender;
             if(new PlayerConfig().hasEntered(p.getName())) {
                 CustomForm form = new CustomForm()
-                        .addInput(new Language().get("liveweather.formapi.button"));
-                form.setTitle(new Language().get("liveweather.formapi.title"));
+                        .addInput(new Language().get("liveweather.forms.button"));
+                form.setTitle(new Language().get("liveweather.forms.title"));
                 form.send(p, (targetPlayer, targetForm, data) -> {
                     if(data == null) return; //Если форма закрыта принудительно, то data будет иметь значение null
                     //new PlayerConfigs().writeConfig(event.getPlayer().getName(), targetForm.getElements().toString());

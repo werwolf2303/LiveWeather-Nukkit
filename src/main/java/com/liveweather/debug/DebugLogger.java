@@ -19,13 +19,13 @@ public class DebugLogger implements Logger {
     GraphicsManager mholder = null;
     String title = "";
     ArrayList<Elements> texts = new ArrayList<>();
-    int my = 25;
+    int my = 22;
     class GraphicsManager extends JPanel {
         @Override
         public void paint(Graphics g) {
             super.paint(g);
             debugFrame.setTitle(title);
-            g.setFont(new Font(Font.DIALOG, BOLD, 17));
+            g.setFont(new Font(Font.DIALOG, BOLD, 13));
             for(Elements e : texts) {
                 e.draw(g);
             }
@@ -86,15 +86,10 @@ public class DebugLogger implements Logger {
         TextElement element = new TextElement(text, c);
         element.setY(my);
         element.setX(10);
-        my+=24;
-        ArrayList<String> st = new ArrayList<>();
-        for(String s : text.split(" ")) {
-            st.add(s);
-            if((mholder.getGraphics().getFontMetrics().stringWidth(text) > mholder.getGraphics().getFontMetrics().stringWidth(st))
-        }
+        my+=22;
         if(my>debugFrame.getHeight()) {
             debugFrame.setTitle(title + " - Clearing Console");
-            my=25;
+            my=22;
             texts.clear();
         }
         texts.add(element);
