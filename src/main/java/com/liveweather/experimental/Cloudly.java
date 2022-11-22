@@ -3,6 +3,7 @@ package com.liveweather.experimental;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.instances.InstanceManager;
 import com.liveweather.language.Language;
 
 public class Cloudly {
@@ -33,7 +34,7 @@ public class Cloudly {
                 new LWLogging().error(new Language().get("liveweather.cloudly.error"));
             } else {
                 if(distance==10) {
-                    p.setViewDistance(Server.getInstance().getViewDistance());
+                    p.setViewDistance(InstanceManager.getServer().getViewDistance());
                 }else{
                     p.setViewDistance(distance);
                 }

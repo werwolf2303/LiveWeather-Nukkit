@@ -2,13 +2,14 @@ package com.liveweather.storage;
 
 import cn.nukkit.Server;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.instances.InstanceManager;
 import com.liveweather.language.Language;
 import com.liveweather.threading.Normal;
 import java.io.File;
 import java.io.IOException;
 
 public class PlayerConfigs3 {
-    String location = Server.getInstance().getPluginPath().replace("\\", "") + "LiveWeather/PlayerCity/";
+    String location = InstanceManager.getServer().getPluginPath().replace("\\", "") + "LiveWeather/PlayerCity/";
     public PlayerConfigs3() {
         if (!new File(location).exists()) {
             new File(location).mkdir();

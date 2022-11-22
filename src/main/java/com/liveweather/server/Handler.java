@@ -1,18 +1,34 @@
 package com.liveweather.server;
 
 
-import cn.nukkit.Server;
-import com.liveweather.storage.YAMLConfig;
-import com.sun.net.httpserver.HttpExchange;
+import com.liveweather.storage.LWConfig;
 
-import java.io.File;
+import com.liveweather.utils.Resources;
+import com.sun.net.httpserver.HttpExchange;
+import org.apache.commons.io.IOUtils;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
 
 public class Handler {
     static String ips = "";
     public static void root(HttpExchange exchange) {
+        if(exchange.getRequestURI().toString().equals("/noise.jpg")) {
+            try {
+                InputStream response = new Resources().getFileFromResourceAsStream("html/noise.jpg");
+                if(ips.contains(exchange.getRemoteAddress().getAddress().toString())) {
+                    response = new Resources().getFileFromResourceAsStream("sechtml/noise.jpg");
+                }
+                exchange.sendResponseHeaders(200, response.available());//response code and length
+                OutputStream os = exchange.getResponseBody();
+                os.write(IOUtils.toByteArray(response));
+                os.close();
+            }catch (IOException ex) {
+
+            }
+            return;
+        }
         if(ips.contains(exchange.getRemoteAddress().getAddress().toString())) {
             try {
                 if(exchange.getRequestURI().toString().contains("logoff.html")) {
@@ -28,20 +44,20 @@ public class Handler {
                     }
                 }else {
                     if (exchange.getRequestURI().toString().equals("")) {
-                        File file = new File(Server.getInstance().getPluginPath() + "/LiveWeather/jarfile/sechtml/" + "index.html");
-                        exchange.sendResponseHeaders(200, file.length());
-                        try (OutputStream os = exchange.getResponseBody()) {
-                            Files.copy(file.toPath(), os);
-                        }
+                        String response = new Resources().read("sechtml/index.html");
+                        exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
+                        OutputStream os = exchange.getResponseBody();
+                        os.write(response.getBytes());
+                        os.close();
                     } else {
-                        File file = new File(Server.getInstance().getPluginPath() + "/LiveWeather/jarfile/sechtml/" + exchange.getRequestURI().toString());
-                        exchange.sendResponseHeaders(200, file.length());
-                        try (OutputStream os = exchange.getResponseBody()) {
-                            Files.copy(file.toPath(), os);
-                        }
+                        String response = new Resources().read("sechtml" + exchange.getRequestURI().toString());
+                        exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
+                        OutputStream os = exchange.getResponseBody();
+                        os.write(response.getBytes());
+                        os.close();
                     }
                 }
-            } catch (IOException e) {
+            } catch (IllegalArgumentException | IOException e) {
                 try {
                     String response = "404 Not found";
                     exchange.sendResponseHeaders(404, response.getBytes().length);//response code and length
@@ -69,7 +85,7 @@ public class Handler {
                 String[] conv = args.split("/");
                 args = conv[conv.length - 1];
                 String response = "";
-                if(args.contains(new YAMLConfig().read("configserverpassword"))) {
+                if(args.contains(new LWConfig().read("configserverpassword"))) {
                     response = "<script>\n" +
                             "    window.location.href=\"index.html\";\n" +
                             "</script>";
@@ -89,17 +105,17 @@ public class Handler {
             }
             try {
                 if (exchange.getRequestURI().toString().equals("/")) {
-                    File file2 = new File(Server.getInstance().getPluginPath() + "/LiveWeather/jarfile/html/" + "index.html");
-                    exchange.sendResponseHeaders(200, file2.length());
-                    try (OutputStream os = exchange.getResponseBody()) {
-                        Files.copy(file2.toPath(), os);
-                    }
+                        String response = new Resources().read("html/index.html");
+                        exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
+                        OutputStream os = exchange.getResponseBody();
+                        os.write(response.getBytes());
+                        os.close();
                 } else {
-                    File file = new File(Server.getInstance().getPluginPath() + "/LiveWeather/jarfile/html/" + exchange.getRequestURI().toString());
-                    exchange.sendResponseHeaders(200, file.length());
-                    try (OutputStream os = exchange.getResponseBody()) {
-                        Files.copy(file.toPath(), os);
-                    }
+                        String response = new Resources().read("html" + exchange.getRequestURI().toString());
+                        exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
+                        OutputStream os = exchange.getResponseBody();
+                        os.write(response.getBytes());
+                        os.close();
                 }
             } catch (IOException e) {
             }
@@ -124,7 +140,8 @@ public class Handler {
                 if(args.contains("autofindplayercityset")) {
                     String bool = args.split("=")[1];
                     try {
-                        String response = String.valueOf(new YAMLConfig().writeReturn("autofindplayercity", bool));
+                        new LWConfig().write("autofindplayercity", bool);
+                        String response = new LWConfig().read("autofindplayercity");
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -137,7 +154,8 @@ public class Handler {
                 if(args.contains("languageset")) {
                     String bool = args.split("=")[1];
                     try {
-                        String response = String.valueOf(new YAMLConfig().writeReturn("language", bool));
+                        new LWConfig().write("language", bool);
+                        String response = new LWConfig().read("language");
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -149,7 +167,7 @@ public class Handler {
                 }
                 if(args.contains("cloudlyget")) {
                     try {
-                        String response = String.valueOf(new YAMLConfig().read("cloudly"));
+                        String response = String.valueOf(new LWConfig().read("cloudly"));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -162,7 +180,8 @@ public class Handler {
                 if(args.contains("cloudlyset")) {
                     String bool = args.split("=")[1];
                     try {
-                        String response = String.valueOf(new YAMLConfig().writeReturn("cloudly", bool));
+                        new LWConfig().write("cloudly", bool);
+                        String response = new LWConfig().read("cloudly");
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -174,7 +193,7 @@ public class Handler {
                 }
                 if(args.contains("languageget")) {
                     try {
-                        String response = String.valueOf(new YAMLConfig().read("language"));
+                        String response = String.valueOf(new LWConfig().read("language"));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -187,7 +206,8 @@ public class Handler {
                 if(args.contains("permissionsset")) {
                     String bool = args.split("=")[1];
                     try {
-                        String response = String.valueOf(new YAMLConfig().writeReturn("permissions", bool));
+                        new LWConfig().write("permissions", bool);
+                        String response = new LWConfig().read("permissions");
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -199,7 +219,7 @@ public class Handler {
                 }
                 if(args.contains("permissionsget")) {
                     try {
-                        String response = String.valueOf(new YAMLConfig().read("permissions"));
+                        String response = String.valueOf(new LWConfig().read("permissions"));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -211,7 +231,7 @@ public class Handler {
                 }
                 if(args.contains("apikeyget")) {
                     try {
-                        String response = String.valueOf(new YAMLConfig().read("apikey"));
+                        String response = String.valueOf(new LWConfig().read("apikey"));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -224,7 +244,8 @@ public class Handler {
                 if(args.contains("apikeyset")) {
                     String bool = args.split("=")[1];
                     try {
-                        String response = String.valueOf(new YAMLConfig().writeReturn("apikey", bool));
+                        new LWConfig().write("apikey", bool);
+                        String response = new LWConfig().read("apikey");
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -237,7 +258,8 @@ public class Handler {
                 if(args.contains("configserverset")) {
                     String bool = args.split("=")[1];
                     try {
-                        String response = String.valueOf(new YAMLConfig().writeReturn("configserver", bool));
+                        new LWConfig().write("configserver", bool);
+                        String response = new LWConfig().read("configserver");
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -249,7 +271,7 @@ public class Handler {
                 }
                 if(args.contains("configserverget")) {
                     try {
-                        String response = String.valueOf(new YAMLConfig().read("configserver"));
+                        String response = String.valueOf(new LWConfig().read("configserver"));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -261,7 +283,7 @@ public class Handler {
                 }
                 if(args.contains("passwordget")) {
                     try {
-                        String response = String.valueOf(new YAMLConfig().read("configserverpassword"));
+                        String response = String.valueOf(new LWConfig().read("configserverpassword"));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
@@ -273,7 +295,7 @@ public class Handler {
                 }
                 if(args.contains("autofindplayercityget")) {
                     try {
-                        String response = String.valueOf(new YAMLConfig().read("autofindplayercity"));
+                        String response = String.valueOf(new LWConfig().read("autofindplayercity"));
                         exchange.sendResponseHeaders(200, response.getBytes().length);//response code and length
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());

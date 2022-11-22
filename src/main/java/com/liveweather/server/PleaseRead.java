@@ -1,6 +1,8 @@
 package com.liveweather.server;
 
 public class PleaseRead {
+
+
     //ENGLISH
     // The code in the package 'server' is for the webserver that i want to code in. But it doesn't work so good. Maybe in the next updates
     // Enable it with: 'configserver:true'

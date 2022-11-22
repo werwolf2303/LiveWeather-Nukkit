@@ -67,15 +67,12 @@ public class ExtensionLoader {
                 }
             }
         } catch (MalformedURLException ex) {
-            ex.printStackTrace();
+            new LWLogging().error(new Language().get("liveweather.extension.loaderror"));
         } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
+            new LWLogging().error("Invalid extension");
         } catch (InvocationTargetException ex) {
-            ex.printStackTrace();
         } catch (InstantiationException ex) {
-            ex.printStackTrace();
         } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
         }
         return null;
     }
@@ -90,13 +87,11 @@ public class ExtensionLoader {
                 new LWLogging().normal(extensionname + " : " + m2.getName());
             }
         } catch (MalformedURLException ex) {
-            ex.printStackTrace();
+            new LWLogging().error("Error while dumping extension");
         } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
+            new LWLogging().error("Invalid extension");
         } catch (InstantiationException ex) {
-            ex.printStackTrace();
         } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
         }
         return null;
     }
@@ -117,7 +112,12 @@ public class ExtensionLoader {
                 }
             }
         } catch (MalformedURLException | InvocationTargetException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-        }
+            if(e instanceof ClassNotFoundException) {
+                new LWLogging().error(new Language().get("liveweather.extension.invalid"));
+            }else{
+                new LWLogging().error(new Language().get("liveweather.extension.loaderror"));
+            }
+            }
         return null;
     }
     public void loadSpecificMethod(File extension, String classname, String methodname) {

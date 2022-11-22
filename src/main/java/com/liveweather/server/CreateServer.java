@@ -2,7 +2,8 @@ package com.liveweather.server;
 
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.language.Language;
-import com.liveweather.storage.YAMLConfig;
+import com.liveweather.storage.LWConfig;
+
 import com.liveweather.threading.Normal;
 import com.sun.net.httpserver.HttpServer;
 
@@ -13,7 +14,7 @@ public class CreateServer {
     Normal normal;
     HttpServer server;
     Runnable starting() {
-        if(new YAMLConfig().read("configserver").equals("true")) {
+        if(new LWConfig().read("configserver").equals("true")) {
             try {
                 server = HttpServer.create(new InetSocketAddress(5678),0);
                 server.createContext("/", Handler::root);

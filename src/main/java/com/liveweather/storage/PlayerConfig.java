@@ -2,6 +2,7 @@ package com.liveweather.storage;
 
 import cn.nukkit.Server;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.instances.InstanceManager;
 import com.liveweather.language.Language;
 import com.liveweather.threading.Normal;
 
@@ -9,7 +10,7 @@ import java.io.*;
 import java.util.Properties;
 
 public class PlayerConfig {
-    String location = Server.getInstance().getPluginPath().replace("\\", "/") + "LiveWeather/PlayerCity/";
+    String location = InstanceManager.getServer().getPluginPath().replace("\\", "/") + "LiveWeather/PlayerCity/";
     public PlayerConfig() {
         if (!new File(location).exists()) {
             new File(location).mkdir();

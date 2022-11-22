@@ -1,9 +1,13 @@
 package com.liveweather.api;
 
+import cn.nukkit.api.API;
 import com.liveweather.check.APIKey;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.instances.InstanceManager;
 import com.liveweather.language.Language;
-import com.liveweather.storage.YAMLConfig;
+import com.liveweather.report.Report;
+import com.liveweather.storage.LWConfig;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -13,8 +17,8 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
-public class GetWeather {
-    private String apikey = "aaf3cf6e879797e568dd4014d4a694e6";
+public class GetWeather implements GW {
+    public static String apikey = "aaf3cf6e879797e568dd4014d4a694e6";
     @Deprecated
     public boolean isValid(String city) {
         if(getWeather(city).equals("InvalidCity")) {
@@ -27,14 +31,18 @@ public class GetWeather {
         try {
             String lon = getLon(city);
             String lat = getLat(city);
-            if (!new YAMLConfig().read("apikey").equals("YOUR_API_KEY")) {
-                if (new APIKey().isValid(new YAMLConfig().read("apikey"))) {
-                    apikey = new YAMLConfig().read("apikey");
+            if (!new LWConfig().read("apikey").equals("YOUR_API_KEY")) {
+                if (new APIKey().isValid(new LWConfig().read("apikey"))) {
+                    apikey = new LWConfig().read("apikey");
                 } else {
                     new LWLogging().critical(new Language().get("liveweather.api.apikeynotvalid"));
-                    new YAMLConfig().delete("apikey");
-                    new YAMLConfig().write("apikey", "YOUR_API_KEY");
+                    new LWConfig().delete("apikey");
+                    new LWConfig().write("apikey", "YOUR_API_KEY");
                     return "InvalidAPIKey";
+                }
+            }else{
+                if(!new APIKey().isValid(apikey)) {
+                    new Report().create("!!IMPORTANT!!", "ApiKey invalid");
                 }
             }
             String result;
@@ -53,7 +61,7 @@ public class GetWeather {
             }
             return "";
         } catch (Exception e) {
-
+            InstanceManager.getLogger().throwable(e);
         }
         return "";
     }
@@ -61,13 +69,13 @@ public class GetWeather {
         try {
             String lon = getLon(city);
             String lat = getLat(city);
-            if(!new YAMLConfig().read("apikey").equals("YOUR_API_KEY")) {
-                if(new APIKey().isValid(new YAMLConfig().read("apikey"))) {
-                    apikey = new YAMLConfig().read("apikey");
+            if(!new LWConfig().read("apikey").equals("YOUR_API_KEY")) {
+                if(new APIKey().isValid(new LWConfig().read("apikey"))) {
+                    apikey = new LWConfig().read("apikey");
                 }else{
                     new LWLogging().critical(new Language().get("liveweather.api.apikeynotvalid"));
-                    new YAMLConfig().delete("apikey");
-                    new YAMLConfig().write("apikey", "YOUR_API_KEY");
+                    new LWConfig().delete("apikey");
+                    new LWConfig().write("apikey", "YOUR_API_KEY");
                     return "InvalidAPIKey";
                 }
             }
@@ -129,11 +137,12 @@ public class GetWeather {
             HttpEntity entity = response.getEntity();
             String result = EntityUtils.toString(entity);
             String[] lon = result.replace("[", "").replace("]", "").split(",");
-            if(lon[4].contains("lon")) {
-                return lon[4].replace("\"lon\":", "");
-            }else{
-                return "NotFound";
+            for(String s : lon) {
+                if(s.contains("lon")) {
+                    return s.replace("\"lon\":", "");
+                }
             }
+            return "NotFound";
         }catch (IOException ioe) {
 
         }
@@ -148,11 +157,12 @@ public class GetWeather {
             HttpEntity entity = response.getEntity();
             String result = EntityUtils.toString(entity);
             String[] lon = result.replace("[", "").replace("]", "").split(",");
-            if(lon[3].contains("lat")) {
-                return lon[3].replace("\"lat\":", "");
-            }else{
-                return "NotFound";
+            for(String s : lon) {
+                if(s.contains("lat")) {
+                    return s.replace("\"lat\":", "");
+                }
             }
+            return "NotFound";
         }catch (IOException ioe) {
 
         }

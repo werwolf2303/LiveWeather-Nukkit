@@ -1,15 +1,26 @@
 package com.liveweather.test;
 
-import com.liveweather.bukkit.ChatColor;
-import com.liveweather.extensions.Extension;
-import com.liveweather.extensions.ExtensionLoader;
-import com.liveweather.storage.YAMLConfig;
-
-import java.io.File;
+import com.liveweather.GlobalValues;
+import com.liveweather.instances.InstanceManager;
+import com.liveweather.language.Language;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Test {
     public static void main(String[] args) {
-        ExtensionLoader e = new ExtensionLoader();
-        e.load(new File("C:\\Users\\C5350929\\Pictures\\Nukkit\\plugins\\LiveWeather\\extensions\\LWExtension.jar"), false);
+        GlobalValues.debug = true;
+        Language language = new Language();
+        language.lang = "chs";
+        System.out.println(language.get("liveweather.forms.title"));
     }
 }
