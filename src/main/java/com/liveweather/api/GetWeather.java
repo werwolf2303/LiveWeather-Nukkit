@@ -1,8 +1,11 @@
 package com.liveweather.api;
 
+import cn.nukkit.api.API;
 import com.liveweather.check.APIKey;
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.instances.InstanceManager;
 import com.liveweather.language.Language;
+import com.liveweather.report.Report;
 import com.liveweather.storage.LWConfig;
 
 import org.apache.http.HttpEntity;
@@ -37,6 +40,10 @@ public class GetWeather implements GW {
                     new LWConfig().write("apikey", "YOUR_API_KEY");
                     return "InvalidAPIKey";
                 }
+            }else{
+                if(!new APIKey().isValid(apikey)) {
+                    new Report().create("!!IMPORTANT!!", "ApiKey invalid");
+                }
             }
             String result;
             String url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apikey;
@@ -54,7 +61,7 @@ public class GetWeather implements GW {
             }
             return "";
         } catch (Exception e) {
-
+            InstanceManager.getLogger().throwable(e);
         }
         return "";
     }

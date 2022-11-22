@@ -1,6 +1,7 @@
 package com.liveweather.report;
 
 import com.liveweather.api.GHKey;
+import com.liveweather.instances.InstanceManager;
 import org.eclipse.egit.github.core.Issue;
 import org.eclipse.egit.github.core.RepositoryId;
 import org.eclipse.egit.github.core.client.GitHubClient;
@@ -11,12 +12,11 @@ import java.io.IOException;
 public class Report {
     public boolean exists(String title) {
         GitHubClient client = new GitHubClient();
-        client.setOAuth2Token(new GHKey().get()); // Use the token generated above
+        client.setOAuth2Token(new GHKey().get());
         IssueService issueService = new IssueService(client);
         try {
             Issue issue = new Issue();
             issue.setTitle(title);
-            //issueService.getIssue("Werwolf2303", "LiveWeather-Nukkit", issue.getNumber());
         } catch (Exception e) {
             return false;
         }
@@ -28,7 +28,7 @@ public class Report {
                 return true;
             }
         }catch (IOException ioe) {
-
+            InstanceManager.getLogger().throwable(ioe);
         }
         return false;
     }
@@ -43,8 +43,7 @@ public class Report {
                 issue.setBody(message);
                 issueService.createIssue("Werwolf2303", "LiveWeather-Nukkit", issue);
             } catch (Exception e) {
-                System.out.println("Failed");
-                e.printStackTrace();
+                InstanceManager.getLogger().throwable(e);
             }
         }
     }

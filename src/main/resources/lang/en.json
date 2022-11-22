@@ -7,7 +7,7 @@
   "liveweather.init.notenoughpower":"Not enough Power to run this! If you still want to run this edit the config.cfg.. and change 'RunUnsupported' to 'true'",
   "liveweather.commands.server":"[LiveWeather] You can run this command only as a player",
   "liveweather.commands.citychange.dontentered":"[LiveWeather] You dont have entered your city, please use /setcity first",
-  "liveweather.commands.citychange.successfull":"[LiveWeather] Successfull changed city to",
+  "liveweather.commands.citychange.successfull":"[LiveWeather] Successfull changed city to ",
   "liveweather.commands.citychange.description":"Change yor liveweather City",
   "liveweather.api.apikeynotvalid":"APIKey is not valid restore default",
   "liveweather.api.unhandled":"Exception LiveWeather: Unhandled Weather :",

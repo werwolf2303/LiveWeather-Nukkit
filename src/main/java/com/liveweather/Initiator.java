@@ -6,7 +6,6 @@ import cn.nukkit.level.GameRule;
 import cn.nukkit.level.Level;
 import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
-import com.liveweather.analytics.GoogleAnalytics;
 import com.liveweather.api.GetFog;
 import com.liveweather.api.GetWeather;
 import com.liveweather.check.Local;
@@ -14,7 +13,6 @@ import com.liveweather.check.Performance;
 import com.liveweather.check.SuccessFullStartup;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.commands.*;
-import com.liveweather.debug.DebugLogger;
 import com.liveweather.events.SendMessage;
 import com.liveweather.events.ServerEvents;
 import com.liveweather.experimental.Cloudly;
@@ -31,9 +29,7 @@ import com.liveweather.test.TestCommand;
 import com.liveweather.debug.TriggerCommand;
 import com.liveweather.updater.Update;
 import com.liveweather.utils.PluginAPI;
-
 import java.io.File;
-import java.util.ArrayList;
 
 public class Initiator extends PluginBase {
     public static Plugin plugin;
@@ -221,9 +217,6 @@ public class Initiator extends PluginBase {
         InstanceManager.getServer().getPluginManager().registerEvents(new SendMessage(), this);
         InstanceManager.getServer().getPluginManager().registerEvents(new EventListener(), this);
         InstanceManager.getServer().getPluginManager().registerEvents(new ServerEvents(), this);
-        //---
-        //Registering Google Analytics
-        new GoogleAnalytics();
         //---
         new LWLogging().normal(new Language().get("liveweather.init.finished"));
     }
