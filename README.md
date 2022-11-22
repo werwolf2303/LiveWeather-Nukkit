@@ -10,8 +10,6 @@ Commands:
 
 /setcity > Set the city 
 
-/whatsmyweather > Checks the current weather
-
 /deletecity > Deletes your city
 
 /changecity > Change your city
@@ -32,11 +30,6 @@ INFO: The weather applies for each player individually
 Supported languages:
 
 - English --> Full
-- German --> Half
-- Chinese --> Half
+- German --> Not sure (i am german but i dont code in english)
+- Chinese --> Not sure
 
-
-Todo :
-
-- [ ] Fix file size
-- [ ] Add more languages
