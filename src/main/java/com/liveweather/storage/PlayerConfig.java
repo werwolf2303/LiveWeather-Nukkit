@@ -1,6 +1,5 @@
 package com.liveweather.storage;
 
-import cn.nukkit.Server;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.instances.InstanceManager;
 import com.liveweather.language.Language;
@@ -9,8 +8,10 @@ import com.liveweather.threading.Normal;
 import java.io.*;
 import java.util.Properties;
 
+@SuppressWarnings({"SameReturnValue", "unused"})
 public class PlayerConfig {
-    String location = InstanceManager.getServer().getPluginPath().replace("\\", "/") + "LiveWeather/PlayerCity/";
+    final String location = InstanceManager.getServer().getPluginPath().replace("\\", "/") + "LiveWeather/PlayerCity/";
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public PlayerConfig() {
         if (!new File(location).exists()) {
             new File(location).mkdir();
@@ -31,13 +32,13 @@ public class PlayerConfig {
             String filename = location + playername + ".properties";
             try {
                 reader = new FileReader(filename);
-            } catch (FileNotFoundException e) {
+            } catch (FileNotFoundException ignored) {
             }
 
             Properties p=new Properties();
             try {
                 p.load(reader);
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             }
             return p.get("City").toString();
         }catch (NullPointerException exc) {
@@ -47,7 +48,7 @@ public class PlayerConfig {
     }
     public boolean hasEntered(String playername) {
         try {
-            FileReader reader = null;
+            FileReader reader;
             String filename = location + playername + ".properties";
             try {
                 reader = new FileReader(filename);
@@ -71,18 +72,18 @@ public class PlayerConfig {
         String filename = location + playername + ".properties";
         try {
             reader = new FileReader(filename);
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException ignored) {
         }
 
         Properties p=new Properties();
         try {
             p.load(reader);
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
         p.remove("City");
         try {
             p.store(new FileWriter(filename), "Player config");
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
         return null;
     }
@@ -91,29 +92,25 @@ public class PlayerConfig {
         String filename = location + playername + ".properties";
         try {
             reader = new FileReader(filename);
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException ignored) {
         }
 
         Properties p=new Properties();
         try {
             p.load(reader);
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
         p.remove("City");
         p.setProperty("City", city);
         try {
             p.store(new FileWriter(filename), "Player config");
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
         return null;
     }
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     Runnable createplayer(String playername, String cityname) {
-        FileReader reader= null;
         String filename = location + playername + ".properties";
-        try {
-            reader = new FileReader(filename);
-        } catch (FileNotFoundException e) {
-        }
         if(!new File(filename).exists()) {
             try {
                 new File(filename).createNewFile();
@@ -126,7 +123,7 @@ public class PlayerConfig {
         p.setProperty("City", cityname);
         try {
             p.store(new FileWriter(filename), "Player config");
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
         if(new PlayerConfig().getCity(playername).equals("")) {
             new LWLogging().critical(new Language().get("liveweather.playerconfig.weather.cantcreate"));

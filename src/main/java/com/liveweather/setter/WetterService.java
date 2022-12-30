@@ -9,10 +9,11 @@ import com.liveweather.storage.LWConfig;
 import com.liveweather.storage.PlayerConfig;
 
 
+@SuppressWarnings("unused")
 public class WetterService implements Listener {
     @EventHandler
     public void playerEntered(PlayerJoinEvent event) {
-        if(!new LWConfig().read("autofindplayercity").toLowerCase().equals("true")) {
+        if(!new LWConfig().read("autofindplayercity").equalsIgnoreCase("true")) {
             if (!new PlayerConfig().hasEntered(event.getPlayer().getName())) {
                 event.getPlayer().sendMessage(new Language().get("liveweather.service.entermessage"));
             }

@@ -1,11 +1,8 @@
-package com.liveweather.Simulator;
+package com.liveweather.simulator;
 
 import cn.nukkit.level.Level;
-import cn.nukkit.network.SourceInterface;
 import cn.nukkit.network.protocol.DataPacket;
-import com.liveweather.instances.InstanceManager;
 
-import java.net.InetSocketAddress;
 import java.util.Random;
 
 public class Player extends cn.nukkit.Player {
@@ -37,7 +34,7 @@ public class Player extends cn.nukkit.Player {
     @Override
     public Level getLevel() {
         new SimulatorLogger().info("Access Level Default");
-        return new com.liveweather.Simulator.Level();
+        return new com.liveweather.simulator.Level();
     }
 
     @Override

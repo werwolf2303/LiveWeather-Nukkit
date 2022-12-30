@@ -1,6 +1,5 @@
 package com.liveweather.utils;
 
-import com.liveweather.commandline.LWLogging;
 import com.liveweather.instances.InstanceManager;
 
 import java.io.InputStream;
@@ -13,8 +12,7 @@ public class Resources {
         }
         try {
             Scanner s = new Scanner(getFileFromResourceAsStream(path)).useDelimiter("\\A");
-            String result = s.hasNext() ? s.next() : "";
-            return result;
+            return s.hasNext() ? s.next() : "";
         }catch (IllegalArgumentException ex) {
             ex.printStackTrace();
             return path;

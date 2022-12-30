@@ -5,9 +5,10 @@ import cn.nukkit.form.window.FormWindow;
 
 import java.util.HashMap;
 
+@SuppressWarnings("ALL")
 public abstract class Form {
 
-    public static HashMap<String, FormResponse> playersForm = new HashMap<>();
+    public static final HashMap<String, FormResponse> playersForm = new HashMap<>();
     protected FormWindow form;
 
     public void send(Player player) {

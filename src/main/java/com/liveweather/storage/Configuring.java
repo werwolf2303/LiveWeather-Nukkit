@@ -1,6 +1,5 @@
 package com.liveweather.storage;
 
-import cn.nukkit.Server;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.instances.InstanceManager;
 import com.liveweather.language.Language;
@@ -11,8 +10,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+@SuppressWarnings("UnusedReturnValue")
 public class Configuring {
-    public String config = InstanceManager.getServer().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "config.cfg";
+    public final String config = InstanceManager.getServer().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "config.cfg";
     public boolean createConfig() {
         try {
             return new File(config).createNewFile();

@@ -1,5 +1,6 @@
 package com.liveweather.extensions;
 
+@SuppressWarnings({"unused", "JavadocBlankLines"})
 public interface Extension {
     /**
      * Extension Creator info:

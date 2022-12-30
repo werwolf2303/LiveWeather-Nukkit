@@ -1,8 +1,8 @@
 package com.liveweather.formapi.forms.handlers;
 
 import cn.nukkit.Player;
-import cn.nukkit.form.element.ElementInput;
 
+@SuppressWarnings({"EmptyMethod", "unused"})
 public interface LoginFormHandler {
 
     void onOk(String email, String password, Player p);

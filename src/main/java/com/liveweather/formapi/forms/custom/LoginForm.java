@@ -8,14 +8,15 @@ import com.liveweather.formapi.forms.CustomFormResponse;
 import com.liveweather.formapi.forms.Form;
 import com.liveweather.formapi.forms.handlers.LoginFormHandler;
 
+@SuppressWarnings({"IfStatementWithIdenticalBranches", "unused", "DuplicateExpressions"})
 public class LoginForm extends Form {
     private boolean hasEmail = false;
     private ElementLabel eml = null;
     private ElementLabel pml = null;
     private boolean hasEml = false;
     private boolean hasPml = false;
-    private ElementInput email = null;
-    private ElementInput password = null;
+    private final ElementInput email;
+    private final ElementInput password;
     private LoginFormHandler handler = null;
 
     public LoginForm(String title) {
@@ -84,7 +85,7 @@ public class LoginForm extends Form {
                 handler.onCancel();
             }else{
                 String e = "";
-                String pass = "";
+                String pass;
                 if(hasEmail) {
                     e = data.toString().replace("[", "").replace("]", "").split(",")[0].replaceFirst(" ", "");
                     pass = data.toString().replace("[", "").replace("]", "").split(",")[1].replaceFirst(" ", "");

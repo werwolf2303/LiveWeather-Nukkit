@@ -1,24 +1,21 @@
 package com.liveweather.debug;
 
 import com.liveweather.Logger;
-import com.liveweather.instances.InstanceManager;
 import com.windowsplus.Elements;
 import com.windowsplus.TextElement;
-import net.sourceforge.htmlunit.corejs.javascript.tools.shell.JSConsole;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 import static java.awt.Font.BOLD;
-import static java.awt.Font.PLAIN;
 
 public class DebugLogger implements Logger {
-    JFrame debugFrame = null;
-    JScrollPane pane = null;
-    GraphicsManager mholder = null;
+    final JFrame debugFrame;
+    final JScrollPane pane;
+    final GraphicsManager mholder;
     String title = "";
-    ArrayList<Elements> texts = new ArrayList<>();
+    final ArrayList<Elements> texts = new ArrayList<>();
     int my = 22;
     class GraphicsManager extends JPanel {
         @Override

@@ -1,11 +1,7 @@
 package com.liveweather.debug;
 
 import cn.nukkit.Player;
-import com.liveweather.storage.Configuring;
 import com.liveweather.storage.LWConfig;
-
-
-import java.io.File;
 
 public class Debug {
     public Debug(Player p) {

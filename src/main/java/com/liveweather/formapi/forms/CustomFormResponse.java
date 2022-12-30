@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface CustomFormResponse extends FormResponse {
 
+    @SuppressWarnings("unused")
     void handle(Player targetPlayer, FormWindowCustom targetForm, List<Object> data);
 
 }

@@ -1,7 +1,6 @@
 package com.liveweather.setter;
 
 import cn.nukkit.Player;
-import cn.nukkit.Server;
 import cn.nukkit.event.Listener;
 import com.liveweather.api.SetWeather;
 

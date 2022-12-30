@@ -1,7 +1,4 @@
-package com.liveweather.Simulator;
-
-import cn.nukkit.Server;
-import cn.nukkit.level.format.LevelProvider;
+package com.liveweather.simulator;
 
 public class Level extends cn.nukkit.level.Level {
     public Level() {

@@ -1,5 +1,6 @@
 package com.liveweather.bukkit;
 
+@SuppressWarnings("ALL")
 public class ChatColor {
     /**
      * Represents black

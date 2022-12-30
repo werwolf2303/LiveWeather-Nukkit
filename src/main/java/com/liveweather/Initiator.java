@@ -30,21 +30,22 @@ import com.liveweather.debug.TriggerCommand;
 import com.liveweather.updater.Update;
 import com.liveweather.utils.PluginAPI;
 import java.io.File;
+import java.util.Objects;
 
 public class Initiator extends PluginBase {
     public static Plugin plugin;
     int t = 0;
     boolean senabled = false;
-    public static String pluginlocation = InstanceManager.getServer().getPluginPath() + "/LiveWeather";
+    public static final String pluginlocation = InstanceManager.getServer().getPluginPath() + "/LiveWeather";
     CreateServer server;
-    boolean im = false;
+    final boolean im = false;
     boolean im2 = false;
     @Override
     public void onDisable() {
         //Execute disable on all extensions if there are
-        if(!(new File(pluginlocation + "/extensions").listFiles().length == 0)) {
+        if(!(Objects.requireNonNull(new File(pluginlocation + "/extensions").listFiles()).length == 0)) {
             File extensions = new File(InstanceManager.getServer().getPluginPath() + "/LiveWeather/extensions");
-            for (File f : extensions.listFiles()) {
+            for (File f : Objects.requireNonNull(extensions.listFiles())) {
                 new ExtensionLoader().load(f, true);
             }
         }
@@ -110,16 +111,18 @@ public class Initiator extends PluginBase {
             }
         }
         //---
-        //Create extensions folder if it doesnt exist
+        //Create extensions folder if it doesn't exist
         if (!new File(InstanceManager.getServer().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "extensions").exists()) {
-            new File(InstanceManager.getServer().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "extensions").mkdir();
+            if(!new File(InstanceManager.getServer().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "extensions").mkdir()) {
+                InstanceManager.getLogger().error(new Language().get("liveweather.extract.failed.createdirectory"));
+            }
         }
         //---
         //Check for plugin misbehaviour
         new SuccessFullStartup();
         //---
         //Check if auto location is enabled
-        if (new LWConfig().read("autofindplayercity").toLowerCase().equals("false")) {
+        if (new LWConfig().read("autofindplayercity").equalsIgnoreCase("false")) {
             InstanceManager.getServer().getCommandMap().register("help", new CityDelete("deletecity", new Language().get("liveweather.commands.citydelete.description")));
             InstanceManager.getServer().getCommandMap().register("help", new CityChange("changecity", new Language().get("liveweather.commands.citychange.description")));
             InstanceManager.getServer().getCommandMap().register("help", new CitySetter("setcity", new Language().get("liveweather.commands.citysetter.description")));
@@ -140,30 +143,27 @@ public class Initiator extends PluginBase {
         //Enable Cloudly if set to true
         if (new LWConfig().read("cloudly").equals("true")) {
             new LWLogging().normal(new Language().get("liveweather.cloudly.activate"));
-            InstanceManager.getServer().getScheduler().scheduleRepeatingTask(new Runnable() {
-                @Override
-                public void run() {
-                    if(!im) {
-                        new LWLogging().normal("Start task cloudly");
-                    }
-                    if (t == 2780) {
-                        for (Player s : InstanceManager.getServer().getOnlinePlayers().values()) {
-                            if (s.hasPermission("liveweather.commands")) {
-                                if (new LWConfig().read("autofindplayercity").toLowerCase().equals("true")) {
-                                    if (!new Local().isLocal(s)) {
-                                        new Cloudly().setFog(s, new GetFog().getFog(new Tracker().getCity(s.getAddress())));
-                                    }
-                                } else {
-                                    if (new PlayerConfigs3().hasEntered(s.getName())) {
-                                        new Cloudly().setFog(s, new GetFog().getFog(new PlayerConfigs3().getCity(s.getName())));
-                                    }
+            InstanceManager.getServer().getScheduler().scheduleRepeatingTask(this, () -> {
+                if(!im) {
+                    new LWLogging().normal("Start task cloudly");
+                }
+                if (t == 2780) {
+                    for (Player s : InstanceManager.getServer().getOnlinePlayers().values()) {
+                        if (s.hasPermission("liveweather.commands")) {
+                            if (new LWConfig().read("autofindplayercity").equalsIgnoreCase("true")) {
+                                if (!new Local().isLocal(s)) {
+                                    new Cloudly().setFog(s, new GetFog().getFog(new Tracker().getCity(s.getAddress())));
+                                }
+                            } else {
+                                if (new PlayerConfigs3().hasEntered(s.getName())) {
+                                    new Cloudly().setFog(s, new GetFog().getFog(new PlayerConfigs3().getCity(s.getName())));
                                 }
                             }
                         }
-                        t = 0;
-                    } else {
-                        t = t + 1;
                     }
+                    t = 0;
+                } else {
+                    t = t + 1;
                 }
             }, 1);
         }
@@ -176,38 +176,35 @@ public class Initiator extends PluginBase {
             InstanceManager.getDebugLogger().create();
         }
         //Register weather change event
-        InstanceManager.getServer().getScheduler().scheduleRepeatingTask(new Runnable() {
-            @Override
-            public void run() {
-                if(!im2) {
-                    new LWLogging().normal("Start task weather service");
-                    im2 = true;
-                }
-                if (t == 2780) {
-                    for (Player s : InstanceManager.getServer().getOnlinePlayers().values()) {
-                        if (s.hasPermission("liveweather.commands")) {
-                            if (new LWConfig().read("autofindplayercity").toLowerCase().equals("true")) {
-                                if (!new Local().isLocal(s)) {
-                                    new Wetter().setWeather(new GetWeather().getWeather(new Tracker().getCity(s.getAddress())), s);
-                                }
-                            } else {
-                                if (new PlayerConfigs3().hasEntered(s.getName())) {
-                                    new Wetter().setWeather(new GetWeather().getWeather(new PlayerConfigs3().getCity(s.getName())), s);
-                                }
+        InstanceManager.getServer().getScheduler().scheduleRepeatingTask(this, () -> {
+            if(!im2) {
+                new LWLogging().normal("Start task weather service");
+                im2 = true;
+            }
+            if (t == 2780) {
+                for (Player s : InstanceManager.getServer().getOnlinePlayers().values()) {
+                    if (s.hasPermission("liveweather.commands")) {
+                        if (new LWConfig().read("autofindplayercity").equalsIgnoreCase("true")) {
+                            if (!new Local().isLocal(s)) {
+                                new Wetter().setWeather(new GetWeather().getWeather(new Tracker().getCity(s.getAddress())), s);
+                            }
+                        } else {
+                            if (new PlayerConfigs3().hasEntered(s.getName())) {
+                                new Wetter().setWeather(new GetWeather().getWeather(new PlayerConfigs3().getCity(s.getName())), s);
                             }
                         }
                     }
-                    t = 0;
-                } else {
-                    t = t + 1;
                 }
+                t = 0;
+            } else {
+                t = t + 1;
             }
         }, 1);
         //---
         //Load extensions if there are
-        if(!(new File(InstanceManager.getServer().getPluginPath() + "/LiveWeather/extensions").listFiles().length == 0)) {
+        if(!(Objects.requireNonNull(new File(InstanceManager.getServer().getPluginPath() + "/LiveWeather/extensions").listFiles()).length == 0)) {
             File extensions = new File(InstanceManager.getServer().getPluginPath() + "/LiveWeather/extensions");
-            for (File f : extensions.listFiles()) {
+            for (File f : Objects.requireNonNull(extensions.listFiles())) {
                 new ExtensionLoader().load(f, false);
             }
         }
@@ -220,6 +217,7 @@ public class Initiator extends PluginBase {
         //---
         new LWLogging().normal(new Language().get("liveweather.init.finished"));
     }
+    @SuppressWarnings("unused")
     public Server server() {
         return getServer();
     }

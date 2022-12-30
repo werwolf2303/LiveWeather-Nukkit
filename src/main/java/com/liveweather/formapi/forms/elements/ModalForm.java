@@ -5,6 +5,7 @@ import cn.nukkit.form.window.FormWindowModal;
 import com.liveweather.formapi.forms.Form;
 import com.liveweather.formapi.forms.ModalFormResponse;
 
+@SuppressWarnings("unused")
 public class ModalForm extends Form {
 
     public ModalForm(FormWindowModal form){

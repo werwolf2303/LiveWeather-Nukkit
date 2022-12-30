@@ -1,16 +1,16 @@
 package com.liveweather.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+@SuppressWarnings("unused")
 public class StringBuffer {
-    ArrayList<String> concept = new ArrayList<>();
+    final ArrayList<String> concept = new ArrayList<>();
     public void add(String s) {
         concept.add(s);
     }
     public void add(String[] s) {
-        for(String st : s) {
-            concept.add(st);
-        }
+        concept.addAll(Arrays.asList(s));
     }
     public void remove(String s) {
         int count = 0;
@@ -25,6 +25,7 @@ public class StringBuffer {
     public void remove(int index) {
         concept.remove(index);
     }
+    @SuppressWarnings("StringConcatenationInLoop")
     @Override
     public String toString() {
         String cache = "";

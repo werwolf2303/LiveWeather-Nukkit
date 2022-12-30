@@ -1,4 +1,4 @@
-package com.liveweather.Simulator;
+package com.liveweather.simulator;
 
 import cn.nukkit.Server;
 import cn.nukkit.command.SimpleCommandMap;

@@ -3,16 +3,16 @@ package com.liveweather.threading;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.language.Language;
 
+@SuppressWarnings("deprecation")
 public class High {
-    Thread t = new Thread();
+    final Thread t;
     int prio = Thread.MAX_PRIORITY;
     boolean running = false;
-    boolean actual = false;
     public High(Runnable run) {
         t = new Thread(run);
     }
     public void setPriority(int priority) {
-        if(!actual) {
+        if(!running) {
             prio = priority;
         }
     }
@@ -24,7 +24,6 @@ public class High {
         t.start();
         if(t.isAlive()) {
             running = true;
-            actual = true;
         }else{
             new LWLogging().critical(new Language().get("liveweather.threading.critical"));
         }
@@ -33,7 +32,7 @@ public class High {
         return running;
     }
     public void stop() {
-        if(actual) {
+        if(running) {
             t.stop();
         }
     }

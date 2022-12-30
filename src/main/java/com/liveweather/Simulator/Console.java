@@ -1,28 +1,23 @@
-package com.liveweather.Simulator;
+package com.liveweather.simulator;
 
 import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.lang.TextContainer;
-import cn.nukkit.network.SourceInterface;
-import cn.nukkit.network.protocol.DataPacket;
 import cn.nukkit.permission.Permission;
 import cn.nukkit.permission.PermissionAttachment;
 import cn.nukkit.permission.PermissionAttachmentInfo;
 import cn.nukkit.plugin.Plugin;
 import com.liveweather.instances.InstanceManager;
-import org.apache.commons.io.LineIterator;
 
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Console extends Player {
-    //TODO: Fix Loggin overlapping user input field
-
-    public static ArrayList<Command> com = new ArrayList<Command>();
+    public static final ArrayList<Command> com = new ArrayList<>();
     boolean first = true;
+    @SuppressWarnings("InfiniteRecursion")
     public void init() {
         if(first) {
             com.add(new SwitchCommand("switch"));
@@ -37,7 +32,6 @@ public class Console extends Player {
         for(Command c : com) {
             try {
                 //Arguments
-                String test = input.trim().split(" ")[0];
                 int curr = 0;
                 for(String s : input.trim().split(" ")) {
                     if(curr>0) {
@@ -160,7 +154,6 @@ public class Console extends Player {
         for(Command c : com) {
             try {
                 //Arguments
-                String test = input.trim().split(" ")[0];
                 int curr = 0;
                 for (String s : input.trim().split(" ")) {
                     if (curr > 0) {

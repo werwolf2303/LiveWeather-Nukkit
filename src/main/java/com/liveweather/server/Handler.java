@@ -24,7 +24,7 @@ public class Handler {
                 OutputStream os = exchange.getResponseBody();
                 os.write(IOUtils.toByteArray(response));
                 os.close();
-            }catch (IOException ex) {
+            }catch (IOException ignored) {
 
             }
             return;
@@ -39,7 +39,7 @@ public class Handler {
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();
-                    }catch (IOException ex) {
+                    }catch (IOException ignored) {
 
                     }
                 }else {
@@ -64,7 +64,7 @@ public class Handler {
                     OutputStream os = exchange.getResponseBody();
                     os.write(response.getBytes());
                     os.close();
-                }catch (IOException ex) {
+                }catch (IOException ignored) {
 
                 }
             }
@@ -76,7 +76,7 @@ public class Handler {
                 OutputStream os = exchange.getResponseBody();
                 os.write(response.getBytes());
                 os.close();
-            }catch (IOException ex) {
+            }catch (IOException ignored) {
 
             }
         }else {
@@ -84,7 +84,7 @@ public class Handler {
                 String args = exchange.getRequestURI().toString();
                 String[] conv = args.split("/");
                 args = conv[conv.length - 1];
-                String response = "";
+                String response;
                 if(args.contains(new LWConfig().read("configserverpassword"))) {
                     response = "<script>\n" +
                             "    window.location.href=\"index.html\";\n" +
@@ -100,7 +100,7 @@ public class Handler {
                     OutputStream os = exchange.getResponseBody();
                     os.write(response.getBytes());
                     os.close();
-                } catch (IOException e) {
+                } catch (IOException ignored) {
                 }
             }
             try {
@@ -117,7 +117,7 @@ public class Handler {
                         os.write(response.getBytes());
                         os.close();
                 }
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             }
         }
     }
@@ -129,7 +129,7 @@ public class Handler {
             OutputStream os = exchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
-        }catch (IOException t) {
+        }catch (IOException ignored) {
 
         }
     }
@@ -146,7 +146,7 @@ public class Handler {
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();
-                    }catch (IOException t) {
+                    }catch (IOException ignored) {
 
                     }
                     return;
@@ -160,7 +160,7 @@ public class Handler {
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();
-                    }catch (IOException t) {
+                    }catch (IOException ignored) {
 
                     }
                     return;
@@ -172,7 +172,7 @@ public class Handler {
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();
-                    }catch (IOException t) {
+                    }catch (IOException ignored) {
 
                     }
                     return;
@@ -186,7 +186,7 @@ public class Handler {
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();
-                    }catch (IOException t) {
+                    }catch (IOException ignored) {
 
                     }
                     return;
@@ -198,7 +198,7 @@ public class Handler {
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();
-                    }catch (IOException t) {
+                    }catch (IOException ignored) {
 
                     }
                     return;
@@ -212,7 +212,7 @@ public class Handler {
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();
-                    }catch (IOException t) {
+                    }catch (IOException ignored) {
 
                     }
                     return;
@@ -224,7 +224,7 @@ public class Handler {
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();
-                    }catch (IOException t) {
+                    }catch (IOException ignored) {
 
                     }
                     return;
@@ -236,7 +236,7 @@ public class Handler {
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();
-                    }catch (IOException t) {
+                    }catch (IOException ignored) {
 
                     }
                     return;
@@ -250,7 +250,7 @@ public class Handler {
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();
-                    }catch (IOException t) {
+                    }catch (IOException ignored) {
 
                     }
                     return;
@@ -264,7 +264,7 @@ public class Handler {
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();
-                    }catch (IOException t) {
+                    }catch (IOException ignored) {
 
                     }
                     return;
@@ -276,7 +276,7 @@ public class Handler {
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();
-                    }catch (IOException t) {
+                    }catch (IOException ignored) {
 
                     }
                     return;
@@ -288,7 +288,7 @@ public class Handler {
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();
-                    }catch (IOException t) {
+                    }catch (IOException ignored) {
 
                     }
                     return;
@@ -300,7 +300,7 @@ public class Handler {
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();
-                    }catch (IOException t) {
+                    }catch (IOException ignored) {
 
                     }
                     return;
@@ -311,7 +311,7 @@ public class Handler {
                     OutputStream os = exchange.getResponseBody();
                     os.write(response.getBytes());
                     os.close();
-                }catch (IOException ex) {
+                }catch (IOException ignored) {
 
                 }
             }
@@ -322,7 +322,7 @@ public class Handler {
                 OutputStream os = exchange.getResponseBody();
                 os.write(response.getBytes());
                 os.close();
-            }catch (IOException t) {
+            }catch (IOException ignored) {
 
             }
         }

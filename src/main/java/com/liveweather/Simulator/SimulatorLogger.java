@@ -1,9 +1,6 @@
-package com.liveweather.Simulator;
+package com.liveweather.simulator;
 
 import com.liveweather.instances.InstanceManager;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 public class SimulatorLogger {
     public void info(String message) {

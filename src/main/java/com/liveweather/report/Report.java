@@ -21,12 +21,7 @@ public class Report {
             return false;
         }
         try {
-            boolean exists = issueService.searchIssues(new RepositoryId("Werwolf2303", "LiveWeather-Nukkit"), IssueService.STATE_CLOSED, title).isEmpty();
-            if(exists) {
-                return false;
-            }else{
-                return true;
-            }
+            return issueService.searchIssues(new RepositoryId("Werwolf2303", "LiveWeather-Nukkit"), IssueService.STATE_CLOSED, title).isEmpty();
         }catch (IOException ioe) {
             InstanceManager.getLogger().throwable(ioe);
         }

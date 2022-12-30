@@ -3,8 +3,9 @@ package com.liveweather.threading;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.language.Language;
 
+@SuppressWarnings({"deprecation", "unused"})
 public class User {
-    Thread t = new Thread();
+    final Thread t;
     int prio = 3;
     boolean running = false;
     boolean actual = false;

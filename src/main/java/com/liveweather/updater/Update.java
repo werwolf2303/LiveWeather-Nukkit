@@ -1,6 +1,5 @@
 package com.liveweather.updater;
 
-import com.exampleextension.com.extension.Init;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebResponse;
@@ -20,11 +19,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
+import java.util.Objects;
 
 import static org.eclipse.jetty.client.GZIPContentDecoder.DEFAULT_BUFFER_SIZE;
 
+@SuppressWarnings("resource")
 public class Update {
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void downloadNightly() {
         String get = new Client().get("https://api.github.com/repos/Werwolf2303/LiveWeather-Nukkit/actions/artifacts");
         JSONObject json = new JSONObject(get);
@@ -37,8 +38,6 @@ public class Update {
             webClient.addRequestHeader("Authorization", "token " + token);
             WebResponse response = webClient.getPage(downloadurl).getWebResponse();
             copyInputStreamToFile(response.getContentAsStream(), new File("updatecache"));
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -49,7 +48,7 @@ public class Update {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        for(File f : new File("update").listFiles()) {
+        for(File f : Objects.requireNonNull(new File("update").listFiles())) {
             f.delete();
         }
         new File("update").delete();
@@ -93,21 +92,13 @@ public class Update {
                 //Development version.. SKIP
                 return false;
             }
-            if (!pluginversion.equals(version)) {
-                return true;
-            } else {
-                return false;
-            }
+            return !pluginversion.equals(version);
         }else {
             if (Float.parseFloat(Initiator.plugin.getDescription().getVersion().replace("\"", "")) > Float.parseFloat(version.replace("\"", ""))) {
                 //Development version.. SKIP
                 return false;
             }
-            if (!Initiator.plugin.getDescription().getVersion().replace("\"", "").equals(version.replace("\"", ""))) {
-                return true;
-            } else {
-                return false;
-            }
+            return !Initiator.plugin.getDescription().getVersion().replace("\"", "").equals(version.replace("\"", ""));
         }
     }
     public void downloadStable() {
@@ -115,8 +106,6 @@ public class Update {
             WebClient webClient = new WebClient(BrowserVersion.BEST_SUPPORTED);
             WebResponse response = webClient.getPage("https://github.com/Werwolf2303/LiveWeather-Nukkit/releases/latest/download/LiveWeather-Nukkit.jar").getWebResponse();
             copyInputStreamToFile(response.getContentAsStream(), new File(InstanceManager.getServer().getPluginPath().replace("\\", "/") + "/LiveWeather-Nukkit.jar"));
-        } catch (MalformedURLException e) {
-            new LWLogging().throwable(e);
         } catch (IOException e) {
             new LWLogging().throwable(e);
         }

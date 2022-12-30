@@ -47,7 +47,7 @@ public class TriggerCommand extends Command {
                     buffer.remove(0);
                     InstanceManager.getLogger().critical(buffer.toString());
                 }
-            }catch (ArrayIndexOutOfBoundsException aioobe) {
+            }catch (ArrayIndexOutOfBoundsException ignored) {
             }
         }
         return false;

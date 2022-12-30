@@ -1,8 +1,9 @@
-package com.liveweather.Simulator;
+package com.liveweather.simulator;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+@SuppressWarnings("SameReturnValue")
 public class TaskHandler extends cn.nukkit.scheduler.TaskHandler {
     public TaskHandler() {
         super();

@@ -1,7 +1,6 @@
 package com.liveweather.check;
 
 
-import com.liveweather.storage.LWConfig;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -21,16 +20,9 @@ public class APIKey {
             HttpEntity entity = response.getEntity();
             String result = EntityUtils.toString(entity);
             String[] lon = result.replace("[", "").replace("]", "").split(",");
-            if(lon[1].contains("Invalid")) {
-                return false;
-            }else{
-                return true;
-            }
+            return lon[1].contains("Invalid");
         }catch (IOException ioe) {
             return false;
         }
-    }
-    public String getAPIKey() {
-        return new LWConfig().read("apikey");
     }
 }

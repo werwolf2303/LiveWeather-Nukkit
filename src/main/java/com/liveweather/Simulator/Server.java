@@ -1,19 +1,17 @@
-package com.liveweather.Simulator;
+package com.liveweather.simulator;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.SimpleCommandMap;
 import cn.nukkit.lang.BaseLang;
-import cn.nukkit.network.protocol.DataPacket;
 import cn.nukkit.plugin.PluginManager;
 import cn.nukkit.scheduler.ServerScheduler;
 import cn.nukkit.utils.MainLogger;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Server extends cn.nukkit.Server {
     int maxplayers = 0;
-    ArrayList<cn.nukkit.Player> players = new ArrayList<Player>();
+    final ArrayList<cn.nukkit.Player> players = new ArrayList<>();
 
     public Server() {
         super();
@@ -50,7 +48,7 @@ public class Server extends cn.nukkit.Server {
 
     @Override
     public PluginManager getPluginManager() {
-        return new com.liveweather.Simulator.PluginManager(null,null);
+        return new com.liveweather.simulator.PluginManager(null,null);
     }
 
     @Override
@@ -60,7 +58,7 @@ public class Server extends cn.nukkit.Server {
 
     @Override
     public ServerScheduler getScheduler() {
-        return new com.liveweather.Simulator.ServerScheduler();
+        return new com.liveweather.simulator.ServerScheduler();
     }
 
     @Override

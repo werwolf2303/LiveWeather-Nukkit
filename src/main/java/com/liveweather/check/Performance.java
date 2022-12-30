@@ -16,11 +16,7 @@ public class Performance {
                 return false;
             }
         }else {
-            if (Runtime.getRuntime().availableProcessors() > 4) {
-                return true;
-            } else {
-                return false;
-            }
+            return Runtime.getRuntime().availableProcessors() > 4;
         }
     }
 }

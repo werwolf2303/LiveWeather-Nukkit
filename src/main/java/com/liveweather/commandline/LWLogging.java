@@ -1,16 +1,11 @@
 package com.liveweather.commandline;
 
 import com.liveweather.Logger;
-import com.liveweather.check.CheckIntelliJ;
 import com.liveweather.instances.InstanceManager;
 import com.liveweather.utils.PluginAPI;
 
 
 public class LWLogging implements Logger {
-    String location = "";
-    public LWLogging() {
-        location = InstanceManager.getServer().getFilePath() + "/plugins/" + "LiveWeather" + "/" + "jarfile/sounds/";
-    }
     public void throwable(Throwable throwable) {
         InstanceManager.getServer().getLogger().alert("[LiveWeather::Throwable] " + throwable.getMessage());
     }

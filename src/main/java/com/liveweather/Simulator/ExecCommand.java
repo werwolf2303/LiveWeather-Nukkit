@@ -1,4 +1,4 @@
-package com.liveweather.Simulator;
+package com.liveweather.simulator;
 
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
@@ -14,6 +14,7 @@ public class ExecCommand extends Command {
         super(name);
     }
 
+    @SuppressWarnings({"StringConcatenationInLoop", "ConstantValue"})
     @Override
     public boolean execute(CommandSender commandSender, String s, String[] strings) {
         try {

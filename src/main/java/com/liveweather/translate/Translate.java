@@ -3,14 +3,12 @@ package com.liveweather.translate;
 import com.gargoylesoftware.htmlunit.*;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 
+@SuppressWarnings("unused")
 public class Translate {
     /**
      * @param text To translate
@@ -49,8 +47,7 @@ public class Translate {
                 }
                 JSONObject json = new JSONObject(redirectPage.getWebResponse().getContentAsString());
                 toreturn = json.getString("translatedText");
-            } catch (MalformedURLException e) {
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             }
             return toreturn;
         }catch (FailingHttpStatusCodeException df) {

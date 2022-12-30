@@ -1,13 +1,13 @@
 package com.liveweather.utils;
 
 import com.liveweather.commandline.LWLogging;
-import com.liveweather.instances.InstanceManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class FileUtils {
+    @SuppressWarnings("StringConcatenationInLoop")
     public String getContent(String path) {
         String toret = "";
         try {

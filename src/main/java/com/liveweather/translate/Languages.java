@@ -1,9 +1,6 @@
 package com.liveweather.translate;
 
-import com.liveweather.test.Test;
-
-import java.util.HashMap;
-
+@SuppressWarnings("ALL")
 public class Languages {
     public String GERMAN = "de";
     public String ENGLISH = "en";

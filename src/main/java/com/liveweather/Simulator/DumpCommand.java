@@ -1,6 +1,5 @@
-package com.liveweather.Simulator;
+package com.liveweather.simulator;
 
-import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 

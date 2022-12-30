@@ -1,4 +1,4 @@
-package com.liveweather.Simulator.forms;
+package com.liveweather.simulator.forms;
 
 import cn.nukkit.Player;
 import com.liveweather.formapi.forms.ModalFormResponse;
@@ -6,12 +6,13 @@ import com.liveweather.formapi.forms.ModalFormResponse;
 import javax.swing.*;
 import java.awt.*;
 
+@SuppressWarnings("unused")
 public class ModalForm extends com.liveweather.formapi.forms.elements.ModalForm {
-    JFrame f = new JFrame();
-    JPanel controls = new JPanel();
-    JButton ok = new JButton();
-    JButton cancel = new JButton();
-    JTextArea area = new JTextArea();
+    final JFrame f = new JFrame();
+    final JPanel controls = new JPanel();
+    final JButton ok = new JButton();
+    final JButton cancel = new JButton();
+    final JTextArea area = new JTextArea();
     public ModalForm(String title, String content, String truebutton, String falsebuton) {
         f.setTitle(title);
         area.setText(content);

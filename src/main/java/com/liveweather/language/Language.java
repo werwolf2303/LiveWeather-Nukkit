@@ -61,7 +61,7 @@ public class Language {
                 JSONObject fallback = new JSONObject(new Resources().read("/lang/en.json"));
                 return fallback.getString(obj);
             }catch (JSONException exs) {
-                new Report().create("English Translation Failure", "English not fully translated\nStacktrace\n\n" + exs.toString());
+                new Report().create("English Translation Failure", "English not fully translated\nStacktrace\n\n" + exs);
                 return obj;
             }
         }

@@ -1,9 +1,9 @@
 package com.liveweather.api;
 
 public interface GW {
-    public boolean isValid(String city);
-    public String dumpResults(String city);
-    public String getWeather(String city);
-    public String getLon(String l);
-    public String getLat(String l);
+    boolean isValid(String city);
+    String dumpResults(String city);
+    String getWeather(String city);
+    String getLon(String l);
+    String getLat(String l);
 }

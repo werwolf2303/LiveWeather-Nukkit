@@ -1,16 +1,14 @@
-package com.liveweather.Simulator;
+package com.liveweather.simulator;
 
-import cn.nukkit.Server;
 import com.liveweather.GlobalValues;
 import com.liveweather.Initiator;
-import com.liveweather.api.GetWeather;
-import com.liveweather.commandline.LWLogging;
 import com.liveweather.debug.TriggerCommand;
 import com.liveweather.instances.InstanceManager;
 
 import java.io.File;
 
 public class Simulate {
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void main(String[] args) {
         if(!new File("nukkit.jar").exists()) {
             System.err.println("Cant run Simulator! Cant find modified version of nukkit");

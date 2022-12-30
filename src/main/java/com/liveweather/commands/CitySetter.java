@@ -4,12 +4,12 @@ import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import com.liveweather.api.GetWeather;
-import com.liveweather.commandline.LWLogging;
 import com.liveweather.formapi.forms.elements.CustomForm;
 import com.liveweather.language.Language;
 import com.liveweather.storage.PlayerConfig;
 import com.liveweather.storage.PlayerConfigs3;
 
+@SuppressWarnings("DuplicateExpressions")
 public class CitySetter extends Command {
     public CitySetter(String name, String description) {
         super(name, description);
@@ -20,9 +20,9 @@ public class CitySetter extends Command {
         if(commandSender.isPlayer()) {
             Player p = (Player) commandSender;
             if(strings.length>0) {
-                if (new GetWeather().isValid(strings[0].toString().replace("[", "").replace("]", ""))) {
-                    new PlayerConfigs3().createPlayer(p.getName(), strings[0].toString().replace("[", "").replace("]", ""));
-                    p.sendMessage(new Language().get("liveweather.commands.citysetter.success").replace("[Name]", strings[0].toString().replace("[", "").replace("]", "")));
+                if (new GetWeather().isValid(strings[0].replace("[", "").replace("]", ""))) {
+                    new PlayerConfigs3().createPlayer(p.getName(), strings[0].replace("[", "").replace("]", ""));
+                    p.sendMessage(new Language().get("liveweather.commands.citysetter.success").replace("[Name]", strings[0].replace("[", "").replace("]", "")));
                 } else {
                     p.sendMessage(new Language().get("liveweather.commands.citysetter.notvalid"));
                 }

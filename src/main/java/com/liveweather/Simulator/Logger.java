@@ -1,4 +1,4 @@
-package com.liveweather.Simulator;
+package com.liveweather.simulator;
 
 import cn.nukkit.utils.MainLogger;
 import com.liveweather.instances.InstanceManager;

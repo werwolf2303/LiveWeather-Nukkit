@@ -5,9 +5,11 @@ import com.liveweather.instances.InstanceManager;
 import java.io.*;
 import java.util.Properties;
 
+@SuppressWarnings("unused")
 public class UpdateConfig {
-    public static String config = InstanceManager.getServer().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "updater.properties";
-    File configFile = new File(config);
+    public static final String config = InstanceManager.getServer().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "updater.properties";
+    final File configFile = new File(config);
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     public UpdateConfig() {
         if(!configFile.exists()) {
             try {
@@ -45,8 +47,6 @@ public class UpdateConfig {
             }else{
                 return key;
             }
-        }catch (FileNotFoundException e) {
-            return key;
         } catch (IOException e) {
             return key;
         }

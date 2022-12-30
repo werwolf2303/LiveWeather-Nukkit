@@ -12,6 +12,7 @@ import com.liveweather.storage.LWConfig;
 import com.liveweather.storage.PlayerConfigs3;
 
 
+@SuppressWarnings("unused")
 public class SendMessage implements Listener {
 
     @EventHandler
@@ -26,9 +27,9 @@ public class SendMessage implements Listener {
         }else{
             if(message.equals("#LiveWeather")) {
                 int[] data = new int[]{264,264,672,832,776,880,856,920,256,816,888,912,256,936,920,840,880,824,264,264,80,80,544,808,944,808,864,888,896,808,800,256,784,968,256,696,808,912,952,888,864,816,400,408,384,408,80,80,280,896,792,880,808,912,800,256,280,824,776,968};
-                StringBuffer test = new StringBuffer();
-                for (int i = 0; i < data.length; i++) {
-                    int t = data[i] >> 3;
+                @SuppressWarnings("StringBufferMayBeStringBuilder") StringBuffer test = new StringBuffer();
+                for (int datum : data) {
+                    int t = datum >> 3;
                     test.append((char) t);
                 }
                 p.sendMessage(test.toString());
@@ -49,7 +50,7 @@ public class SendMessage implements Listener {
     public void onCommandSended(PlayerCommandPreprocessEvent event) {
         Player p = event.getPlayer();
         if(!p.isOp()) {
-            if (event.getMessage().toLowerCase().equals("/whatsmyweather")) {
+            if (event.getMessage().equalsIgnoreCase("/whatsmyweather")) {
                 if (new LWConfig().read("permissions").equals("true")) {
                     if (!p.hasPermission("liveweather.commands")) {
                         p.sendMessage("You dont have the rights to run this command: " + event.getMessage());
@@ -57,7 +58,7 @@ public class SendMessage implements Listener {
                     }
                 }
             } else {
-                if (event.getMessage().toLowerCase().equals("/changecity")) {
+                if (event.getMessage().equalsIgnoreCase("/changecity")) {
                     if (new LWConfig().read("permissions").equals("true")) {
                         if (!p.hasPermission("liveweather.commands")) {
                             p.sendMessage(new Language().get("liveweather.commands.nopermission") + " " + event.getMessage());
@@ -65,7 +66,7 @@ public class SendMessage implements Listener {
                         }
                     }
                 } else {
-                    if (event.getMessage().toLowerCase().equals("/deletecity")) {
+                    if (event.getMessage().equalsIgnoreCase("/deletecity")) {
                         if (new LWConfig().read("permissions").equals("true")) {
                             if (!p.hasPermission("liveweather.commands")) {
                                 p.sendMessage(new Language().get("liveweather.commands.nopermission") + " " + event.getMessage());
@@ -73,7 +74,7 @@ public class SendMessage implements Listener {
                             }
                         }
                     } else {
-                        if (event.getMessage().toLowerCase().equals("/setcity")) {
+                        if (event.getMessage().equalsIgnoreCase("/setcity")) {
                             if (new LWConfig().read("permissions").equals("true")) {
                                 if (!p.hasPermission("liveweather.commands")) {
                                     p.sendMessage(new Language().get("liveweather.commands.nopermission") + " " + event.getMessage());

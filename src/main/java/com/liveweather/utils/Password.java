@@ -6,6 +6,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.function.Function;
 
+@SuppressWarnings("unused")
 public class Password {
     private static final Logger log = LoggerFactory.getLogger(Password.class);
 
@@ -44,8 +45,8 @@ public class Password {
      * currently.
      */
     private int getRounds(String salt) {
-        char minor = (char)0;
-        int off = 0;
+        char minor;
+        int off;
 
         if (salt.charAt(0) != '$' || salt.charAt(1) != '2')
             throw new IllegalArgumentException ("Invalid salt version");

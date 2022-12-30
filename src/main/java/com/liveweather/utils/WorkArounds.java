@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginClassLoader;
@@ -27,6 +26,7 @@ public class WorkArounds {
         return result;
     }
 
+    @SuppressWarnings("RedundantCollectionOperation")
     public static void unregisterCommand(Command cmd) {
         try {
 

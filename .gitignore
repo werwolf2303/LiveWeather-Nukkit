@@ -3,4 +3,4 @@
 logs/server.log
 *.class
 *.xml
-*.xml
+/build/

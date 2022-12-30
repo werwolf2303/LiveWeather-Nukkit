@@ -9,7 +9,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+@SuppressWarnings("unused")
 public class LWFileLogger {
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public LWFileLogger() {
         if(!new File(Initiator.pluginlocation + "/log.txt").exists()) {
             try {
@@ -22,7 +24,7 @@ public class LWFileLogger {
     public void write(String message) {
         String before = new FileUtils().getContent(Initiator.pluginlocation + "/log.txt");
         try {
-            FileWriter writer = new FileWriter(new File(Initiator.pluginlocation + "/log.txt"));
+            FileWriter writer = new FileWriter(Initiator.pluginlocation + "/log.txt");
             writer.write(before+"\n"+message);
             writer.close();
         } catch (IOException e) {

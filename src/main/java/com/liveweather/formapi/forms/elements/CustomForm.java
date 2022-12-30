@@ -8,6 +8,7 @@ import com.liveweather.formapi.forms.Form;
 
 import java.util.List;
 
+@SuppressWarnings({"UnusedReturnValue", "unused"})
 public class CustomForm extends Form {
 
     public CustomForm(FormWindowCustom form){

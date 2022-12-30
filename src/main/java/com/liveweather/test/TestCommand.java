@@ -3,16 +3,10 @@ package com.liveweather.test;
 import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.form.element.ElementInput;
 import com.liveweather.Initiator;
 import com.liveweather.commandline.LWLogging;
-import com.liveweather.formapi.forms.custom.LoginForm;
-import com.liveweather.formapi.forms.elements.CustomForm;
-import com.liveweather.formapi.forms.elements.ImageType;
-import com.liveweather.formapi.forms.elements.SimpleForm;
 import com.liveweather.formapi.forms.handlers.LoginFormHandler;
 import com.liveweather.instances.InstanceManager;
-import com.liveweather.utils.PluginAPI;
 import com.liveweather.utils.WorkArounds;
 
 public class TestCommand extends Command {
@@ -20,7 +14,8 @@ public class TestCommand extends Command {
         super(name);
     }
 
-    private class handler implements LoginFormHandler {
+    @SuppressWarnings("unused")
+    private static class handler implements LoginFormHandler {
 
         @Override
         public void onOk(String email, String password, Player p) {

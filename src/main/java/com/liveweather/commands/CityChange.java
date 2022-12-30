@@ -8,6 +8,7 @@ import com.liveweather.formapi.forms.elements.CustomForm;
 import com.liveweather.language.Language;
 import com.liveweather.storage.PlayerConfig;
 
+@SuppressWarnings("DuplicateExpressions")
 public class CityChange extends Command {
     public CityChange(String name, String description) {
         super(name, description);

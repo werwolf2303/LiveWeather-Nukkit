@@ -1,14 +1,11 @@
 package com.liveweather.check;
 
-import com.liveweather.Initiator;
 import com.liveweather.api.GetWeather;
 import com.liveweather.commandline.LWLogging;
-import com.liveweather.instances.InstanceManager;
 import com.liveweather.language.Language;
 import com.liveweather.report.Report;
 import com.liveweather.storage.LWConfig;
 import com.liveweather.utils.PluginAPI;
-import sun.java2d.ReentrantContextProviderTL;
 
 
 public class SuccessFullStartup {

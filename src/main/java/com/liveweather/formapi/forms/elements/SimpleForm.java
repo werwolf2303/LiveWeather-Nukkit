@@ -3,11 +3,11 @@ package com.liveweather.formapi.forms.elements;
 import cn.nukkit.Player;
 import cn.nukkit.form.element.ElementButton;
 import cn.nukkit.form.element.ElementButtonImageData;
-import cn.nukkit.form.window.FormWindowCustom;
 import cn.nukkit.form.window.FormWindowSimple;
 import com.liveweather.formapi.forms.Form;
 import com.liveweather.formapi.forms.SimpleFormResponse;
 
+@SuppressWarnings("unused")
 public class SimpleForm extends Form {
 
     public SimpleForm(FormWindowSimple form){

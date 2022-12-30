@@ -13,6 +13,7 @@ import java.net.InetSocketAddress;
 public class CreateServer {
     Normal normal;
     HttpServer server;
+    @SuppressWarnings("SameReturnValue")
     Runnable starting() {
         if(new LWConfig().read("configserver").equals("true")) {
             try {

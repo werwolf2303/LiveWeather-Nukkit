@@ -22,8 +22,10 @@ import com.liveweather.formapi.forms.SimpleFormResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings (value="unchecked")
 public class EventListener implements Listener {
 
+    @SuppressWarnings (value="unused")
     @EventHandler(priority = EventPriority.HIGH)
     public void formResponded(PlayerFormRespondedEvent event) {
         Player player = event.getPlayer();
@@ -54,7 +56,6 @@ public class EventListener implements Listener {
                 ((SimpleFormResponse) temp).handle(player, (FormWindowSimple) window, (int) data);
                 return;
             }
-
             if (window instanceof FormWindowCustom) {
                 data = new ArrayList<>(((FormResponseCustom) response).getResponses().values());
                 ((CustomFormResponse) temp).handle(player, (FormWindowCustom) window, (List<Object>) data);
@@ -68,10 +69,10 @@ public class EventListener implements Listener {
         }
     }
 
+    @SuppressWarnings(value="unused")
     @EventHandler(priority = EventPriority.HIGH)
     public void playerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-
         Form.playersForm.remove(player.getName());
     }
 }

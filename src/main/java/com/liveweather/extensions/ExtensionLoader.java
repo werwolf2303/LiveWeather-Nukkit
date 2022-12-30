@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+@SuppressWarnings("SameReturnValue")
 public class ExtensionLoader {
     String extensionname = "";
     Runnable l(File extension, boolean ondisable) {
@@ -42,7 +43,7 @@ public class ExtensionLoader {
                         Object o = m2.invoke(t);
                         extensionname = o.toString();
                         foundextensionname = true;
-                        new LWLogging().extension(new Language().get("liveweather.extension.load") + " " + o.toString());
+                        new LWLogging().extension(new Language().get("liveweather.extension.load") + " " + extensionname);
                     }
                 }
                 for (Method m : jarclass.getDeclaredMethods()) {
@@ -70,9 +71,7 @@ public class ExtensionLoader {
             new LWLogging().error(new Language().get("liveweather.extension.loaderror"));
         } catch (ClassNotFoundException ex) {
             new LWLogging().error("Invalid extension");
-        } catch (InvocationTargetException ex) {
-        } catch (InstantiationException ex) {
-        } catch (IllegalAccessException ex) {
+        } catch (InvocationTargetException | IllegalAccessException | InstantiationException ignored) {
         }
         return null;
     }
@@ -90,8 +89,7 @@ public class ExtensionLoader {
             new LWLogging().error("Error while dumping extension");
         } catch (ClassNotFoundException ex) {
             new LWLogging().error("Invalid extension");
-        } catch (InstantiationException ex) {
-        } catch (IllegalAccessException ex) {
+        } catch (InstantiationException | IllegalAccessException ignored) {
         }
         return null;
     }
@@ -119,10 +117,6 @@ public class ExtensionLoader {
             }
             }
         return null;
-    }
-    public void loadSpecificMethod(File extension, String classname, String methodname) {
-        Low low = new Low(lsm(extension, classname, methodname));
-        low.start();
     }
     public void load(File extension, boolean ondisable) {
         Low low = new Low(l(extension,ondisable));

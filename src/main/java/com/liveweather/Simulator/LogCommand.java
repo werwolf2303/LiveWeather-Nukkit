@@ -1,4 +1,4 @@
-package com.liveweather.Simulator;
+package com.liveweather.simulator;
 
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
@@ -15,6 +15,7 @@ public class LogCommand extends Command {
             if(cache.equals("")) {
                 cache = s2;
             }else{
+                //noinspection StringConcatenationInLoop
                 cache = cache + " " + s2;
             }
         }

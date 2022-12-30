@@ -1,4 +1,5 @@
 package com.exampleextension.com.extension;
+@SuppressWarnings("ALL")
 public class Init {
     public void onLoad() {
         //REQUIRED: Called when loading

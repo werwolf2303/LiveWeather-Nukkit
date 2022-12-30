@@ -1,5 +1,6 @@
 package com.liveweather.server;
 
+@SuppressWarnings("unused")
 public class PleaseRead {
 
 

@@ -21,7 +21,7 @@ public class WhatsMyWeather extends Command {
     public boolean execute(CommandSender commandSender, String s, String[] strings) {
         if(commandSender.isPlayer()) {
             Player p = (Player) commandSender;
-            if(!new LWConfig().read("autofindplayercity").toLowerCase().equals("true")) {
+            if(!new LWConfig().read("autofindplayercity").equalsIgnoreCase("true")) {
                 if (!new LWConfig().read(p.getName()).equals("")) {
                     p.sendMessage(new Language().get("liveweather.commands.whatsmyweather.noautofind.current") + new GetWeather().getWeather(new PlayerConfig().getCity(p.getName())));
                 } else {

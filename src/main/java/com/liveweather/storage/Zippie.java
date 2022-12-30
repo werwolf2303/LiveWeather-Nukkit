@@ -4,9 +4,10 @@ import com.liveweather.commandline.LWLogging;
 import com.liveweather.language.Language;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -25,10 +26,9 @@ public class Zippie {
     }
     public static void extractZIP(String in, String out) {
         try {
-            String fileZip = in;
             File destDir = new File(out);
             byte[] buffer = new byte[1024];
-            ZipInputStream zis = new ZipInputStream(new FileInputStream(fileZip));
+            ZipInputStream zis = new ZipInputStream(Files.newInputStream(Paths.get(in)));
             ZipEntry zipEntry = zis.getNextEntry();
             while (zipEntry != null) {
                 File newFile = newFile(destDir, zipEntry);
@@ -55,7 +55,7 @@ public class Zippie {
             }
             zis.closeEntry();
             zis.close();
-        }catch (IOException ioexc) {
+        }catch (IOException ignored) {
 
         }
     }

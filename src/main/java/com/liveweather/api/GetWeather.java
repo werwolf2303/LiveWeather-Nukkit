@@ -1,6 +1,5 @@
 package com.liveweather.api;
 
-import cn.nukkit.api.API;
 import com.liveweather.check.APIKey;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.instances.InstanceManager;
@@ -19,13 +18,8 @@ import java.io.IOException;
 
 public class GetWeather implements GW {
     public static String apikey = "aaf3cf6e879797e568dd4014d4a694e6";
-    @Deprecated
     public boolean isValid(String city) {
-        if(getWeather(city).equals("InvalidCity")) {
-            return false;
-        }else{
-            return true;
-        }
+        return getWeather(city).equals("InvalidCity");
     }
     public String dumpResults(String city) {
         try {
@@ -56,7 +50,7 @@ public class GetWeather implements GW {
                 return result;
             } catch (ArrayIndexOutOfBoundsException aioobe) {
                 return "InvalidCity";
-            } catch (IOException e) {
+            } catch (IOException ignored) {
 
             }
             return "";
@@ -65,6 +59,7 @@ public class GetWeather implements GW {
         }
         return "";
     }
+    @SuppressWarnings("DuplicateBranchesInSwitch")
     public String getWeather(String city) {
         try {
             String lon = getLon(city);
@@ -89,38 +84,27 @@ public class GetWeather implements GW {
                 String[] conv = result.split(",");
                 String out = conv[3].replace("\"", "").replace(":", "").replace("main", "");
                 if (conv[3].contains("main")) {
-                    if (out.contains("Clouds")) {
-                        return "Clear";
-                    } else {
-                        if (out.contains("Thunderstorm")) {
+                    switch(out) {
+                        case "Clouds":
+                            return "Clear";
+                        case "Thunderstorm":
                             return "Thunderstorm";
-                        } else {
-                            if (out.contains("Drizzle")) {
-                                return "Drizzle";
-                            } else {
-                                if (out.contains("Rain")) {
-                                    return "Rain";
-                                } else {
-                                    if (out.contains("Snow")) {
-                                        return "Snow";
-                                    } else {
-                                        if (out.contains("Clear")) {
-                                            return "Clear";
-                                        } else {
-                                            if (out.contains("Mist")) {
-                                                return "Clear";
-                                            } else {
-                                                new LWLogging().critical(new Language().get("liveweather.api.unhandled") + out);
-                                                return "Clear";
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        case "Drizzle":
+                            return "Drizzle";
+                        case "Rain":
+                            return "Rain";
+                        case "Snow":
+                            return "Snow";
+                        case "Clear":
+                            return "Clear";
+                        case "Mist":
+                            return "Clear";
+                        default:
+                            InstanceManager.getLogger().critical(new Language().get("liveweather.api.unhandled") + out);
+                            return "Clear";
                     }
                 }
-            } catch (IOException ioe) {
+            } catch (IOException ignored) {
 
             }
         }catch (ArrayIndexOutOfBoundsException aioobe) {
@@ -143,7 +127,7 @@ public class GetWeather implements GW {
                 }
             }
             return "NotFound";
-        }catch (IOException ioe) {
+        }catch (IOException ignored) {
 
         }
         return "";
@@ -163,7 +147,7 @@ public class GetWeather implements GW {
                 }
             }
             return "NotFound";
-        }catch (IOException ioe) {
+        }catch (IOException ignored) {
 
         }
         return "";

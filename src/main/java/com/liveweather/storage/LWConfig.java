@@ -6,8 +6,9 @@ import java.io.*;
 import java.util.Properties;
 
 public class LWConfig {
-    public static String config = InstanceManager.getServer().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "options.properties";
-    File configFile = new File(config);
+    public static final String config = InstanceManager.getServer().getFilePath() + "/" + "plugins" + "/" + "LiveWeather" + "/" + "options.properties";
+    final File configFile = new File(config);
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     public LWConfig() {
         if(!configFile.exists()) {
             try {
@@ -32,8 +33,6 @@ public class LWConfig {
             }else{
                 return key;
             }
-        }catch (FileNotFoundException e) {
-            return key;
         } catch (IOException e) {
             return key;
         }

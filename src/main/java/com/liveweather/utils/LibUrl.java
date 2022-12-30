@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class LibUrl {
     public String get(String url) {
         try {
@@ -37,7 +38,7 @@ public class LibUrl {
     public String post(String url, String[] data) {
         try {
             HttpPost request = new HttpPost(url);
-            List<NameValuePair> params = new ArrayList<NameValuePair>(2);
+            List<NameValuePair> params = new ArrayList<>(2);
             for(String s : data) {
                 params.add(new BasicNameValuePair(s.split(",")[0], s.split(",")[1]));
             }
@@ -55,7 +56,7 @@ public class LibUrl {
         public void post(String url, String[] data) {
             try {
                 request = new HttpPost(url);
-                List<NameValuePair> params = new ArrayList<NameValuePair>(2);
+                List<NameValuePair> params = new ArrayList<>(2);
                 for(String s : data) {
                     params.add(new BasicNameValuePair(s.split(",")[0], s.split(",")[1]));
                 }

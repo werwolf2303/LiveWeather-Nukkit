@@ -4,9 +4,9 @@ import java.awt.*;
 
 public class TextElement implements Elements {
     int xaxis = 0;
-    Color color = null;
+    final Color color;
     int yaxis = 0;
-    String content = "";
+    final String content;
     public TextElement(String text, Color c) {
         color = c;
         content = text;

@@ -3,8 +3,9 @@ package com.liveweather.threading;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.language.Language;
 
+@SuppressWarnings("unused")
 public class Low {
-    Thread t = new Thread();
+    final Thread t;
     int prio = Thread.MIN_PRIORITY;
     boolean running = false;
     boolean actual = false;
@@ -32,6 +33,7 @@ public class Low {
     public boolean isRunning() {
         return running;
     }
+    @SuppressWarnings("deprecation")
     public void stop() {
         if(actual) {
             t.stop();
