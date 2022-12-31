@@ -1,7 +1,7 @@
 name: LiveWeather
 main: com.liveweather.Initiator
-api: ["1.0.14"]
-version: "2.0"
+api: ["1.0.13"]
+version: "2.1"
 author: Werwolf2303
 
 permissions:

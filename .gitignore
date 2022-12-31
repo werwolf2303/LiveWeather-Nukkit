@@ -1,6 +1,7 @@
 
 .idea/libraries/nukkit_1_0_SNAPSHOT.xml
-logs/server.log
-*.class
 *.xml
 /build/
+/target/
+/DebugEnv/
+/logs/

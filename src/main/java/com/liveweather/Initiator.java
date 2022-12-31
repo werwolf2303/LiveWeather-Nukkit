@@ -10,6 +10,7 @@ import com.liveweather.api.GetFog;
 import com.liveweather.api.GetWeather;
 import com.liveweather.check.Local;
 import com.liveweather.check.Performance;
+import com.liveweather.check.PowerNukkit;
 import com.liveweather.check.SuccessFullStartup;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.commands.*;
@@ -36,6 +37,7 @@ public class Initiator extends PluginBase {
     public static Plugin plugin;
     int t = 0;
     boolean senabled = false;
+    boolean pn = new PowerNukkit().isIt();
     public static final String pluginlocation = InstanceManager.getServer().getPluginPath() + "/LiveWeather";
     CreateServer server;
     final boolean im = false;
@@ -60,6 +62,11 @@ public class Initiator extends PluginBase {
     @Override
     public void onEnable() {
         plugin = this;
+        //Disable if its running on a powernukkit server. WHY? Because fail checks are failing for an unknown reason
+            if(pn) {
+                new PluginAPI().disableLiveWeather();
+            }
+        //---
         //Check for config file that says not enough power and check if its ignored
         if(new File(new Configuring().config).exists()) {
             if (new Configuring().getConfig("RunUnsupported").equals("false")) {

@@ -20,7 +20,7 @@ public class APIKey {
             HttpEntity entity = response.getEntity();
             String result = EntityUtils.toString(entity);
             String[] lon = result.replace("[", "").replace("]", "").split(",");
-            return lon[1].contains("Invalid");
+            return !lon[1].contains("Invalid");
         }catch (IOException ioe) {
             return false;
         }

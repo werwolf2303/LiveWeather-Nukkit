@@ -16,6 +16,7 @@ public class Server extends cn.nukkit.Server {
     public Server() {
         super();
     }
+
     @Override
     public String getName() {
         return "DebugServer";

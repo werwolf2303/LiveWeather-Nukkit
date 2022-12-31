@@ -1,5 +1,9 @@
 package com.liveweather.check;
 
+import com.liveweather.instances.InstanceManager;
+
 public class PowerNukkit {
-    //Check if server is powernukkit
+    public boolean isIt() {
+        return InstanceManager.getServer().getCodename().equalsIgnoreCase("PowerNukkit");
+    }
 }
