@@ -1,6 +1,7 @@
 package com.liveweather.threading;
 
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.instances.InstanceManager;
 import com.liveweather.language.Language;
 
 @SuppressWarnings({"deprecation", "unused"})
@@ -22,6 +23,7 @@ public class User {
     }
     public void start() {
         t.setPriority(prio);
+        InstanceManager.getThreadManager().add(t);
         t.start();
         if(t.isAlive()) {
             running = true;

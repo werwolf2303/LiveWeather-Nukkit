@@ -40,7 +40,7 @@ public class Password {
     }
 
     /*
-     * Copy pasted from BCrypt internals :(. Ideally a method
+     * Copy and pasted from BCrypt internals :(. Ideally a method
      * to exports parts would be public. We only care about rounds
      * currently.
      */

@@ -11,7 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-@SuppressWarnings("SameReturnValue")
+@SuppressWarnings({"SameReturnValue", "unused"})
 public class ExtensionLoader {
     String extensionname = "";
     Runnable l(File extension, boolean ondisable) {
@@ -24,7 +24,6 @@ public class ExtensionLoader {
                 for(Method m2 : jarclass.getDeclaredMethods()) {
                     if(m2.getName().equals("getExtensionName")) {
                         m2.setAccessible(true);
-                        Object o = m2.invoke(t);
                         foundextensionname = true;
                     }
                 }
@@ -32,7 +31,6 @@ public class ExtensionLoader {
                     if(foundextensionname) {
                         if (m.getName().equals("onDisable")) {
                             m.setAccessible(true);
-                            Object o = m.invoke(t);
                         }
                     }
                 }
@@ -50,7 +48,6 @@ public class ExtensionLoader {
                     if(foundextensionname) {
                         if (m.getName().equals("onLoad")) {
                             m.setAccessible(true);
-                            Object o = m.invoke(t);
                         }
                         if (m.getName().equals("dumpFunctions")) {
                             m.setAccessible(true);
@@ -80,7 +77,7 @@ public class ExtensionLoader {
         try {
             URLClassLoader classLoader = URLClassLoader.newInstance(new URL[]{extension.toURI().toURL()});
             Class<?> jarclass = classLoader.loadClass("com.extension.Init");
-            Object t = jarclass.newInstance();
+            jarclass.newInstance();
             new LWLogging().normal(new Language().get("liveweather.extension.startdump") + " "+ extensionname);
             for(Method m2 : jarclass.getDeclaredMethods()) {
                 new LWLogging().normal(extensionname + " : " + m2.getName());
@@ -102,14 +99,13 @@ public class ExtensionLoader {
         try {
             URLClassLoader classLoader = URLClassLoader.newInstance(new URL[]{extension.toURI().toURL()});
             Class<?> jarclass = classLoader.loadClass(classname);
-            Object t = jarclass.newInstance();
+            jarclass.newInstance();
             for (Method m : jarclass.getDeclaredMethods()) {
                 if(m.getName().equals(methodname)) {
                     m.setAccessible(true);
-                    Object o = m.invoke(t);
                 }
             }
-        } catch (MalformedURLException | InvocationTargetException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
+        } catch (MalformedURLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
             if(e instanceof ClassNotFoundException) {
                 new LWLogging().error(new Language().get("liveweather.extension.invalid"));
             }else{
@@ -117,6 +113,11 @@ public class ExtensionLoader {
             }
             }
         return null;
+    }
+
+    public void loadSpecificMethodAndClass(File extension, String classname, String methodname) {
+        Low low = new Low(lsm(extension, classname, methodname));
+        low.start();
     }
     public void load(File extension, boolean ondisable) {
         Low low = new Low(l(extension,ondisable));

@@ -1,11 +1,11 @@
 package com.liveweather.server;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "GrazieInspection"})
 public class PleaseRead {
 
 
     //ENGLISH
-    // The code in the package 'server' is for the webserver that i want to code in. But it doesn't work so good. Maybe in the next updates
+    // The code in the package 'server' is for the webserver that I want to code in. But it doesn't work so good. Maybe in the next updates
     // Enable it with: 'configserver:true'
     // Set Password with: 'configserverpassword:YOUR_PASSWORD'
     // options.cfg

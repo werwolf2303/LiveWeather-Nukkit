@@ -29,6 +29,7 @@ import com.liveweather.storage.*;
 import com.liveweather.test.TestCommand;
 import com.liveweather.debug.TriggerCommand;
 import com.liveweather.updater.Update;
+import com.liveweather.utils.Analytics;
 import com.liveweather.utils.PluginAPI;
 import java.io.File;
 import java.util.Objects;
@@ -37,7 +38,7 @@ public class Initiator extends PluginBase {
     public static Plugin plugin;
     int t = 0;
     boolean senabled = false;
-    boolean pn = new PowerNukkit().isIt();
+    final boolean pn = new PowerNukkit().isIt();
     public static final String pluginlocation = InstanceManager.getServer().getPluginPath() + "/LiveWeather";
     CreateServer server;
     final boolean im = false;
@@ -61,8 +62,14 @@ public class Initiator extends PluginBase {
     }
     @Override
     public void onEnable() {
+        if(InstanceManager.getThreadManager().getSize()>0) {
+            InstanceManager.getThreadManager().clear();
+        }
+        if(Cache.ignorePlayer.size()>0) {
+            Cache.ignorePlayer.clear();
+        }
         plugin = this;
-        //Disable if its running on a powernukkit server. WHY? Because fail checks are failing for an unknown reason
+        //Disable if it's running on a powernukkit server. WHY? Because fail checks are failing for an unknown reason
             if(pn) {
                 new PluginAPI().disableLiveWeather();
             }
@@ -180,6 +187,7 @@ public class Initiator extends PluginBase {
             InstanceManager.getServer().getCommandMap().register("help", new TestCommand("testweather"));
             InstanceManager.getServer().getCommandMap().register("help", new TriggerCommand("trigger"));
             InstanceManager.getServer().getCommandMap().register("help", new WhatsMyWeather("whatsmyweather", new Language().get("liveweather.commands.whatsmyweather.description")));
+            InstanceManager.getServer().getCommandMap().register("help", new SimulateWeather("simulateweather"));
             InstanceManager.getDebugLogger().create();
         }
         //Register weather change event
@@ -189,7 +197,20 @@ public class Initiator extends PluginBase {
                 im2 = true;
             }
             if (t == 2780) {
+                boolean ignore = false;
                 for (Player s : InstanceManager.getServer().getOnlinePlayers().values()) {
+                    ignore = false;
+                    if(GlobalValues.serverdebug) {
+                        for(Player p : Cache.ignorePlayer) {
+                            if(p.getName().equals(s.getName())) {
+                                ignore = true;
+                                return;
+                            }
+                        }
+                    }
+                    if(ignore) {
+                        continue;
+                    }
                     if (s.hasPermission("liveweather.commands")) {
                         if (new LWConfig().read("autofindplayercity").equalsIgnoreCase("true")) {
                             if (!new Local().isLocal(s)) {
@@ -222,6 +243,7 @@ public class Initiator extends PluginBase {
         InstanceManager.getServer().getPluginManager().registerEvents(new EventListener(), this);
         InstanceManager.getServer().getPluginManager().registerEvents(new ServerEvents(), this);
         //---
+        new Analytics().send();
         new LWLogging().normal(new Language().get("liveweather.init.finished"));
     }
     @SuppressWarnings("unused")

@@ -14,5 +14,5 @@ Chunk
 
 RESULTS
 
-10km = 10 Chunks
-1km = 1 Chunk
+10 km = 10 Chunks
+1 km = 1 Chunk

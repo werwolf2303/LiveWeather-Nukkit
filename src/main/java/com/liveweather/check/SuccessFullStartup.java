@@ -2,7 +2,6 @@ package com.liveweather.check;
 
 import com.liveweather.api.GetWeather;
 import com.liveweather.commandline.LWLogging;
-import com.liveweather.instances.InstanceManager;
 import com.liveweather.language.Language;
 import com.liveweather.report.Report;
 import com.liveweather.storage.LWConfig;

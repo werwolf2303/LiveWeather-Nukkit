@@ -8,12 +8,21 @@ import com.liveweather.simulator.Console;
 import com.liveweather.api.GetWeather;
 import com.liveweather.commandline.LWLogging;
 import com.liveweather.debug.DebugLogger;
+import com.liveweather.threading.ThreadManager;
 
+@SuppressWarnings("unused")
 public class InstanceManager {
     static com.liveweather.simulator.Server server = null;
     static DebugLogger logger = null;
     static GetWeather weather = null;
     static Console console = null;
+    static ThreadManager manager = null;
+    public static ThreadManager getThreadManager() {
+        if(manager==null) {
+            manager = new ThreadManager();
+        }
+        return manager;
+    }
     public static Server getServer() {
         if(GlobalValues.debug) {
             if(server==null) {
@@ -28,6 +37,10 @@ public class InstanceManager {
         if(GlobalValues.debug) {
             if(weather==null) {
                 weather = new APIResponse();
+            }
+        }else{
+            if(weather==null) {
+                weather = new GetWeather();
             }
         }
         return weather;

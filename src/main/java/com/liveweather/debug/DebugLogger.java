@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import static java.awt.Font.BOLD;
 
+@SuppressWarnings("unused")
 public class DebugLogger implements Logger {
     final JFrame debugFrame;
     final JScrollPane pane;

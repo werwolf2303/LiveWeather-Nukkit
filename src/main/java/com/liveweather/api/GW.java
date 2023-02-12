@@ -1,5 +1,6 @@
 package com.liveweather.api;
 
+@SuppressWarnings("unused")
 public interface GW {
     boolean isValid(String city);
     String dumpResults(String city);

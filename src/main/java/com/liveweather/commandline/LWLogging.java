@@ -5,6 +5,7 @@ import com.liveweather.instances.InstanceManager;
 import com.liveweather.utils.PluginAPI;
 
 
+@SuppressWarnings("unused")
 public class LWLogging implements Logger {
     public void throwable(Throwable throwable) {
         InstanceManager.getServer().getLogger().alert("[LiveWeather::Throwable] " + throwable.getMessage());

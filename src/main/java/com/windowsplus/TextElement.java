@@ -2,6 +2,7 @@ package com.windowsplus;
 
 import java.awt.*;
 
+@SuppressWarnings("unused")
 public class TextElement implements Elements {
     int xaxis = 0;
     final Color color;

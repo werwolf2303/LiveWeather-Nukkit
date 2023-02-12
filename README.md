@@ -19,7 +19,7 @@ Commands:
 
 How to use it?
 
-Just type "/setcity" then enter the city and you have live weather
+Just type "/setcity" then enter the city, and you have live weather
 
 
 How does it work?

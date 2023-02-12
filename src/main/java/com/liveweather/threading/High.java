@@ -1,9 +1,10 @@
 package com.liveweather.threading;
 
 import com.liveweather.commandline.LWLogging;
+import com.liveweather.instances.InstanceManager;
 import com.liveweather.language.Language;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation", "unused"})
 public class High {
     final Thread t;
     int prio = Thread.MAX_PRIORITY;
@@ -21,6 +22,7 @@ public class High {
     }
     public void start() {
         t.setPriority(prio);
+        InstanceManager.getThreadManager().add(t);
         t.start();
         if(t.isAlive()) {
             running = true;
