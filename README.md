@@ -1,6 +1,6 @@
 <h2>LiveWeather-Nukkit</h2>
 
-<a>EOF: I will only provide security updates and bugfixes</a>
+<a>EOL: I will only provide security updates and bugfixes</a>
 
 <img src="https://github.com/Werwolf2303/LiveWeather-Nukkit/blob/main/liveweatherlogo.png?raw=true" width="200" height="200" alt="Your browser suck"></img>
 
