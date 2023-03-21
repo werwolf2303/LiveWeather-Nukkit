@@ -32,6 +32,6 @@ INFO: The weather applies for each player individually
 Supported languages:
 
 - English --> Full
-- German --> Not sure (i am german but i dont code in english)
+- German --> Not sure (i am german but i dont code in german)
 - Chinese --> Not sure
 
