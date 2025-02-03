@@ -3,12 +3,9 @@ package com.liveweather.commands;
 import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
-import com.liveweather.api.GetWeather;
-import com.liveweather.commandline.LWLogging;
-import com.liveweather.formapi.forms.elements.CustomForm;
-import com.liveweather.language.Language;
-import com.liveweather.storage.PlayerConfig;
-import com.liveweather.storage.PlayerConfigs3;
+import com.liveweather.PublicValues;
+
+import java.io.IOException;
 
 public class CitySetter extends Command {
     public CitySetter(String name, String description) {
@@ -18,36 +15,44 @@ public class CitySetter extends Command {
     @Override
     public boolean execute(CommandSender commandSender, String s, String[] strings) {
         if(commandSender.isPlayer()) {
-            Player p = (Player) commandSender;
+            Player player = (Player) commandSender;
             if(strings.length>0) {
-                if (new GetWeather().isValid(strings[0].toString().replace("[", "").replace("]", ""))) {
-                    new PlayerConfigs3().createPlayer(p.getName(), strings[0].toString().replace("[", "").replace("]", ""));
-                    p.sendMessage(new Language().get("liveweather.commands.citysetter.success").replace("[Name]", strings[0].toString().replace("[", "").replace("]", "")));
-                } else {
-                    p.sendMessage(new Language().get("liveweather.commands.citysetter.notvalid"));
+                try {
+                    if (PublicValues.weatherDataProvider.isCityValid(strings[0].toString().replace("[", "").replace("]", ""))) {
+                        //PublicValues.playerStorageProvider.createPlayer(player.getUniqueId(), strings[0].toString().replace("[", "").replace("]", ""));
+                        player.sendMessage(PublicValues.language.translate("liveweather.commands.citysetter.success").replace("[Name]", strings[0].toString().replace("[", "").replace("]", "")));
+                    } else {
+                        player.sendMessage(PublicValues.language.translate("liveweather.commands.citysetter.notvalid"));
+                    }
+                } catch (IOException e) {
+                    player.sendMessage(PublicValues.language.translate("general.internalerror"));
                 }
             }else {
-                if (!new PlayerConfig().hasEntered(p.getName())) {
-                    CustomForm form = new CustomForm()
-                            .addInput(new Language().get("liveweather.forms.button"));
-                    form.setTitle(new Language().get("liveweather.forms.title"));
-                    form.send(p, (targetPlayer, targetForm, data) -> {
+                if (!PublicValues.playerStorageProvider.hasEntered(player.getUniqueId())) {
+                    /*CustomForm form = new CustomForm()
+                            .addInput(PublicValues.language.translate("liveweather.forms.button"));
+                    form.setTitle(PublicValues.language.translate("liveweather.forms.title"));
+                    form.send(player, (targetPlayer, targetForm, data) -> {
                         if (data == null) return; //Если форма закрыта принудительно, то data будет иметь значение null
                         //new PlayerConfigs().writeConfig(event.getPlayer().getName(), targetForm.getElements().toString());
-                        if (new GetWeather().isValid(data.toString().replace("[", "").replace("]", ""))) {
-                            new PlayerConfigs3().createPlayer(p.getName(), data.toString().replace("[", "").replace("]", ""));
-                            targetPlayer.sendMessage(new Language().get("liveweather.commands.citysetter.success").replace("[Name]", data.toString().replace("[", "").replace("]", "")));
-                        } else {
-                            targetPlayer.sendMessage(new Language().get("liveweather.commands.citysetter.notvalid"));
+                        try {
+                            if (PublicValues.weatherDataProvider.isCityValid(data.toString().replace("[", "").replace("]", ""))) {
+                               // PublicValues.playerStorageProvider.createPlayer(player.getUniqueId(), data.toString().replace("[", "").replace("]", ""));
+                                targetPlayer.sendMessage(PublicValues.language.translate("liveweather.commands.citysetter.success").replace("[Name]", data.toString().replace("[", "").replace("]", "")));
+                            } else {
+                                targetPlayer.sendMessage(PublicValues.language.translate("liveweather.commands.citysetter.notvalid"));
+                            }
+                        } catch (IOException e) {
+                            LWLogging.throwable(e);
+                            targetPlayer.sendMessage(PublicValues.language.translate("general.internalerror"));
                         }
-                        //InstanceManager.getServer().getLogger().info(targetForm.getElements().toString());
-                    });
+                    });*/
                 } else {
-                    p.sendMessage(new Language().get("liveweather.commands.citysetter.already"));
+                    player.sendMessage(PublicValues.language.translate("liveweather.commands.citysetter.already"));
                 }
             }
         }else{
-            commandSender.sendMessage(new Language().get("liveweather.commands.server"));
+            commandSender.sendMessage(PublicValues.language.translate("liveweather.commands.server"));
         }
         return false;
     }

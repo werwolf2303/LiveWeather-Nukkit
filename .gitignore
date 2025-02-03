@@ -4,3 +4,5 @@ logs/server.log
 *.class
 *.xml
 *.xml
+/Server/
+/data/

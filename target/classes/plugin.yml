@@ -1,10 +1,13 @@
 name: LiveWeather
 main: com.liveweather.Initiator
 api: ["1.0.14"]
-version: "2.0"
+version: "3.1"
 author: Werwolf2303
 
 permissions:
+  liveweather.op.commands:
+    description: "Allows the use to run the admin commands of the LiveWeather plugin"
+    default: false
   liveweather.commands:
     description: "Allows the user to run the commands of the LiveWeather plugin"
-    default: false
+    default: true

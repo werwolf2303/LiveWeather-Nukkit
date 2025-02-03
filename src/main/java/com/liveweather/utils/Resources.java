@@ -1,32 +1,29 @@
 package com.liveweather.utils;
 
-import com.liveweather.commandline.LWLogging;
-import com.liveweather.instances.InstanceManager;
-
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.Scanner;
+import java.nio.charset.Charset;
 
 public class Resources {
-    public String read(String path) {
-        if(!path.startsWith("/")) {
-            InstanceManager.getLogger().error("Illegal Path Exception in Resources().read() : Expected path to start with '/'");
+    public String readToString(String path) {
+        if (!path.startsWith("/")) {
+            path = "/" + path;
         }
-        try {
-            Scanner s = new Scanner(getFileFromResourceAsStream(path)).useDelimiter("\\A");
-            String result = s.hasNext() ? s.next() : "";
-            return result;
-        }catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
-            return path;
+        InputStream stream = getClass().getResourceAsStream(path);
+        if (stream == null) {
+            throw new RuntimeException(new FileNotFoundException());
         }
+        return IOUtils.toString(stream, Charset.defaultCharset());
     }
-    public InputStream getFileFromResourceAsStream(String fileName) throws IllegalArgumentException {
-        InputStream inputStream = getClass().getResourceAsStream(fileName);
-        if (inputStream == null) {
-            InstanceManager.getLogger().error("Failed to read from resources: inputStream == null");
-            return null;
-        } else {
-            return inputStream;
+    public InputStream readToInputStream(String path) {
+        if(!path.startsWith("/")) {
+            path = "/" + path;
         }
+        InputStream stream = getClass().getResourceAsStream(path);
+        if(stream==null) {
+            throw new RuntimeException(new FileNotFoundException());
+        }
+        return stream;
     }
 }

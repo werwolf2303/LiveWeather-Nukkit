@@ -9,8 +9,5 @@
         <module name="LiveWeather" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="LiveWeather" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
