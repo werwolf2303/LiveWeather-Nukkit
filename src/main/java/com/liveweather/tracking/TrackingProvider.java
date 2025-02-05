@@ -9,4 +9,6 @@ public interface TrackingProvider {
     boolean needsLicenseAttribution();
     String getAttributionText();
     String friendlyName();
+    void init();
+    void unload();
 }

@@ -80,6 +80,10 @@ public class libLanguage {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return ret[0];
+        String input = ret[0];
+        if (input.length() >= 2 && input.charAt(0) == '\"' && input.charAt(input.length() - 1) == '\"') {
+            input = input.substring(1, input.length() - 1);
+        }
+        return input;
     }
 }

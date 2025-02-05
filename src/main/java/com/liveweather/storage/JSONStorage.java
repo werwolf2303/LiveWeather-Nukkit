@@ -1,6 +1,5 @@
 package com.liveweather.storage;
 
-import cn.nukkit.Server;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.liveweather.PublicValues;

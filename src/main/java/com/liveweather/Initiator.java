@@ -5,32 +5,28 @@ import cn.nukkit.level.GameRule;
 import cn.nukkit.level.Level;
 import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
+import cn.nukkit.scheduler.Task;
+import com.liveweather.commands.*;
+import com.liveweather.config.Config;
+import com.liveweather.config.ConfigValues;
+import com.liveweather.events.PlayerEvents;
 import com.liveweather.geocoding.DummyGeocodingProvider;
 import com.liveweather.geocoding.GeoapifyGeocodingProvider;
 import com.liveweather.geocoding.GeocodingProvider;
-import com.liveweather.storage.JSONStorage;
-import com.liveweather.storage.Storage;
-import com.liveweather.tracking.DummyTrackingProvider;
-import com.liveweather.tracking.IPAPiCommercialProvider;
-import com.liveweather.tracking.IPAPiProvider;
-import com.liveweather.tracking.TrackingProvider;
-import com.liveweather.weatherproviders.DummyWeatherProvider;
-import com.liveweather.commands.CityChange;
-import com.liveweather.commands.CityDelete;
-import com.liveweather.commands.CityGetter;
-import com.liveweather.commands.CitySetter;
-import com.liveweather.config.ConfigValues;
-import com.liveweather.config.Config;
-import com.liveweather.events.PlayerEvents;
 import com.liveweather.language.libLanguage;
 import com.liveweather.logging.LWLogging;
 import com.liveweather.storage.DummyStorage;
-import com.liveweather.weatherproviders.OpenMeteoCProvider;
-import com.liveweather.weatherproviders.OpenMeteoProvider;
-import com.liveweather.weatherproviders.WeatherDataProvider;
+import com.liveweather.storage.JSONStorage;
+import com.liveweather.storage.RAMStorage;
+import com.liveweather.storage.Storage;
+import com.liveweather.tracking.*;
+import com.liveweather.weather.SetWeather;
+import com.liveweather.weatherproviders.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.FileSystemException;
+import java.util.concurrent.TimeUnit;
 
 public class Initiator extends PluginBase {
     public static Plugin lwplugin;
@@ -52,16 +48,19 @@ public class Initiator extends PluginBase {
             PublicValues.weatherDataProviders = new WeatherDataProvider[] {
                     new DummyWeatherProvider(),
                     new OpenMeteoProvider(),
-                    new OpenMeteoCProvider()
+                    new OpenMeteoCProvider(),
+                    new OpenWeatherProvider()
             };
             PublicValues.trackingProviders = new TrackingProvider[] {
                     new IPAPiProvider(),
                     new IPAPiCommercialProvider(),
-                    new DummyTrackingProvider()
+                    new DummyTrackingProvider(),
+                    new TestTrackingProvider()
             };
             PublicValues.playerStorageProviders = new Storage[] {
                     new DummyStorage(),
-                    new JSONStorage()
+                    new JSONStorage(),
+                    new RAMStorage()
             };
             PublicValues.geocodingProviders = new GeocodingProvider[] {
                     new DummyGeocodingProvider(),
@@ -74,6 +73,7 @@ public class Initiator extends PluginBase {
                 if(storage.name().equals(PublicValues.config.getString(ConfigValues.storageType.name))) {
                     PublicValues.playerStorageProvider = storage;
                     storage.init();
+                    break;
                 }
             }
             if(PublicValues.playerStorageProvider == null) {
@@ -84,6 +84,7 @@ public class Initiator extends PluginBase {
             for(WeatherDataProvider provider : PublicValues.weatherDataProviders) {
                 if(provider.name().equals(PublicValues.config.getString(ConfigValues.apiProvider.name))) {
                     PublicValues.weatherDataProvider = provider;
+                    break;
                 }
             }
             if(PublicValues.weatherDataProvider == null) {
@@ -95,6 +96,7 @@ public class Initiator extends PluginBase {
                 for(TrackingProvider provider : PublicValues.trackingProviders) {
                     if(provider.name().equals(PublicValues.config.getString(ConfigValues.trackingProvider.name))) {
                         PublicValues.trackingProvider = provider;
+                        PublicValues.trackingProvider.init();
                         break;
                     }
                 }
@@ -107,6 +109,7 @@ public class Initiator extends PluginBase {
             for(GeocodingProvider provider : PublicValues.geocodingProviders) {
                 if(provider.name().equals(PublicValues.config.getString(ConfigValues.geocodingProvider.name))) {
                     PublicValues.geocodingProvider = provider;
+                    break;
                 }
             }
             if(PublicValues.geocodingProvider == null) {
@@ -118,12 +121,49 @@ public class Initiator extends PluginBase {
                 level.getGameRules().setGameRule(GameRule.DO_WEATHER_CYCLE, false);
             }
             if (!PublicValues.config.getBoolean(ConfigValues.autoFind.name)) {
-                Server.getInstance().getCommandMap().register("help", new CityDelete("lwdeletecity", PublicValues.language.translate("liveweather.commands.citydelete.description")));
-                Server.getInstance().getCommandMap().register("help", new CityChange("lwchangecity", PublicValues.language.translate("liveweather.commands.citychange.description")));
-                Server.getInstance().getCommandMap().register("help", new CitySetter("lwsetcity", PublicValues.language.translate("liveweather.commands.citysetter.description")));
-                Server.getInstance().getCommandMap().register("help", new CityGetter("lwgetcity", PublicValues.language.translate("liveweather.commands.citygetter.description")));
+                Server.getInstance().getCommandMap().register("", new LocationDelete("lwdeletelocation", PublicValues.language.translate("liveweather.commands.locationdelete.description")));
+                Server.getInstance().getCommandMap().register("", new LocationChange("lwchangelocation", PublicValues.language.translate("liveweather.commands.locationchange.description")));
+            }
+            Server.getInstance().getCommandMap().register("", new LocationSet("lwsetlocation", PublicValues.language.translate("liveweather.commands.locationset.description")));
+            if (PublicValues.config.getBoolean(ConfigValues.debug.name)) {
+                Server.getInstance().getCommandMap().register("", new DebugGetWeather());
+                Server.getInstance().getCommandMap().register("", new DebugGetLocation());
             }
             Server.getInstance().getPluginManager().registerEvents(new PlayerEvents(), this);
+            Server.getInstance().getScheduler().scheduleRepeatingTask(this, new Task() {
+                @Override
+                public void onRun(int i) {
+                    Server.getInstance().getOnlinePlayers().forEach((uuid, player) -> {
+                        if(PublicValues.playerStorageProvider.hasEntered(player.getUniqueId()) && PublicValues.playerStorageProvider.didAccept(player.getUniqueId())) {
+                            if (PublicValues.config.getBoolean(ConfigValues.debug.name)) {
+                               LWLogging.debugging("Getting weather for: " + player.getName());
+                            }
+                            try {
+                                Float[] latLon = PublicValues.playerStorageProvider.getSettingOfPlayer(player.getUniqueId());
+                                switch (PublicValues.weatherDataProvider.getWeather(latLon[0], latLon[1], player)) {
+                                    case RAIN:
+                                        SetWeather.setRaining(player);
+                                        break;
+                                    case CLEAR:
+                                        SetWeather.setClear(player);
+                                        break;
+                                    case THUNDER:
+                                        SetWeather.setThundering(player);
+                                }
+                            } catch (IOException e) {
+                                LWLogging.error("Failed getting weather for: " + player.getName());
+                                LWLogging.throwable(e);
+                            }
+                            try {
+                                Thread.sleep(TimeUnit.SECONDS.toMillis(PublicValues.config.getInt(ConfigValues.apiCallsPerMinute.name) / 60));
+                            } catch (InterruptedException e) {
+                                LWLogging.error("Couldn't throttle api requests");
+                                LWLogging.throwable(e);
+                            }
+                        }
+                    });
+                }
+            }, PublicValues.weatherDataProvider.getRefreshPeriod());
         }catch (Exception e) {
             LWLogging.error("Failed to initialize LiveWeather");
             LWLogging.throwable(e);
@@ -136,8 +176,17 @@ public class Initiator extends PluginBase {
         try {
             PublicValues.playerStorageProvider.onUnload();
         } catch (Exception e) {
-            LWLogging.error("Failed saving player storage");
+            LWLogging.error("Failed to unload player storage");
             LWLogging.throwable(e);
+        }
+
+        if(PublicValues.trackingProvider != null) {
+            try {
+                PublicValues.trackingProvider.unload();
+            } catch (Exception e) {
+                LWLogging.error("Failed to unload tracking provider");
+                LWLogging.throwable(e);
+            }
         }
     }
 }

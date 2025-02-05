@@ -30,7 +30,7 @@ public class LWLogging {
     public static void error(String message) {
         Server.getInstance().getLogger().error("[LiveWeather::Error] " + message);
     }
-    public void debugging(String message) {
+    public static void debugging(String message) {
         Server.getInstance().getLogger().info("[LiveWeather::Debugging] " + message);
     }
 }

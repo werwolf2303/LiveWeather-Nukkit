@@ -12,28 +12,29 @@ public class LocationSelectorForm extends Form implements LWForm<LocationSelecto
     private final LocationSelectorFormResponse internalResponse;
 
     public LocationSelectorForm() {
-        super("Enter Location", new ArrayList<Element>() {{ // ToDo: Translate
-            add(new ElementLabel("Leave empty or close window if you don't want to provide your location")); // ToDo: Translate
-            add(new ElementInput("Country")); // ToDo: Translate
-            add(new ElementInput("State")); // ToDo: Translate
-            add(new ElementInput("City")); // ToDo: Translate
+        super(PublicValues.language.translate("liveweather.forms.locationselector.title"), new ArrayList<Element>() {{
+            add(new ElementLabel(PublicValues.language.translate("liveweather.forms.locationselector.info")));
+            add(new ElementInput(PublicValues.language.translate("liveweather.forms.locationselector.country")));
+            add(new ElementInput(PublicValues.language.translate("liveweather.forms.locationselector.state")));
+            add(new ElementInput(PublicValues.language.translate("liveweather.forms.locationselector.city")));
             if(PublicValues.geocodingProvider.needsLicenseAttribution()) {
-                add(new ElementLabel(PublicValues.geocodingProvider.getAttributionText())); // ToDo: Translate
+                add(new ElementLabel(PublicValues.geocodingProvider.getAttributionText()));
             }
         }});
         internalResponse = new LocationSelectorFormResponse();
         setOnFormResponse((formResponse, i) -> {
             for(int res = 0; res < formResponse.getResponses().size(); res ++) {
                 switch (res) {
-                    case 0:
-                        internalResponse.setCountry(formResponse.getInputResponse(0));
-                        break;
                     case 1:
-                        internalResponse.setState(formResponse.getInputResponse(1));
+                        internalResponse.setCountry(formResponse.getInputResponse(1));
                         break;
                     case 2:
-                        internalResponse.setCity(formResponse.getInputResponse(2));
+                        internalResponse.setState(formResponse.getInputResponse(2));
+                        break;
+                    case 3:
+                        internalResponse.setCity(formResponse.getInputResponse(3));
                         response.onResponseReady(internalResponse);
+                        break;
                 }
             }
         });

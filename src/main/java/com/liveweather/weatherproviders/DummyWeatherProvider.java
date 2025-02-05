@@ -1,11 +1,11 @@
 package com.liveweather.weatherproviders;
 
-public class DummyWeatherProvider implements WeatherDataProvider {
-    @Override
-    public boolean isCityValid(String city) {
-        return false;
-    }
+import cn.nukkit.Player;
+import com.liveweather.weather.Weather;
 
+import java.io.IOException;
+
+public class DummyWeatherProvider implements WeatherDataProvider {
     @Override
     public boolean isNonCommercial() {
         return true;
@@ -29,5 +29,15 @@ public class DummyWeatherProvider implements WeatherDataProvider {
     @Override
     public String friendlyName() {
         return "Dummy";
+    }
+
+    @Override
+    public Weather getWeather(float lat, float lon, Player player) throws IOException {
+        return null;
+    }
+
+    @Override
+    public int getRefreshPeriod() {
+        return 69;
     }
 }

@@ -51,4 +51,14 @@ public class IPAPiProvider implements TrackingProvider {
     public String friendlyName() {
         return "IPAPi";
     }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void unload() {
+
+    }
 }

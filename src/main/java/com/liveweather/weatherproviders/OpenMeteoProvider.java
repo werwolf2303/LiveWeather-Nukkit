@@ -1,13 +1,11 @@
 package com.liveweather.weatherproviders;
 
+import cn.nukkit.Player;
+import com.liveweather.weather.Weather;
+
 import java.io.IOException;
 
 public class OpenMeteoProvider implements WeatherDataProvider {
-    @Override
-    public boolean isCityValid(String city) throws IOException {
-        return false;
-    }
-
     @Override
     public boolean isNonCommercial() {
         return true;
@@ -31,5 +29,15 @@ public class OpenMeteoProvider implements WeatherDataProvider {
     @Override
     public String friendlyName() {
         return "Open-Meteo";
+    }
+
+    @Override
+    public Weather getWeather(float lat, float lon, Player player) throws IOException {
+        return null;
+    }
+
+    @Override
+    public int getRefreshPeriod() {
+        return 0;
     }
 }

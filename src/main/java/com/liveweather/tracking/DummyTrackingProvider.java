@@ -33,4 +33,14 @@ public class DummyTrackingProvider implements TrackingProvider {
     public String friendlyName() {
         return "Dummy";
     }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void unload() {
+
+    }
 }

@@ -2,12 +2,8 @@ package com.liveweather.weather;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
-import cn.nukkit.entity.Entity;
-import cn.nukkit.entity.mob.EntityWither;
 import cn.nukkit.event.level.ThunderChangeEvent;
 import cn.nukkit.event.level.WeatherChangeEvent;
-import cn.nukkit.network.protocol.BossEventPacket;
-import cn.nukkit.network.protocol.ChunkRadiusUpdatedPacket;
 import cn.nukkit.network.protocol.LevelEventPacket;
 
 import java.util.concurrent.ThreadLocalRandom;
